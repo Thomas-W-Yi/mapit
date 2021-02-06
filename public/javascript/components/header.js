@@ -27,7 +27,7 @@ $(() => {
       userLinks = `
       <nav class="navbar navbar-expand-lg navbar-light py-3">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#"></a>
+        <a class="navbar-brand" href="#"><img src="images/home-icon-silhouette.png" alt=""></a>
         <button
           class="navbar-toggler"
           type="button"
