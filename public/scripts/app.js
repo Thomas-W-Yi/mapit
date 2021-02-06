@@ -19,7 +19,7 @@ $(() => {
       });
   };
 
-  const getAllmaps = () => {
+  const getAllMaps = () => {
     const url = "/api/maps";
     return $.ajax({ url }).then((res) => res.rows);
   };
@@ -80,10 +80,14 @@ $(() => {
       });
     })
     .catch();
-});
 
-getAllmaps().then((maps) => {
-  for (const id in maps) {
-    $("listUl").append(`<li id='${id}'>${maps[id].name}</li>`);
-  }
+  getAllMaps().then((maps) => {
+    for (const id in maps) {
+      const map = maps[id];
+      $("listUl").append(`<li id='${id}'>${map.name}</li>`);
+      $(`#${id}`).click(function (map) {
+        createMap(map);
+      });
+    }
+  });
 });
