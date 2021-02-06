@@ -1,19 +1,16 @@
 module.exports = function (router, database) {
 
 
+  // Main maps route to get the maps
+  router.get('/maps', (req, res) => {
+    database.getMaps(req.query)
+    .then(maps => res.send({maps}))
+    .catch((error) => {
+      console.error(error);
+      res.send(error)
+    });
+  });
 
-  // EXAMPLE
-  // router.post('/properties', (req, res) => {
-  //   const userId = req.session.userId;
-  //   database.addProperty({...req.body, owner_id: userId})
-  //     .then(property => {
-  //       res.send(property);
-  //     })
-  //     .catch(e => {
-  //       console.error(e);
-  //       res.send(e)
-  //     });
-  // });
 
 return router;
 };
