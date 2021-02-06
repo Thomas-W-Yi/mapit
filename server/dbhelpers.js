@@ -1,5 +1,20 @@
 const db = require ('./server');
 
+//Helper function to return user object for a given id
+const getUserWithId = function(id) {
+  const queryValues = [id];
+  const queryString = `
+  SELECT *
+  FROM users
+  WHERE id = $1;
+  `;
+  return db.query(queryString, queryValues)
+  .then((res) => {
+    return res.rows[0]
+  });
+}
+exports.getUserWithId = getUserWithId;
+
 //Helper function for retrieving user with email
 const getUserWithEmail = function(email) {
   const queryValues = [email];
@@ -23,7 +38,7 @@ const addUser =  function(user) {
   INSERT INTO users(name, email, password)
   VALUES($1, $2, $3)
   RETURNING *;
-  `
+  `;
   return db.query(queryString, queryValues)
   .then((user) => {
     return user.rows[0];

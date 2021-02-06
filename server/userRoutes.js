@@ -14,7 +14,7 @@ module.exports = function (router, database) {
         return;
       }
       req.session.userId = user.id;
-      res.send("Get in");
+      res.send({user: {name: user.name, email: user.email, id: user.id}});
     })
     .catch(error => res.send(error));
   });
@@ -38,7 +38,7 @@ module.exports = function (router, database) {
     login(email, password)
       .then(user => {
         if (!user) {
-          res.send(Error("error"));
+          res.send(Error("Invalid credentials"));
           return;
         }
         req.session.userId = user.id;
@@ -51,6 +51,27 @@ module.exports = function (router, database) {
   router.post('/logout', (req, res) => {
     req.session.userId = null;
     res.send({});
+  });
+
+
+  // Fetches user information
+  router.get("/me", (req, res) => {
+    const userId = req.session.userId;
+    if (!userId) {
+      res.send({message: "not logged in"});
+      return;
+    }
+
+    database.getUserWithId(userId)
+      .then(user => {
+        if (!user) {
+          res.send({error: "no user with that id"});
+          return;
+        }
+
+        res.send({user: {name: user.name, email: user.email, id: userId}});
+      })
+      .catch(e => res.send(e));
   });
 
 return router;
