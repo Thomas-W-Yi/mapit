@@ -14,6 +14,8 @@ const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
 const path = require('path');
+const cookieSession = require('cookie-session');
+
 
 // PG database client/connection setup
 const { Pool } = require('pg');
