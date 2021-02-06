@@ -5,13 +5,57 @@
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <style>
+      #mymap {
+        height: 40%;
+        width: 90%;
+      }
+    </style>
   </head>
 
   <body>
-    <h1>Hello World!</h1>
+    <header id="page-header" class="page-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-success">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/urls">My URLs</a>
+            <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <a href="/login">Login</a>
+          <a href="/register"> Register</a>
+        </div>
+        <% } %>
+      </nav>
+    </header>
+    <main id="main-content">
+      <div id="mymap"></div>
+    </main>
   </body>
 </html>
