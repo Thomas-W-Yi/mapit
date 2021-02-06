@@ -1,7 +1,7 @@
 $(() => {
   window.header = {};
 
-  const $pageHeader = $('page-header');
+  const $pageHeader = $(".page-header");
   let currentUser = null;
   function updateHeader(user) {
     currentUser = user;
@@ -10,33 +10,64 @@ $(() => {
 
     if (!user) {
       userLinks = `
-      <nav id="page-header__user-links" class="page-header__user-links">
-        <ul>
-          <li class="home">🏠</li>
-          <li class="search_button">Search</li>
-          <li class="login_button">Log In</li>
-          <li class="sign-up_button">Sign Up</li>
-        </ul>
-      </nav>
-      `
+      <nav class="navbar navbar-expand-lg navbar-light p-3">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-flex flex-row-reverse" id="navbarColor03">
+          <button id="login-btn"class="btn btn-outline-dark mx-2 my-2 my-sm-0" type="submit">Sign in</button>
+          <button id="register-btn"class="btn btn-light my-2 my-sm-0 text-dark" type="submit">Register</button>
+        </div>
+      </div>
+    </nav>
+      `;
     } else {
       userLinks = `
-      <nav id="page-header__user-links" class="page-header__user-links">
-        <ul>
-          <li class="home">🏠</li>
-          <li class="search_button">Search</li>
-          <li>${user.name}</li>
-          <li class="create_listing_button">Create Listing</li>
-          <li class="my_listing_button">My Listings</li>
-          <li class="my_reservations_button">My Reservations</li>
-          <li class="logout_button">Log Out</li>
-        </ul>
-      </nav>
-      `
+      <nav class="navbar navbar-expand-lg navbar-light py-3">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="images/home-icon-silhouette.png" alt=""></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarColor03"
+          aria-controls="navbarColor03"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarColor03">
+          <div class="dropdown">
+            <button
+              class="btn btn-outline-dark dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Profile
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item" href="#">My Favorites</a></li>
+              <li><a class="dropdown-item" href="#">My Contributions</a></li>
+              <li><a class="dropdown-item" href="#">My Maps</a></li>
+            </ul>
+          </div>
+          <a id="logout-btn" class="btn btn-outline-dark mx-2 my-2 my-sm-0">
+            Logout
+          </a>
+        </div>
+      </div>
+    </nav>
+      `;
     }
 
     $pageHeader.append(userLinks);
   }
 
   window.header.update = updateHeader;
+  updateHeader({ name: "Bruce" });
 });
