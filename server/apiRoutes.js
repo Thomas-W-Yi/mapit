@@ -1,14 +1,20 @@
-module.exports = function(router, database) {
-
-  /*router.get('/properties', (req, res) => {
-    database.getAllProperties(req.query, 20)
-    .then(properties => res.send({properties}))
-    .catch(e => {
-      console.error(e);
-      res.send(e)
-    });
-  });*/
+module.exports = function (router, database) {
 
 
-  return router;
-}
+
+  // EXAMPLE
+  // router.post('/properties', (req, res) => {
+  //   const userId = req.session.userId;
+  //   database.addProperty({...req.body, owner_id: userId})
+  //     .then(property => {
+  //       res.send(property);
+  //     })
+  //     .catch(e => {
+  //       console.error(e);
+  //       res.send(e)
+  //     });
+  // });
+
+return router;
+};
+
