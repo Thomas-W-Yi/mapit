@@ -27,7 +27,7 @@ $(() => {
       userLinks = `
       <nav class="navbar navbar-expand-lg navbar-light py-3">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img src="images/home-icon-silhouette.png" alt=""></a>
+        <a class="navbar-brand" href="#"></a>
         <button
           class="navbar-toggler"
           type="button"
@@ -56,9 +56,9 @@ $(() => {
               <li><a class="dropdown-item" href="#">My Maps</a></li>
             </ul>
           </div>
-          <a id="logout-btn" class="btn btn-outline-dark mx-2 my-2 my-sm-0">
+          <button id="logout-btn" class="btn btn-outline-dark mx-2 my-2 my-sm-0">
             Logout
-          </a>
+          </button>
         </div>
       </div>
     </nav>
