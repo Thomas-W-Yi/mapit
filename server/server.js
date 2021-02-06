@@ -1,3 +1,7 @@
+//routes
+const apiRoutes = require('./apiRoutes');
+const userRoutes = require('./userRoutes');
+
 // load .env data into process.env
 require('dotenv').config();
 
@@ -16,6 +20,7 @@ const { Pool } = require('pg');
 const dbParams = require('../lib/db.js');
 const db = new Pool(dbParams);
 db.connect();
+
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -37,11 +42,17 @@ app.use(express.static(path.join(__dirname, '../public')));
 const usersRoutes = require("../routes/users");
 const widgetsRoutes = require("../routes/widgets");
 
-// Mount all resource routes
-// Note: Feel free to replace the example routes below with your own
-app.use("/api/users", usersRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
-// Note: mount other resources here, using the same pattern above
+
+// /api/endpoints
+const apiRouter = express.Router();
+apiRoutes(apiRouter, db);
+app.use('/api', apiRouter);
+
+// /user/endpoints
+const userRouter = express.Router();
+userRoutes(userRouter, db);
+app.use('/users', userRouter);
+
 
 
 // Home page
