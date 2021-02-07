@@ -1,6 +1,8 @@
 //routes
 const apiRoutes = require('./apiRoutes');
 const userRoutes = require('./userRoutes');
+const dbuserhelpers = require('./dbuserhelpers');
+const dbapihelpers = require('./dbapihelpers');
 
 // load .env data into process.env
 require('dotenv').config();
@@ -57,12 +59,12 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // /api/endpoints
 const apiRouter = express.Router();
-apiRoutes(apiRouter, db);
+apiRoutes(apiRouter, dbapihelpers);
 app.use('/api', apiRouter);
 
 // /user/endpoints
 const userRouter = express.Router();
-userRoutes(userRouter, db);
+userRoutes(userRouter, dbuserhelpers);
 app.use('/users', userRouter);
 
 
