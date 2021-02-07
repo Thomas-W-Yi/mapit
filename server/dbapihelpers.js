@@ -1,6 +1,6 @@
 const db = require ('./server');
 
-const getAllMaps = function(options) {
+const getMaps = function(options) {
   let queryValue = [];
   let queryString = `
   SELECT DISTINCT maps.*
@@ -42,7 +42,7 @@ const getAllMaps = function(options) {
   .catch(error => res.send(error));
 }
 
-exports.getAllMaps = getAllMaps;
+exports.getMaps = getMaps;
 
 
 const getMarkersForMap = function(mapId) {
