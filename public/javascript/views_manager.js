@@ -21,10 +21,10 @@ $(() => {
       case 'mainMap':
         //main map will have general list with the map
         $mainMap.appendTo($main);
-        $mapList.appendTo($mainMap);
+        $mapList.appendTo($main);
         break;
       case 'mapList':
-        $mapList.appendTo($mainMap);
+        $mapList.appendTo($main);
         break;
       case 'error': {
         const $error = $(`<p>${arguments[1]}</p>`);
