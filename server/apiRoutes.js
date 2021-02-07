@@ -14,7 +14,7 @@ module.exports = function (router, database) {
 
   // GET route to get the markers of a map
   router.get('/markers', (req, res) => {
-    database.getMarkers(req.query)
+    database.getMarkersForMap(req.query)
     .then(markers => res.send({markers}))
     .catch((error) => {
       console.error(error);

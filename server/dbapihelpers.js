@@ -10,16 +10,16 @@ const getAllMaps = function(options) {
   if(options.owner_id) {
     queryValue = [options.owner_id]
     queryString += `
-    WHERE user_id = $1
-    ;`;
+    WHERE user_id = $1;
+    `;
   }
 
   if(options.contributor_id) {
     queryValue = [options.contributor_id]
     queryString += `
     JOIN markers ON maps.id = markers.map_id
-    WHERE markers.user_id = $1
-    ;`;
+    WHERE markers.user_id = $1;
+    `;
   }
 
   if(options.favUser_id) {
@@ -27,7 +27,7 @@ const getAllMaps = function(options) {
     queryString += `
     JOIN favorites ON maps.id = favorites.map_id
     WHERE favorites.user_id = $1;
-    ;`;
+    `;
   }
 
   return db.query(queryString, queryValue)
@@ -38,32 +38,36 @@ const getAllMaps = function(options) {
 exports.getAllMaps = getAllMaps;
 
 
-const getMarkers = function(mapId) {
+const getMarkersForMap = function(mapId) {
    let queryValue = [mapId];
    let queryString = `
    SELECT * markers
-   WHERE map_id = $1
-   ;`;
+   WHERE map_id = $1;
+   `;
 
    return db.query(queryString, queryValue)
   .then(res => res.rows)
   .catch(error => res.send(error));
 }
 
-exporrs.getMarkers = getMarkers;
+exports.getMarkersforMap = getMarkersForMap;
 
 
 const addMap = function(options) {
+  if(!options.user_id) {
+    throw new Error('User not logged in!');
+  }
 
   const queryString = `
-  INSERT INTO maps (user_id, coord_id, name)
-  VALUES($1, $2, $3)
+  INSERT INTO maps (user_id, latitude, longitude, name)
+  VALUES($1, $2, $3, $4)
   RETURNING *;
   `;
 
   const queryValues = [
     options.user_id,
-    options.coord_id,
+    options.latitude,
+    options.longitude,
     options.name,
   ];
 
@@ -75,18 +79,24 @@ exports.addMap = addMap;
 
 const addMarker = function(options) {
 
+  if(!options.user_id) {
+    throw new Error('User not logged in!');
+  }
+
   const queryString = `
-  INSERT INTO markers (map_id, coord_id, user_id, title, description, img_url)
-  VALUES($1, $2, $3, $4, $5, $6)
+  INSERT INTO markers (map_id, latitude, longitude, user_id, title, description, img_url)
+  VALUES($1, $2, $3, $4, $5, $6, $7)
   RETURNING *;
   `;
 
   const queryValues = [
     options.map_id,
-    options.coord_id,
+    options.latitude,
+    options.longitude,
     options.user_id,
-    options.title || `Not provided`,
-    options.description || `Not provided`
+    options.title,
+    options.description || `Not provided`,
+    options.img_url || `Not provided`
   ];
 
   return db.query(queryString, queryValues)
@@ -103,8 +113,7 @@ const deleteMarker = function(options) {
 
   const queryString = `
   DELETE FROM markers
-  WHERE id = $1
-  ;
+  WHERE id = $1;
   `;
   const queryValues = [
     options.marker_id
@@ -125,18 +134,38 @@ const updateMarker = function(options) {
     throw new Error('User not logged in!');
   }
 
-//////b------------>> problem
+  const queryValues = [
+    options.latitude,
+    options.longitude,
+    options.title,
+    options.description || `Not provided`,
+    options.img_url || `Not provided`,
+    options.marker_id
+  ];
+
+  const queryString = `
+  UPDATE markers
+  SET latitude = $1,
+  SET longitude = $2,
+  SET title = $3,
+  SET description = $4,
+  SET img_url = $5,
+  WHERE id = $6
+  RETURNING *;
+  `;
 
   return db.query(queryString, queryValues)
-  .then(() => {
-    return ;
-  })
+  .then((res) =>  res.rows[0])
   .catch(error => res.send(error));
 }
 
 exports.updateMarker = updateMarker;
 
 const addFavorite = function(options) {
+
+  if(!options.user_id) {
+    throw new Error('User not logged in!');
+  }
 
   const queryString = `
   INSERT INTO favorites (user_id, map_id)
@@ -157,11 +186,14 @@ exports.addFavorite = addFavorite;
 
 const deleteFavorite = function(options) {
 
+  if(!options.user_id) {
+    throw new Error('User not logged in!');
+  }
+
   const queryString = `
   DELETE FROM favorites
   WHERE user_id = $1
-  AND map_id = $2
-  ;
+  AND map_id = $2;
   `;
 
   const queryValues = [
@@ -175,4 +207,4 @@ const deleteFavorite = function(options) {
   })
   .catch(error => res.send(error));
 }
-exports.deleteFavurite = deleteFavorite;
+exports.deleteFavorite = deleteFavorite;
