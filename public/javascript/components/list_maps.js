@@ -1,11 +1,10 @@
 $(() => {
   window.mapLists = {};
 
+  const $listMaps = `<ul class="list-group"><ul>`;
+
   function addMap(map) {
     $listMaps.append(map);
-  }
-  function clearMaps() {
-    $listMaps.empty();
   }
   window.mapLists.clearMaps = clearMaps;
 
@@ -20,7 +19,6 @@ $(() => {
    */
 
   function addMaps(maps, options = false) {
-    clearMaps();
     for (const map in Object.values(maps)) {
       const mapListItem = mapList.createMap(map, options);
       addMap(mapListItem);
