@@ -7,10 +7,7 @@ $(() => {
   window.views_manager.show = function (item) {
     $logInForm.detach();
     $signUpForm.detach();
-    $generalList.detach();
-    $favoriteList.detach();
-    $contributionList.detach();
-    $createdList.detach();
+    $mapList.detach();
 
     switch (item) {
       case 'logIn':
@@ -24,19 +21,10 @@ $(() => {
       case 'mainMap':
         //main map will have general list with the map
         $mainMap.appendTo($main);
-        $generalList.appendTo($mainMap);
+        $mapList.appendTo($mainMap);
         break;
-      case 'generalList':
-        $generalList.appendTo($mainMap);
-        break;
-      case 'favorites':
-        $favoriteList.appendTo($mainMap);
-        break;
-      case 'contributions':
-        $contributionList.appendTo($mainMap);
-        break;
-      case 'createdList':
-        $createdList.appendTo($mainMap);
+      case 'mapList':
+        $mapList.appendTo($mainMap);
         break;
       case 'error': {
         const $error = $(`<p>${arguments[1]}</p>`);
