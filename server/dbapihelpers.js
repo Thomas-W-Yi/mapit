@@ -3,7 +3,8 @@ const db = require ('./server');
 const getAllMaps = function(options) {
   let queryValue = [];
   let queryString = `
-  SELECT maps.*
+  SELECT maps.*, markers.*
+  JOIN markers on maps.id = markers.map_id
   FROM maps;
   `;
 
