@@ -28,3 +28,47 @@ const getAllMaps = function(options) {
 }
 
 exports.getAllMaps = getAllMaps;
+
+const addMap = function(map) {
+
+  const queryString = `
+  INSERT INTO maps (user_id, coord_id, name)
+  VALUES($1, $2, $3)
+  RETURNING *;
+  `;
+
+  const queryValues = [
+    map.user_id,
+    map.coord_id,
+    map.name,
+  ];
+
+  return db.query(queryString, queryValues)
+  .then((res) => {
+    return res.rows[0];
+  });
+}
+exports.addMap = addMap;
+
+const addMarker = function(marker) {
+
+  const queryString = `
+  INSERT INTO markers (map_id, coord_id, user_id, title, description, img_url)
+  VALUES($1, $2, $3, $4, $5, $6)
+  RETURNING *;
+  `;
+
+  const queryValues = [
+    marker.map_id,
+    marker.coord_id,
+    marker.user_id,
+    marker.title || `Not provided`,
+    marker.description || `Not provided`
+  ];
+
+  return db.query(queryString, queryValues)
+  .then((res) => {
+    return res.rows[0];
+  });
+}
+exports.addMarker = addMarker;
