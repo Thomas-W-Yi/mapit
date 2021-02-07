@@ -1,11 +1,6 @@
 $(() => {
   window.mapList = {};
 
-  //create map list item eg.
-  //<article>
-  // ...
-  //</article>
-
   function createMap(
     map,
     { isCreated = false, isFavorites = false, isContributed = false } = false
