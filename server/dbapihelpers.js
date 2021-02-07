@@ -1,27 +1,27 @@
-const db = require ('./server').db;
+const db = require('./server').db; // this needs to change the pool is not added here.
 
-const getMaps = function(options) {
+const getMaps = function (options) {
   let queryValue = [];
   let queryString = `
   SELECT DISTINCT maps.*
   FROM maps;
   `;
 
-  if(options.map_id) {
+  if (options.map_id) {
     queryValue = [options.map_id]
     queryString += `
     WHERE map_id = $1;
     `;
   }
 
-  if(options.owner_id) {
+  if (options.owner_id) {
     queryValue = [options.owner_id]
     queryString += `
     WHERE user_id = $1;
     `;
   }
 
-  if(options.contributor_id) {
+  if (options.contributor_id) {
     queryValue = [options.contributor_id]
     queryString += `
     JOIN markers ON maps.id = markers.map_id
@@ -29,7 +29,7 @@ const getMaps = function(options) {
     `;
   }
 
-  if(options.favUser_id) {
+  if (options.favUser_id) {
     queryValue = [options.favUser_id]
     queryString += `
     JOIN favorites ON maps.id = favorites.map_id
@@ -38,30 +38,30 @@ const getMaps = function(options) {
   }
 
   return db.query(queryString, queryValue)
-  .then(res => res.rows)
-  .catch(error => res.send(error));
+    .then(res => res.rows)
+    .catch(error => res.send(error));
 }
 
 exports.getMaps = getMaps;
 
 
-const getMarkersForMap = function(mapId) {
-   let queryValue = [mapId];
-   let queryString = `
+const getMarkersForMap = function (mapId) {
+  let queryValue = [mapId];
+  let queryString = `
    SELECT * markers
    WHERE map_id = $1;
    `;
 
-   return db.query(queryString, queryValue)
-  .then(res => res.rows)
-  .catch(error => res.send(error));
+  return db.query(queryString, queryValue)
+    .then(res => res.rows)
+    .catch(error => res.send(error));
 }
 
-exports.getMarkersforMap = getMarkersForMap;
+exports.getMarkersForMap = getMarkersForMap;
 
 
-const addMap = function(options) {
-  if(!options.user_id) {
+const addMap = function (options) {
+  if (!options.user_id) {
     throw new Error('User not logged in!');
   }
 
@@ -79,14 +79,14 @@ const addMap = function(options) {
   ];
 
   return db.query(queryString, queryValues)
-  .then((res) =>  res.rows[0])
-  .catch(error => res.send(error));
+    .then((res) => res.rows[0])
+    .catch(error => res.send(error));
 }
 exports.addMap = addMap;
 
-const addMarker = function(options) {
+const addMarker = function (options) {
 
-  if(!options.user_id) {
+  if (!options.user_id) {
     throw new Error('User not logged in!');
   }
 
@@ -107,14 +107,14 @@ const addMarker = function(options) {
   ];
 
   return db.query(queryString, queryValues)
-  .then((res) =>  res.rows[0])
-  .catch(error => res.send(error));
+    .then((res) => res.rows[0])
+    .catch(error => res.send(error));
 }
 exports.addMarker = addMarker;
 
-const deleteMarker = function(options) {
+const deleteMarker = function (options) {
 
-  if(!options.user_id) {
+  if (!options.user_id) {
     throw new Error('User not logged in!');
   }
 
@@ -127,17 +127,17 @@ const deleteMarker = function(options) {
   ];
 
   return db.query(queryString, queryValues)
-  .then(() => {
-    return ;
-  })
-  .catch(error => res.send(error));
+    .then(() => {
+      return;
+    })
+    .catch(error => res.send(error));
 }
 
 exports.deleteMarker = deleteMarker;
 
-const updateMarker = function(options) {
+const updateMarker = function (options) {
 
-  if(!options.user_id) {
+  if (!options.user_id) {
     throw new Error('User not logged in!');
   }
 
@@ -162,15 +162,15 @@ const updateMarker = function(options) {
   `;
 
   return db.query(queryString, queryValues)
-  .then((res) =>  res.rows[0])
-  .catch(error => res.send(error));
+    .then((res) => res.rows[0])
+    .catch(error => res.send(error));
 }
 
 exports.updateMarker = updateMarker;
 
-const addFavorite = function(options) {
+const addFavorite = function (options) {
 
-  if(!options.user_id) {
+  if (!options.user_id) {
     throw new Error('User not logged in!');
   }
 
@@ -186,14 +186,14 @@ const addFavorite = function(options) {
   ];
 
   return db.query(queryString, queryValues)
-  .then((res) =>  res.rows[0])
-  .catch(error => res.send(error));
+    .then((res) => res.rows[0])
+    .catch(error => res.send(error));
 }
 exports.addFavorite = addFavorite;
 
-const deleteFavorite = function(options) {
+const deleteFavorite = function (options) {
 
-  if(!options.user_id) {
+  if (!options.user_id) {
     throw new Error('User not logged in!');
   }
 
@@ -209,9 +209,9 @@ const deleteFavorite = function(options) {
   ];
 
   return db.query(queryString, queryValues)
-  .then(() => {
-    return ;
-  })
-  .catch(error => res.send(error));
+    .then(() => {
+      return;
+    })
+    .catch(error => res.send(error));
 }
 exports.deleteFavorite = deleteFavorite;
