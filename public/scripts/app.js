@@ -132,6 +132,42 @@ $(() => {
       : null;
   };
 
+  // callback function for map items click event, which will show the map item on our app, a check mark will show on the current map
+  const clickMap = (maps, mapId) => {
+    const id = mapId;
+    createMap(maps[id]);
+    $("#listUl").html("");
+    getList(maps, id);
+  };
+
+  // callback function for point click event
+  const clickPoint = (event) => {
+    console.log(event.target.getPopup());
+    const { lat, lng } = event.latlng;
+    // let icon = event.target.setIcon();
+    let popup = event.target.getPopup();
+    // update content on marker
+    popup.setContent("<p>new content</p>");
+    // add new form so we can update or delete marker
+    $("#map-container").append(`<div id = 'save-point'>
+    <form>
+  <div class="form-group">
+    <label>Latitude: ${lat}</label>
+    <label>Longitude: ${lng}</label>
+    <input type="text" class="form-control" id="InputText" placeholder="Enter New Title">
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" id="InputDescription" placeholder="Enter New Description">
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" id="InputImgUrl" placeholder="Update img url">
+  </div>
+  <button type="submit" class="btn btn-primary">Update Point</button>
+  <button type="submit" class="btn btn-danger">Delete Point</button>
+</form>
+    </div>`);
+  };
+
   getAllMaps().then((maps) => {
     for (const id in maps) {
       const map = maps[id];
