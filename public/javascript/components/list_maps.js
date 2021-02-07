@@ -6,7 +6,6 @@ $(() => {
   function addMap(map) {
     $listMaps.append(map);
   }
-  window.mapLists.clearMaps = clearMaps;
 
   /**
    * Get all MAPS (list). if we decide to add buttons onto the list options is that only purpose
@@ -32,6 +31,6 @@ $(() => {
     const mapId = listMapItem.attr('id');
     listMapItem.detatch();
     $('.list-group').prepend(listMapItem);
-   $.when(getAllMaps(mapId), getMarkersForMap(mapId)).done((data) => console.log(data));
+   $.when(getMaps(mapId), getMarkersForMap(mapId)).done((data) => console.log(data));
   });
 });
