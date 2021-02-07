@@ -25,4 +25,16 @@ $(() => {
     }
   }
   window.mapLists.addMaps = addMaps;
+
+
+  $($listMaps).click(function(evt) {
+    const listMapItem = $(evt);
+    const map_id = listMapItem.attr('id');
+    listMapItem.detatch();
+    $('.list-group').prepend(listMapItem);
+
+    //ajax request for map object
+    //reoder list so bar prepends to top
+
+  });
 });
