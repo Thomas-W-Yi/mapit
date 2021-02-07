@@ -19,6 +19,27 @@ $(() => {
       });
   };
 
+  const newMarkerForm = (lat, long, map) => {
+    return `<div id = 'save-point'>
+    <form>
+  <div class="form-group">
+    <label>Latitude: ${lat}</label>
+    <label>Longitude: ${long}</label>
+    <label>map_id: ${map.id}</label>
+    <label>map_id: ${map.user_id}</label>
+    <input type="text" class="form-control" id="InputText" aria-describedby="emailHelp" placeholder="Enter Title">
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" id="InputDescription" placeholder="Description">
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" id="InputImgUrl" placeholder="Img Url">
+  </div>
+  <button type="submit" class="btn btn-primary">Save Point</button>
+  <button type="submit" class="btn btn-warning">Discard</button>
+</form>
+    </div>`;
+  };
   const getAllMaps = () => {
     const url = "/api/maps";
     return $.ajax({ url }).then((res) => res.rows);
@@ -70,25 +91,7 @@ $(() => {
       const lat = event.latlng.lat;
       const long = event.latlng.lng;
       // click event on mymap will create new marker to save/discard
-      $("#map-container").append(`<div id = 'save-point'>
-    <form>
-  <div class="form-group">
-    <label>Latitude: ${lat}</label>
-    <label>Longitude: ${long}</label>
-    <label>map_id: ${map.id}</label>
-    <label>map_id: ${map.user_id}</label>
-    <input type="text" class="form-control" id="InputText" aria-describedby="emailHelp" placeholder="Enter Title">
-  </div>
-  <div class="form-group">
-    <input type="text" class="form-control" id="InputDescription" placeholder="Description">
-  </div>
-  <div class="form-group">
-    <input type="text" class="form-control" id="InputImgUrl" placeholder="Img Url">
-  </div>
-  <button type="submit" class="btn btn-primary">Save Point</button>
-  <button type="submit" class="btn btn-warning">Discard</button>
-</form>
-    </div>`);
+      $("#map-container").append(newMarkerForm(lat, long, map));
       L.marker([lat, long])
         .addTo(mymap)
         .bindPopup(`map point lat: ${lat} and long: ${long}`)
