@@ -176,7 +176,7 @@ $(() => {
   };
 
   // event listener for map list items
-  $(`.mapLi`).on("click", function (event) {
+  $(`#listUl`).on("click", ".mapLi", function (event) {
     const id = event.target.id;
     clickMap(maps, id);
   });
