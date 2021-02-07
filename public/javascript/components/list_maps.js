@@ -29,12 +29,9 @@ $(() => {
 
   $($listMaps).click(function(evt) {
     const listMapItem = $(evt);
-    const map_id = listMapItem.attr('id');
+    const mapId = listMapItem.attr('id');
     listMapItem.detatch();
     $('.list-group').prepend(listMapItem);
-
-    //ajax request for map object
-    //reoder list so bar prepends to top
-
+   $.when(getAllMaps(mapId), getMarkersForMap(mapId)).done((data) => console.log(data));
   });
 });
