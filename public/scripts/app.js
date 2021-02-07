@@ -42,7 +42,7 @@ $(() => {
   };
 
   const modifyMarker = (lat, lng) => {
-    `<div id = 'save-point'>
+    `<div id = 'update-point'>
     <form>
   <div class="form-group">
     <label>Latitude: ${lat}</label>
@@ -108,6 +108,13 @@ $(() => {
     });
 
     mymap.on("click", function (event) {
+      // clear previous forms
+      if ($("#save-point")) {
+        $("#save-point").remove();
+      }
+      if ($("#update-point")) {
+        $("#update-point").remove();
+      }
       const lat = event.latlng.lat;
       const lng = event.latlng.lng;
       // click event on mymap will create new marker to save/discard
@@ -165,6 +172,12 @@ $(() => {
 
   // callback function for point click event
   const clickPoint = (event) => {
+    if ($("#save-point")) {
+      $("#save-point").remove();
+    }
+    if ($("#update-point")) {
+      $("#update-point").remove();
+    }
     console.log(event.target.getPopup());
     const { lat, lng } = event.latlng;
     // let icon = event.target.setIcon();
