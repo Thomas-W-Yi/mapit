@@ -68,11 +68,12 @@ module.exports = function (router, database) {
           res.send({error: "no user with that id"});
           return;
         }
-
         res.send({user: {name: user.name, email: user.email, id: userId}});
       })
-      .catch(e => res.send(e));
+      .catch(error => res.send(error));
   });
 
 return router;
 };
+
+
