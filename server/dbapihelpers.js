@@ -7,6 +7,13 @@ const getAllMaps = function(options) {
   FROM maps;
   `;
 
+  if(options.map_id) {
+    queryValue = [options.map_id]
+    queryString += `
+    WHERE map_id = $1;
+    `;
+  }
+
   if(options.owner_id) {
     queryValue = [options.owner_id]
     queryString += `
