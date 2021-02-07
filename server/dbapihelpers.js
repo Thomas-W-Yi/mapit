@@ -1,6 +1,6 @@
 const db = require ('./server');
 
-const getAllProperties = function(options) {
+const getAllMaps = function(options) {
   let queryValue = [];
   let queryString = `
   SELECT maps.*
@@ -22,9 +22,9 @@ const getAllProperties = function(options) {
     ;`;
   }
 
-  return db.query(queryString, queryParams)
+  return db.query(queryString, queryValue)
   .then(res => res.rows)
   .catch(error => res.send(error));
 }
 
-exports.getAllProperties = getAllProperties;
+exports.getAllMaps = getAllMaps;

@@ -1,7 +1,7 @@
 module.exports = function (router, database) {
 
 
-  // Main maps route to get the maps
+  // Main maps route to get the maps----- either all maps or filtered through req.query
   router.get('/maps', (req, res) => {
     database.getMaps(req.query)
     .then(maps => res.send({maps}))
@@ -10,6 +10,7 @@ module.exports = function (router, database) {
       res.send(error)
     });
   });
+
 
 
 return router;
