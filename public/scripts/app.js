@@ -120,6 +120,18 @@ $(() => {
     })
     .catch();
 
+  // create list map list based on the map date from map api, if second argument provided, we will use this to label the current map item
+  const getList = (maps, currentMapId) => {
+    for (const id in maps) {
+      const map = maps[id];
+      $("#listUl").append(`<li id='${id}' class='mapLi'>${map.name}</li>`);
+    }
+    console.log(currentMapId);
+    currentMapId
+      ? $(`#${currentMapId}`).append('<i class="far fa-check-circle"></i>')
+      : null;
+  };
+
   getAllMaps().then((maps) => {
     for (const id in maps) {
       const map = maps[id];
