@@ -1,21 +1,27 @@
 $(() => {
 
   const $logInForm = $(`
-  <form id="login-form" class="login-form">
-      <p>Login</p>
-      <div class="login-form__field-wrapper">
-        <input type="email" name="email" placeholder="Email">
-      </div>
+  <div class="sign-in sign-in-container">
+  <form class="form-signin">
+    <div class="text-center mb-4">
+      <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72"
+        height="72">
+      <h1 class="h3 mb-3 font-weight-normal">Map It!</h1>
+    </div>
 
-      <div class="login-form__field-wrapper">
-          <input type="password" name="password" placeholder="Password">
-        </div>
+    <div class="form-label-group">
+      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <label for="inputEmail">Email address</label>
+    </div>
 
-      <div class="login-form__field-wrapper">
-          <button>Login</button>
-          <a id="login-form__cancel" href="#">Cancel</a>
-      </div>
-    </form>
+    <div class="form-label-group">
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <label for="inputPassword">Password</label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <p class="mt-5 mb-3 text-muted text-center">&copy; 2021</p>
+  </form>
+</div>
   `);
 
   window.$logInForm = $logInForm;
@@ -26,20 +32,12 @@ $(() => {
     const data = $(this).serialize();
     logIn(data)
       .then(json => {
-        console.log(json);
         if (!json.user) {
           views_manager.show('error', 'Failed to login');
           return;
         }
-        console.log(json.user);
         header.update(json.user);
         views_manager.show('listings');
       });
   });
-
-  $('body').on('click', '#login-form__cancel', function() {
-    views_manager.show('listings');
-    return false;
-  });
-      
 });
