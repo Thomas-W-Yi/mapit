@@ -7,3 +7,10 @@ function getAllMaps(params) {
     url,
   });
 }
+
+function getMarkersForMap(mapId) {
+  let url = `/api/markers?${mapId}`;
+  return $.ajax({
+    url,
+  });
+}
