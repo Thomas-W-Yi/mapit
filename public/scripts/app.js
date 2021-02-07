@@ -168,13 +168,14 @@ $(() => {
     </div>`);
   };
 
+  // event listener for map list items
+  $(`.mapLi`).on("click", function (event) {
+    const id = event.target.id;
+    clickMap(maps, id);
+  });
+
+  // get the map list on our landing page when user first land on our app
   getAllMaps().then((maps) => {
-    for (const id in maps) {
-      const map = maps[id];
-      $("listUl").append(`<li id='${id}'>${map.name}</li>`);
-      $(`#${id}`).click(function (map) {
-        createMap(map);
-      });
-    }
+    getList(maps);
   });
 });
