@@ -22,7 +22,6 @@ app.use(cookieSession({
 }));
 
 
-
 // PG database client/connection setup
 const { Pool } = require('pg');
 const dbParams = require('../lib/db.js');
@@ -45,6 +44,10 @@ app.use("/styles", sass({
   debug: true,
   outputStyle: 'expanded'
 }));
+
+//Middleware method override
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
 
 app.use(express.static(path.join(__dirname, '../public')));
 

@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS maps CASCADE;
 CREATE TABLE maps (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  coord_id INTEGER REFERENCES coords(id) ON DELETE CASCADE,
+  latitude Decimal(8,6) NOT NULL,
+  longitude Decimal(9,6) NOT NULL,
   name VARCHAR(255) NOT NULL
 );
