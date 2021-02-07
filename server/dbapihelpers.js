@@ -1,4 +1,4 @@
-const db = require ('./server');
+const db = require ('./server').db;
 
 const getMaps = function(options) {
   let queryValue = [];
