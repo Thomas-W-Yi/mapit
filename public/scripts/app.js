@@ -19,12 +19,12 @@ $(() => {
       });
   };
 
-  const newMarkerForm = (lat, long, map) => {
+  const newMarkerForm = (lat, lng, map) => {
     return `<div id = 'save-point'>
     <form>
   <div class="form-group">
     <label>Latitude: ${lat}</label>
-    <label>Longitude: ${long}</label>
+    <label>Longitude: ${lng}</label>
     <label>map_id: ${map.id}</label>
     <label>map_id: ${map.user_id}</label>
     <input type="text" class="form-control" id="InputText" aria-describedby="emailHelp" placeholder="Enter Title">
@@ -37,6 +37,26 @@ $(() => {
   </div>
   <button type="submit" class="btn btn-primary">Save Point</button>
   <button type="submit" class="btn btn-warning">Discard</button>
+</form>
+    </div>`;
+  };
+
+  const modifyMarker = (lat, lng) => {
+    `<div id = 'save-point'>
+    <form>
+  <div class="form-group">
+    <label>Latitude: ${lat}</label>
+    <label>Longitude: ${lng}</label>
+    <input type="text" class="form-control" id="InputText" placeholder="Enter New Title">
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" id="InputDescription" placeholder="Enter New Description">
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" id="InputImgUrl" placeholder="Update img url">
+  </div>
+  <button type="submit" class="btn btn-primary">Update Point</button>
+  <button type="submit" class="btn btn-danger">Delete Point</button>
 </form>
     </div>`;
   };
@@ -89,12 +109,12 @@ $(() => {
 
     mymap.on("click", function (event) {
       const lat = event.latlng.lat;
-      const long = event.latlng.lng;
+      const lng = event.latlng.lng;
       // click event on mymap will create new marker to save/discard
-      $("#map-container").append(newMarkerForm(lat, long, map));
-      L.marker([lat, long])
+      $("#map-container").append(newMarkerForm(lat, lng, map));
+      L.marker([lat, lng])
         .addTo(mymap)
-        .bindPopup(`map point lat: ${lat} and long: ${long}`)
+        .bindPopup(`map point lat: ${lat} and long: ${lng}`)
         .openPopup();
     });
   };
@@ -114,10 +134,10 @@ $(() => {
         .openPopup();
       mymap.on("click", function (event) {
         const lat = event.latlng.lat;
-        const long = event.latlng.lng;
-        L.marker([lat, long])
+        const lng = event.latlng.lng;
+        L.marker([lat, lng])
           .addTo(mymap)
-          .bindPopup(`map point lat: ${lat} and long: ${long}`)
+          .bindPopup(`map point lat: ${lat} and lng: ${lng}`)
           .openPopup();
       });
     })
@@ -152,23 +172,7 @@ $(() => {
     // update content on marker
     popup.setContent("<p>new content</p>");
     // add new form so we can update or delete marker
-    $("#map-container").append(`<div id = 'save-point'>
-    <form>
-  <div class="form-group">
-    <label>Latitude: ${lat}</label>
-    <label>Longitude: ${lng}</label>
-    <input type="text" class="form-control" id="InputText" placeholder="Enter New Title">
-  </div>
-  <div class="form-group">
-    <input type="text" class="form-control" id="InputDescription" placeholder="Enter New Description">
-  </div>
-  <div class="form-group">
-    <input type="text" class="form-control" id="InputImgUrl" placeholder="Update img url">
-  </div>
-  <button type="submit" class="btn btn-primary">Update Point</button>
-  <button type="submit" class="btn btn-danger">Delete Point</button>
-</form>
-    </div>`);
+    $("#map-container").append(modifyMarker(lat, lng));
   };
 
   // event listener for map list items
