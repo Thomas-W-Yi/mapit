@@ -1,4 +1,4 @@
-function getAllMaps(params) {
+function getMaps(params) {
   let url = "/api/maps";
   if (params) {
     url += "?" + params;
@@ -14,3 +14,6 @@ function getMarkersForMap(mapId) {
     url,
   });
 }
+
+//test only
+// $.when(getMaps(`map_id=${1}`), getMarkersForMap(`map_id=${1}`)).done((data) => console.log(data));
