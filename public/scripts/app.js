@@ -96,6 +96,7 @@ $(() => {
     });
   };
 
+  // create map on our landing page when use first get into our app. latitude and longitude were aquaired from user's IP address
   createMapWithCoords()
     .then((res) => {
       const { latitude, longitude } = res;
