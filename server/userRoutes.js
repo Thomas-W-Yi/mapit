@@ -4,19 +4,20 @@ module.exports = function (router, database) {
 
   //Post route for user registration
   router.post('/', (req, res) => {
-    const user = req.body;
-    user.password = bcrypt.hashSync(user.password, 12);
-    database.userExists(user.email)
-    .then(database.addUser(user))
+    req.body.password = bcrypt.hashSync(req.body.password, 12);
+    database.userExists(req.body.email)
+    .then((resp) => {
+      database.addUser(req.body, resp)
+    })
     .then((user) => {
       if (!user) {
-        res.send(Error("Invalid credentials"));
+        res.send({error: "error"});;
         return;
       }
       req.session.userId = user.id;
       res.send({user: {name: user.name, email: user.email, id: user.id}});
     })
-    .catch(error => res.send(error));
+    .catch(e => res.send(e));
   });
 
   //Helper function for correct password check
@@ -38,13 +39,13 @@ module.exports = function (router, database) {
     login(email, password)
       .then(user => {
         if (!user) {
-          res.send(Error("Invalid credentials"));
+          res.send({error: "error"});;
           return;
         }
         req.session.userId = user.id;
         res.send({user: {name: user.name, email: user.email, id: user.id}});
       })
-      .catch(e => res.send(e));
+      .catch(error => res.send(error));
   });
 
   //Post route for user logout

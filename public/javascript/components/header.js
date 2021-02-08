@@ -61,3 +61,4 @@ $(() => {
   window.header.update = updateHeader;
   updateHeader({ name: "Bruce" });
 });
+

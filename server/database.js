@@ -78,7 +78,7 @@ const addMap = function (options) {
 
   return db.query(queryString, queryValues)
     .then((res) => res.rows[0])
-    .catch(error => res.send(error));
+    .catch(() => null);
 }
 exports.addMap = addMap;
 
@@ -106,7 +106,7 @@ const addMarker = function (options) {
 
   return db.query(queryString, queryValues)
     .then((res) => res.rows[0])
-    .catch(error => res.send(error));
+    .catch(() => null);
 }
 exports.addMarker = addMarker;
 
@@ -128,7 +128,7 @@ const deleteMarker = function (options) {
     .then(() => {
       return;
     })
-    .catch(error => res.send(error));
+    .catch(() => null);
 }
 
 exports.deleteMarker = deleteMarker;
@@ -161,7 +161,7 @@ const updateMarker = function (options) {
 
   return db.query(queryString, queryValues)
     .then((res) => res.rows[0])
-    .catch(error => res.send(error));
+    .catch(() => null);
 }
 
 exports.updateMarker = updateMarker;
@@ -185,7 +185,7 @@ const addFavorite = function (options) {
 
   return db.query(queryString, queryValues)
     .then((res) => res.rows[0])
-    .catch(error => res.send(error));
+    .catch(() => null);
 }
 exports.addFavorite = addFavorite;
 
@@ -210,7 +210,7 @@ const deleteFavorite = function (options) {
     .then(() => {
       return;
     })
-    .catch(error => res.send(error));
+    .catch(() => null);
 }
 exports.deleteFavorite = deleteFavorite;
 
@@ -241,12 +241,18 @@ const getUserWithEmail = function (email) {
     .then((user) => {
       return user.rows[0];
     })
-    .catch(error => res.send(error));
+    .catch(() => null);
 }
 exports.getUserWithEmail = getUserWithEmail;
 
 //Helper function for adding user to database
-const addUser = function (user) {
+const addUser = function (user, resp) {
+  console.log('hey');
+  console.log(resp);
+  if(resp === "user exists") {
+    return Error("user exists!");
+  }
+  console.log(user);
   const queryValues = [user.name, user.email, user.password];
   const queryString = `
   INSERT INTO users(name, email, password)
@@ -257,7 +263,7 @@ const addUser = function (user) {
     .then((user) => {
       return user.rows[0];
     })
-    .catch(error => res.send(error));
+    .catch(() => null);
 }
 exports.addUser = addUser;
 
@@ -265,15 +271,17 @@ exports.addUser = addUser;
 const userExists = function (email) {
   const queryValues = [email];
   const queryString = `
-  SELECT count(*)
+  SELECT email
   FROM users
   WHERE email = $1;
   `;
   return db.query(queryString, queryValues)
-    .then((count) => {
-      return count === 0 ? true : Error('User exits');
+    .then((obj) => {
+      console.log(obj.rowCount);
+      console.log(obj.rowCount === 0 ? "proceed" : "user exists");
+      return obj.rowCount === 0 ? "proceed" : "user exists";
     })
-    .catch(error => res.send(error));
+    .catch(() => null);
 };
 
 exports.userExists = userExists;
