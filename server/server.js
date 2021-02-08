@@ -1,8 +1,7 @@
 //routes
 const apiRoutes = require('./apiRoutes');
 const userRoutes = require('./userRoutes');
-const dbuserhelpers = require('./dbuserhelpers');
-const dbapihelpers = require('./dbapihelpers');
+const db = require('./database');
 
 // load .env data into process.env
 require('dotenv').config();
@@ -22,15 +21,6 @@ app.use(cookieSession({
   name: 'session',
   keys: ['key1']
 }));
-
-
-// PG database client/connection setup
-const { Pool } = require('pg');
-const dbParams = require('../lib/db.js');
-const db = new Pool(dbParams);
-db.connect();
-
-module.exports = db;
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -59,15 +49,13 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // /api/endpoints
 const apiRouter = express.Router();
-apiRoutes(apiRouter, dbapihelpers);
+apiRoutes(apiRouter, db);
 app.use('/api', apiRouter);
 
 // /user/endpoints
 const userRouter = express.Router();
-userRoutes(userRouter, dbuserhelpers);
+userRoutes(userRouter, db);
 app.use('/users', userRouter);
-
-
 
 // Home page
 // Warning: avoid creating more routes in this file!
