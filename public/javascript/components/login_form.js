@@ -28,7 +28,6 @@ $(() => {
     event.preventDefault();
 
     const data = $(this).serialize();
-    console.log(data);
     logIn(data)
       .then(json => {
         if (!json.user) {
