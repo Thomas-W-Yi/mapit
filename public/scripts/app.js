@@ -21,7 +21,7 @@ $(() => {
 
   const newMarkerForm = (lat, lng, map) => {
     return `<div id = 'save-point'>
-    <form>
+    <form id = '#new-marker-frm'>
   <div class="form-group">
     <label>Latitude: ${lat}</label>
     <label>Longitude: ${lng}</label>
@@ -43,7 +43,7 @@ $(() => {
 
   const modifyMarker = (lat, lng) => {
     return `<div id = 'update-point'>
-    <form>
+    <form id = 'update-marker-frm'>
   <div class="form-group">
     <label>Latitude: ${lat}</label>
     <label>Longitude: ${lng}</label>
@@ -60,38 +60,9 @@ $(() => {
 </form>
     </div>`;
   };
-  // const getAllMaps = () => {
-  //   const url = "/api/maps";
-  //   return $.ajax({ url }).then((res) => res.rows);
-  // };
 
-  // const getAllPoints = (mapId) => {
-  //   const url = "/api/map_points";
-  //   return $.ajax({ url }).then((res) => res.rows);
-  // };
-
-  const createMap = (map) => {
-    // remove previous map before add new map
-    // if (mymap && mymap.remove) {
-    //   mymap.remove();
-    // }
-    $("#map-container").html("");
-    $("#map-container").html('<div id="mymap"></div>');
-
-    // get lat, lng, name, and id from map obj
-    const { latitude, longitude, name, id } = map;
-
-    // create mapObj
-    const mymap = L.map("mymap").setView([latitude, longitude], 10);
-
-    // fill the map with tiles, we use openstreetmap api
-    const attribution = `${name} is created by ${map.user_name}`;
-    const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-    L.tileLayer(tileUrl, { attribution }).addTo(mymap);
-
-    // add markers/points to map, and we get points data from our apiRoutes
-    console.log(id);
-
+  // create makers on map
+  const createMarkers = (id, mymap) => {
     getMarkersForMap(`map_id=${id}`).then((data) => {
       const { markers } = data;
       console.log(markers);
@@ -102,6 +73,7 @@ $(() => {
         const myIcon = L.icon({
           iconUrl: `${img_url}`,
           iconSize: [20, 40],
+          shadowSize: [0, 0],
         });
         // add individual markers to the map
         L.marker([latitude, longitude], { icon: myIcon })
@@ -112,23 +84,44 @@ $(() => {
           .openPopup();
       }
     });
+  };
 
+  const mapClickMarker = (id, map, event, mymap) => {
+    // clear previous forms
+    if ($("#save-point")) {
+      $("#save-point").remove();
+    }
+    if ($("#update-point")) {
+      $("#update-point").remove();
+    }
+    $(".leaflet-marker-icon").remove();
+    $(".leaflet-popup").remove();
+    createMarkers(id, mymap);
+    const lat = event.latlng.lat;
+    const lng = event.latlng.lng;
+    // click event on mymap will create new marker to save/discard
+    $("#map-container").append(newMarkerForm(lat, lng, map));
+
+    L.marker([lat, lng])
+      .addTo(mymap)
+      .bindPopup(`map point lat: ${lat} and long: ${lng}`)
+      .openPopup();
+  };
+  const createMap = (map) => {
+    $("#map-container").html("");
+    $("#map-container").html('<div id="mymap"></div>');
+    // get lat, lng, name, and id from map obj
+    const { latitude, longitude, name, id } = map;
+    // create mapObj
+    const mymap = L.map("mymap").setView([latitude, longitude], 10);
+    // fill the map with tiles, we use openstreetmap api
+    const attribution = `${name} is created by ${map.user_name}`;
+    const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    L.tileLayer(tileUrl, { attribution }).addTo(mymap);
+    // add markers/points to map, and we get points data from our apiRoutes
+    createMarkers(id, mymap);
     mymap.on("click", function (event) {
-      // clear previous forms
-      if ($("#save-point")) {
-        $("#save-point").remove();
-      }
-      if ($("#update-point")) {
-        $("#update-point").remove();
-      }
-      const lat = event.latlng.lat;
-      const lng = event.latlng.lng;
-      // click event on mymap will create new marker to save/discard
-      $("#map-container").append(newMarkerForm(lat, lng, map));
-      L.marker([lat, lng])
-        .addTo(mymap)
-        .bindPopup(`map point lat: ${lat} and long: ${lng}`)
-        .openPopup();
+      mapClickMarker(id, map, event, mymap);
     });
   };
 
@@ -202,6 +195,16 @@ $(() => {
     // popup.setContent("<p>new content</p>");
     // add new form so we can update or delete marker
     $("#map-container").append(`${modifyMarker(lat, lng)}`);
+
+    $("#update-marker-frm").on("submit", function (event) {
+      event.preventDefault();
+      const title = $(this).children("#InputText");
+      const description = $(this).children("#InputDescription");
+      const img_url = $(this).children("#InputImgUrl");
+      // data should have map_id, lat, long, user_id, title, img_url
+      // seriralze the data before sending out
+      data.serialize();
+    });
   };
 
   // event listener for map list items
