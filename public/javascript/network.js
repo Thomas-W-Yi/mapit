@@ -16,4 +16,4 @@ function getMarkersForMap(mapId) {
 }
 
 //test only
-// $.when(getMaps(`map_id=${1}`), getMarkersForMap(`map_id=${1}`)).done((data) => console.log(data));
+$.when(getMaps(`map_id=${1}`), getMarkersForMap(`map_id=${1}`)).done((data1, data2) => console.log(data1,data2));
