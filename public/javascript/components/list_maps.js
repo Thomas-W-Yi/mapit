@@ -31,6 +31,6 @@ $(() => {
     const mapId = listMapItem.attr('id');
     listMapItem.detatch();
     $('.list-group').prepend(listMapItem);
-   $.when(getMaps(`map_id=${mapId}`), getMarkersForMap(`map_id=${mapId}`)).done((data) => console.log(data));
+   $.when(getMaps(`map_id=${mapId}`), getMarkersForMap(`map_id=${mapId}`)).done((data1, data2) => console.log(data1, data2));
   });
 });
