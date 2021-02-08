@@ -18,7 +18,7 @@ $(() => {
       <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
       <label for="inputPassword">Password</label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign Up</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
     <p class="mt-5 mb-3 text-muted text-center">&copy; 2021</p>
   </form>
 </div>
