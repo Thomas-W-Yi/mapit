@@ -29,7 +29,7 @@ $(() => {
       case 'error': {
         const $error = $(`<p>${arguments[1]}</p>`);
         $error.appendTo('body');
-        $mainMap.detatch();
+        $mainMap.detach();
         setTimeout(() => {
           $error.remove();
           views_manager.show('mainMap');
