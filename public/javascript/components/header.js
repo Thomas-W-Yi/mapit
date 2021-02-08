@@ -16,8 +16,8 @@ $(() => {
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       </ul>
       <form class="d-flex">
-        <button class="btn btn-outline-dark me-2" type="submit">Login</button>
-        <button class="btn btn-dark" type="submit">Register</button>
+        <button id="login-btn" class="btn btn-outline-dark me-2" type="submit">Login</button>
+        <button id="register-btn"class="btn btn-dark" type="submit">Register</button>
       </form>
     </div>
   </div>
@@ -35,11 +35,11 @@ $(() => {
             My Profile
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">My Favorites</a></li>
-            <li><a class="dropdown-item" href="#">My Contributions</a></li>
-            <li><a class="dropdown-item" href="#">My Maps</a></li>
+            <li><a id="favorites-li" class="dropdown-item" href="#">My Favorites</a></li>
+            <li><a id="contributions-li"class="dropdown-item" href="#">My Contributions</a></li>
+            <li><a id="maps-li"class="dropdown-item" href="#">My Maps</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Create Map</a></li>
+            <li><a id="create-maps-li"class="dropdown-item" href="#">Create Map</a></li>
           </ul>
           <li class="nav-item">
             <a class="nav-link" href="#">Hello ${user.name}</a>
@@ -47,7 +47,7 @@ $(() => {
         </li>
       </ul>
       <form class="d-flex">
-        <button class="btn btn-outline-danger type="submit">Logout</button>
+        <button id="logout-btn" class="btn btn-outline-danger type="submit">Logout</button>
       </form>
     </div>
   </div>
@@ -63,12 +63,29 @@ $(() => {
 
   $('nav').click(function(evt) {
     evt.preventDefault();
-    switch($(evt.target).text()) {
-      case('Login'):
+    switch($(evt.target).attr('id')) {
+      case('login-btn'):
       views_manager.show('logIn');
       break;
-      case('Register'):
+      case('register-btn'):
       views_manager.show('signUp');
+      break;
+      case('logout-btn'):
+      logOut();
+      break;
+      case('create-maps-li'):
+
+      break;
+      case('My Favorites'):
+
+      break;
+      case('contributions-li'):
+
+      break;
+      case('maps-li'):
+
+      break;
+      default:
       break;
     }
   });
