@@ -37,7 +37,7 @@ $(() => {
           return;
         }
         header.update(json.user);
-        views_manager.show('listings');
+        views_manager.show('mainMap');
       });
   });
 });
