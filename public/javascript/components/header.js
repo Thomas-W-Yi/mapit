@@ -59,5 +59,17 @@ $(() => {
   }
 
   window.header.update = updateHeader;
-  updateHeader({ name: "Bruce" });
+  updateHeader();
+
+  $('nav').click(function(evt) {
+    evt.preventDefault();
+    switch($(evt.target).text()) {
+      case('Login'):
+      views_manager.show('logIn');
+      break;
+      case('Register'):
+      views_manager.show('signUp');
+      break;
+    }
+  });
 });
