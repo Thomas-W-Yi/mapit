@@ -3,9 +3,6 @@ const apiRoutes = require('./apiRoutes');
 const userRoutes = require('./userRoutes');
 const db = require('./database');
 
-// load .env data into process.env
-require('dotenv').config();
-
 // Web server config
 const PORT       = process.env.PORT || 8080;
 const ENV        = process.env.ENV || "development";

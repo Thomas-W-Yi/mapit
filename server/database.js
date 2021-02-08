@@ -1,6 +1,9 @@
+// load .env data into process.env
+require('dotenv').config();
+
 const dbParams = require('../lib/db')
 const { Pool } = require('pg');
-const db = new Pool(dbParams); // <------this is the issue. I found that if I hard code the params into the pool promise it works
+const db = new Pool(dbParams);
 
 const getMaps = function (options) {
   let queryValue = [];
