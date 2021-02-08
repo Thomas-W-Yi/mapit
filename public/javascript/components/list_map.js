@@ -1,6 +1,7 @@
 $(() => {
   window.mapList = {};
 
+  //second params for options (stretch if we decide that it a favorite or not)
   function createMap(
     map,
     { isCreated = false, isFavorites = false, isContributed = false } = false
