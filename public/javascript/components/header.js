@@ -74,7 +74,7 @@ $(() => {
       logOut();
       break;
       case('create-maps-li'):
-      views_manager.show('signUp');
+      views_manager.show('createMap');
       break;
       case('favorites-li'):
 
