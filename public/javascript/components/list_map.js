@@ -7,27 +7,27 @@ $(() => {
     { isCreated = false, isFavorites = false, isContributed = false } = false
   ) {
 
-    let mapList = `<li id="${map.id}" class="list-group-item-action list-group-item-`
+    let mapListItem = `<li id="${map.id}" class="list-group-item-action list-group-item-`
     switch (map.id % 5) {
       case (0):
-        mapList += `success`;
+        mapListItem += `success`;
         break;
       case (1):
-        mapList += `info`;
+        mapListItem += `info`;
         break;
       case (2):
-        mapList += `dark`;
+        mapListItem += `dark`;
         break;
       case (3):
-        mapList += `danger`;
+        mapListItem += `danger`;
         break;
       case (4):
-        mapList += `warning`;
+        mapListItem += `warning`;
         break;
     }
-    mapList += `">${map.name}</li>`;
+    mapListItem += `">${map.name}</li>`;
 
-    return mapList;
+    return mapListItem;
   }
 
   window.mapList.createMap = createMap;
