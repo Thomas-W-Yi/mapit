@@ -42,7 +42,7 @@ $(() => {
   };
 
   const modifyMarker = (lat, lng) => {
-    `<div id = 'update-point'>
+    return `<div id = 'update-point'>
     <form>
   <div class="form-group">
     <label>Latitude: ${lat}</label>
@@ -60,21 +60,21 @@ $(() => {
 </form>
     </div>`;
   };
-  const getAllMaps = () => {
-    const url = "/api/maps";
-    return $.ajax({ url }).then((res) => res.rows);
-  };
+  // const getAllMaps = () => {
+  //   const url = "/api/maps";
+  //   return $.ajax({ url }).then((res) => res.rows);
+  // };
 
-  const getAllPoints = (mapId) => {
-    const url = "/api/map_points";
-    return $.ajax({ url }).then((res) => res.rows);
-  };
+  // const getAllPoints = (mapId) => {
+  //   const url = "/api/map_points";
+  //   return $.ajax({ url }).then((res) => res.rows);
+  // };
 
   const createMap = (map) => {
     // remove previous map before add new map
-    if (mymap && mymap.remove) {
-      mymap.remove();
-    }
+    // if (mymap && mymap.remove) {
+    //   mymap.remove();
+    // }
     $("#map-container").html("");
     $("#map-container").html('<div id="mymap"></div>');
 
@@ -90,11 +90,17 @@ $(() => {
     L.tileLayer(tileUrl, { attribution }).addTo(mymap);
 
     // add markers/points to map, and we get points data from our apiRoutes
-    getAllPoints(id).then((map_points) => {
-      for (const id in map_points) {
-        const { latitude, longitude, title, des, marker_url } = map_points[id];
+    console.log(id);
+
+    getMarkersForMap(`map_id=${id}`).then((data) => {
+      const { markers } = data;
+      console.log(markers);
+      for (const id in markers) {
+        const { latitude, longitude, title, description, img_url } = markers[
+          id
+        ];
         const myIcon = L.icon({
-          iconUrl: `${marker_url}`,
+          iconUrl: `${img_url}`,
           iconSize: [20, 40],
         });
         // add individual markers to the map
@@ -102,7 +108,7 @@ $(() => {
           // click event on marker will trigger new form for update/delete for this marker
           .on("click", clickPoint)
           .addTo(mymap)
-          .bindPopup(`<p>${title}<br />${des}.</p>`)
+          .bindPopup(`<p>${title}<br />${description}.</p>`)
           .openPopup();
       }
     });
@@ -151,12 +157,14 @@ $(() => {
     .catch();
 
   // create list map list based on the map date from map api, if second argument provided, we will use this to label the current map item
-  const getList = (maps, currentMapId) => {
-    for (const id in maps) {
-      const map = maps[id];
-      $("#listUl").append(`<li id='${id}' class='mapLi'>${map.name}</li>`);
-    }
-    console.log(currentMapId);
+  const getList = (data, currentMapId) => {
+    const { maps } = data;
+    maps.map((obj) => {
+      const map = obj;
+      $("#listUl").append(
+        `<li id='${map.id}' class='mapLi'>Map Id: ${map.id} - Map Name: ${map.name}</li>`
+      );
+    });
     currentMapId
       ? $(`#${currentMapId}`).append('<i class="far fa-check-circle"></i>')
       : null;
@@ -165,9 +173,16 @@ $(() => {
   // callback function for map items click event, which will show the map item on our app, a check mark will show on the current map
   const clickMap = (maps, mapId) => {
     const id = mapId;
-    createMap(maps[id]);
+    let map;
+    maps.map((obj) => {
+      if (obj.id == id) {
+        return (map = obj);
+      }
+    });
+    createMap(map);
     $("#listUl").html("");
-    getList(maps, id);
+    const data = { maps };
+    getList(data, id);
   };
 
   // callback function for point click event
@@ -180,22 +195,27 @@ $(() => {
     }
     console.log(event.target.getPopup());
     const { lat, lng } = event.latlng;
+    console.log(event.latlng);
     // let icon = event.target.setIcon();
     let popup = event.target.getPopup();
     // update content on marker
-    popup.setContent("<p>new content</p>");
+    // popup.setContent("<p>new content</p>");
     // add new form so we can update or delete marker
-    $("#map-container").append(modifyMarker(lat, lng));
+    $("#map-container").append(`${modifyMarker(lat, lng)}`);
   };
 
   // event listener for map list items
   $(`#listUl`).on("click", ".mapLi", function (event) {
     const id = event.target.id;
-    clickMap(maps, id);
+    getMaps().then((data) => {
+      const { maps } = data;
+      clickMap(maps, id);
+    });
   });
 
   // get the map list on our landing page when user first land on our app
-  getAllMaps().then((maps) => {
+
+  getMaps().then((maps) => {
     getList(maps);
   });
 });
