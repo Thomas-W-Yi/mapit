@@ -5,11 +5,15 @@ module.exports = function (router, database) {
   //Post route for user registration
   router.post('/', (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, 12);
+
+    console.log(req.body, 1);
     database.userExists(req.body.email)
     .then((resp) => {
+      console.log(req.body, 2)
       database.addUser(req.body, resp)
     })
     .then((user) => {
+      console.log(user, 3);
       if (!user) {
         res.send({error: "error"});;
         return;

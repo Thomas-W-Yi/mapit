@@ -9,6 +9,11 @@ $(() => {
     </div>
 
     <div class="form-label-group">
+    <input type="text" id="inputName" name="name" class="form-control" placeholder="Name" required>
+    <label for="inputName">Name</label>
+  </div>
+
+    <div class="form-label-group">
     <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required>
     <label for="inputEmail">Email address</label>
   </div>
