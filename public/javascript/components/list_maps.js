@@ -1,8 +1,9 @@
 $(() => {
   window.mapLists = {};
 
-  const $mapList = `<ul class="list-group"><ul>`;
+  const $mapList = $(`<ul class="list-group"><ul>`);
 
+  window.$mapList = $mapList;
   function addMap(map) {
     $mapList.append(map);
   }
@@ -29,7 +30,7 @@ $(() => {
   $($mapList).click(function(evt) {
     const listMapItem = $(evt);
     const mapId = listMapItem.attr('id');
-    listMapItem.detatch();
+    listMapItem.detach();
     $('.list-group').prepend(listMapItem);
    $.when(getMaps(`map_id=${mapId}`), getMarkersForMap(`map_id=${mapId}`)).done((data1, data2) => console.log(data1, data2));  //I don't understand the api enough to add the function once it receives all the required data MAYBE Thomas can take a look?
   });
