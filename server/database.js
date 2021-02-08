@@ -1,11 +1,6 @@
+const dbParams = require('../lib/db')
 const { Pool } = require('pg');
-const db = new Pool({
-  user: "labber",
-  password: "laber",
-  host: "localhost",
-  database: "midterm",
-});
-db.connect();
+const db = new Pool(dbParams);
 
 const getMaps = function (options) {
   let queryValue = [];
