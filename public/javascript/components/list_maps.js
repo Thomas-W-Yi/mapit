@@ -1,14 +1,14 @@
 $(() => {
   window.mapLists = {};
 
-  const $listMaps = `<ul class="list-group"><ul>`;
+  const $mapList = `<ul class="list-group"><ul>`;
 
   function addMap(map) {
-    $listMaps.append(map);
+    $mapList.append(map);
   }
 
   /**
-   * Get all MAPS (list). if we decide to add buttons onto the list options is that only purpose
+   * Get all MAPS (list). if we decide to add buttons onto the list options (stretch)
    * @param {{
    * isCreated = false,
    * isFavorites = false,
@@ -26,7 +26,7 @@ $(() => {
   window.mapLists.addMaps = addMaps;
 
 
-  $($listMaps).click(function(evt) {
+  $($mapList).click(function(evt) {
     const listMapItem = $(evt);
     const mapId = listMapItem.attr('id');
     listMapItem.detatch();
