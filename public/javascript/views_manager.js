@@ -8,7 +8,6 @@ $(() => {
     $logInForm.detach();
     $signUpForm.detach();
     $mapList.detach();
-    $markerForm.detach();
     $mapForm.detach();
 
     switch (item) {
@@ -23,16 +22,12 @@ $(() => {
       case 'mainMap':
         //main map will have general list with the map
         $mainMap.appendTo($main);
-        $mapList.appendTo($main);
         break;
       case 'mapList':
         $mapList.appendTo($main);
         break;
       case 'createMap':
         $mapForm.appendTo($main);
-        break;
-      case 'createMarker':
-        $markerForm.appendTo($main);
         break;
       case 'error': {
         const $error = $(`<p>${arguments[1]}</p>`);

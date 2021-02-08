@@ -9,7 +9,7 @@ $(() => {
     let userLinks = `
     <nav id="page-header__user-links" class="navbar navbar-expand-lg navbar-light bg-light py-3 px-1">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#"><img src="images/home-icon-silhouette.png" alt=""></a>
+      <a class="navbar-brand" href="#"><img id="home-btn" src="images/home-icon-silhouette.png" alt=""></a>
   `;
     if (!user) {
       userLinks += `
@@ -87,6 +87,9 @@ $(() => {
             break;
           case ('maps-li'):
 
+            break;
+          case ('home-btn'):
+            views_manager.show('mainMap');
             break;
           default:
             break;

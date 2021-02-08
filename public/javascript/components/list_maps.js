@@ -29,13 +29,11 @@ $(() => {
 
 
 
-  $(`#listUl`).on("click", ".mapLi", function (event) {
+  $mainMap.find('#listUl').on("click", ".mapLi", function (event) {
     const id = event.target.id;
     getMaps().then((data) => {
       const { maps } = data;
       clickMap(maps, id);
     });
-
   });
-
 });
