@@ -18,26 +18,11 @@ function getMarkersForMap(mapId) {
   });
 }
 
-function signUp() {
-  return $.ajax({
-    url: "/users",
-  });
-}
-
 function getMyDetails() {
   return $.ajax({
     url: "/users/me",
   });
 }
-
-
-function logIn() {
-  return $.ajax({
-    url: "/users/login",
-  });
-}
-
-
 
 
 // -------- POST ROUTES ---------
