@@ -4,7 +4,8 @@ $(() => {
   const $mapList = $(`<ul class="list-group"><ul>`);
 
   window.$mapList = $mapList;
-  function addMap(map) {
+
+  function appendMap(map) {
     $mapList.append(map);
   }
 
@@ -18,13 +19,13 @@ $(() => {
    *
    */
 
-  function addMaps(maps, options = false) {
+  function appendMaps(maps, options = false) {
     for (const map in Object.values(maps)) {
-      const mapListItem = mapList.createMap(map, options);
-      addMap(mapListItem);
+      const mapListItem = mapList.createMapLi(map, options);
+      appendMap(mapListItem);
     }
   }
-  window.mapLists.addMaps = addMaps;
+  window.mapLists.appendMaps = appendMaps;
 
 
   $($mapList).click(function(evt) {

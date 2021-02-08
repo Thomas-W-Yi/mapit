@@ -2,7 +2,7 @@ $(() => {
   window.mapList = {};
 
   //second params for options (stretch if we decide that it a favorite or not)
-  function createMap(
+  function createMapLi(
     map,
     { isCreated = false, isFavorites = false, isContributed = false } = false
   ) {
@@ -30,6 +30,6 @@ $(() => {
     return mapListItem;
   }
 
-  window.mapList.createMap = createMap;
+  window.mapList.createMapLi = createMapLi;
 
 });
