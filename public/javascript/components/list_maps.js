@@ -1,9 +1,11 @@
 $(() => {
   window.mapLists = {};
 
-  const $mapList = `<ul class="list-group"><ul>`;
+  const $mapList = $(`<ul id="listUl" class="list-group"><ul>`);
 
-  function addMap(map) {
+  window.$mapList = $mapList;
+
+  function appendMap(map) {
     $mapList.append(map);
   }
 
@@ -17,20 +19,21 @@ $(() => {
    *
    */
 
-  function addMaps(maps, options = false) {
+  function appendMaps(maps, options = false) {
     for (const map in Object.values(maps)) {
-      const mapListItem = mapList.createMap(map, options);
-      addMap(mapListItem);
+      const mapListItem = mapList.createMapLi(map, options);
+      appendMap(mapListItem);
     }
   }
-  window.mapLists.addMaps = addMaps;
+  window.mapLists.appendMaps = appendMaps;
 
 
-  $($mapList).click(function(evt) {
-    const listMapItem = $(evt);
-    const mapId = listMapItem.attr('id');
-    listMapItem.detatch();
-    $('.list-group').prepend(listMapItem);
-   $.when(getMaps(`map_id=${mapId}`), getMarkersForMap(`map_id=${mapId}`)).done((data1, data2) => console.log(data1, data2));
+
+  $mainMap.find('#listUl').on("click", ".mapLi", function (event) {
+    const id = event.target.id;
+    getMaps().then((data) => {
+      const { maps } = data;
+      clickMap(maps, id);
+    });
   });
 });

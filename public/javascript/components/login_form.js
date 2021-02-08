@@ -1,7 +1,6 @@
 $(() => {
 
   const $logInForm = $(`
-  <div class="sign-in sign-in-container">
   <form class="form-signin">
     <div class="text-center mb-4">
       <img class="mb-4" src="" alt="" width="72"
@@ -10,18 +9,17 @@ $(() => {
     </div>
 
     <div class="form-label-group">
-      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required>
       <label for="inputEmail">Email address</label>
     </div>
 
     <div class="form-label-group">
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
       <label for="inputPassword">Password</label>
     </div>
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
     <p class="mt-5 mb-3 text-muted text-center">&copy; 2021</p>
   </form>
-</div>
   `);
 
   window.$logInForm = $logInForm;
@@ -37,7 +35,7 @@ $(() => {
           return;
         }
         header.update(json.user);
-        views_manager.show('listings');
+        views_manager.show('mainMap');
       });
   });
 });
