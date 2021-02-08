@@ -7,7 +7,7 @@ $(() => {
     currentUser = user;
     $pageHeader.find("#page-header__user-links").remove();
     let userLinks = `
-    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 px-1">
+    <nav id="page-header__user-links" class="navbar navbar-expand-lg navbar-light bg-light py-3 px-1">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"><img src="images/home-icon-silhouette.png" alt=""></a>
   `;
