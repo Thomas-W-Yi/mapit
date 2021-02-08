@@ -1,6 +1,6 @@
 const dbParams = require('../lib/db')
 const { Pool } = require('pg');
-const db = new Pool(dbParams);
+const db = new Pool(dbParams); // <------this is the issue. I found that if I hard code the params into the pool promise it works
 
 const getMaps = function (options) {
   let queryValue = [];
@@ -46,10 +46,9 @@ exports.getMaps = getMaps;
 
 const getMarkersForMap = function ({ map_id }) {
   let queryValue = [map_id];
-  let queryString = `SELECT * markers WHERE map_id = $1;`;
-  console.log(queryString, queryValue);
-  return db.query(queryString, queryValue) // IDK why this fails? maybe someone else can spot this.
-    .then(res => console.log(res.rows))
+  let queryString = `SELECT * FROM markers WHERE map_id = $1;`;
+  return db.query(queryString, queryValue)
+    .then(res => res.rows)
     .catch(() => null);
 }
 
