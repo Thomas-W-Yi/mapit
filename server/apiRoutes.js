@@ -50,7 +50,7 @@ module.exports = function (router, database) {
   router.delete('/markers', (req, res) => {
     const userId = req.session.userId;
     database.deleteMarker({...req.body, user_id: userId})
-      .then(() => res.status(200).send(1))
+      .then((res) => res.send())
       .catch((error) => {
         console.error(error);
         res.send(error);
