@@ -83,7 +83,6 @@ const addMap = function (options) {
 exports.addMap = addMap;
 
 const addMarker = function (options) {
-  console.log(options);
 
   if (!options.user_id) {
     throw new Error('User not logged in!');
@@ -135,7 +134,6 @@ const deleteMarker = function (options) {
 exports.deleteMarker = deleteMarker;
 
 const updateMarker = function (options) {
-
   if (!options.user_id) {
     throw new Error('User not logged in!');
   }
