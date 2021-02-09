@@ -246,10 +246,7 @@ const getUserWithEmail = function (email) {
 exports.getUserWithEmail = getUserWithEmail;
 
 //Helper function for adding user to database
-const addUser = function (user, resp) {
-  if(resp === "user exists") {
-    return Error("user exists!");
-  }
+const addUser = function (user) {
   const queryValues = [user.name, user.email, user.password];
   const queryString = `
   INSERT INTO users(name, email, password)
@@ -274,7 +271,7 @@ const userExists = function (email) {
   `;
   return db.query(queryString, queryValues)
     .then((obj) => {
-      return obj.rowCount === 0 ? "proceed" : "user exists";
+      return obj.rowCount === 0 ? "proceed" : new Error('user already exists');
     })
     .catch(() => null);
 };
