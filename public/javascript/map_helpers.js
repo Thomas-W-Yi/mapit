@@ -1,5 +1,5 @@
 $(() => {
-  const $main = $('#main-content');
+  const $main = $("#main-content");
 
   const fetchMyIP = () => {
     return axios.get("https://api.ipify.org?format=json");
@@ -56,9 +56,14 @@ $(() => {
     getMarkersForMap(`map_id=${mapId}`).then((data) => {
       const { markers } = data;
       for (const markerId in markers) {
-        const { id, latitude, longitude, title, description, img_url } = markers[
-          markerId
-        ];
+        const {
+          id,
+          latitude,
+          longitude,
+          title,
+          description,
+          img_url,
+        } = markers[markerId];
 
         const myIcon = L.icon({
           iconUrl: `${img_url}`,
@@ -68,9 +73,9 @@ $(() => {
         L.marker([latitude, longitude], { icon: myIcon })
           // click event on marker will trigger new form for update/delete for this marker
           .on("click", function (event) {
-            return function () {
+            return (function () {
               clickPoint(id, mapId, event, mymap);
-            }();
+            })();
           })
           .addTo(mymap)
           .bindPopup(`<p>${title}<br />${description}.</p>`)
@@ -81,35 +86,33 @@ $(() => {
 
   window.createMarkers = createMarkers;
 
-
   // create list map list based on the map date from map api, if second argument provided, we will use this to label the current map item
   const getList = (data, currentMapId) => {
     const { maps } = data;
     maps.map((obj) => {
       const map = obj;
 
-      let mapListItem = `<li id="${map.id}" class="mapLi list-group-item-action list-group-item-`
+      let mapListItem = `<li id="${map.id}" class="mapLi list-group-item-action list-group-item-`;
       switch (map.id % 5) {
-        case (0):
+        case 0:
           mapListItem += `success`;
           break;
-        case (1):
+        case 1:
           mapListItem += `info`;
           break;
-        case (2):
+        case 2:
           mapListItem += `dark`;
           break;
-        case (3):
+        case 3:
           mapListItem += `danger`;
           break;
-        case (4):
+        case 4:
           mapListItem += `warning`;
           break;
       }
       mapListItem += `">Map Id: ${map.id} - Map Name: ${map.name}</li>`;
 
-
-      $mainMap.find('#listUl').append(mapListItem);
+      $mainMap.find("#listUl").append(mapListItem);
     });
     currentMapId
       ? $(`#${currentMapId}`).append('<i class="far fa-check-circle"></i>')
@@ -155,7 +158,6 @@ $(() => {
 
   window.clickMap = clickMap;
 
-
   // callback function for point click event
   const clickPoint = (id, mapId, event, mymap) => {
     if ($("#save-point")) {
@@ -168,35 +170,33 @@ $(() => {
     $(".leaflet-popup").remove();
     createMarkers(mapId, mymap);
     const { lat, lng } = event.latlng;
-    // let icon = event.target.setIcon();
-    let popup = event.target.getPopup();
-    // update content on marker
-    // popup.setContent("<p>new content</p>");
-    // add new form so we can update or delete marker
-    $("#map-container").append(`${modifyMarker(lat, lng)}`);
-    $mainMap.find("#submit-update").on("click", function (e) {
-      if ($mainMap.find("#update-marker-frm")[0].checkValidity()) {
+
+    getMyDetails().then(function (user) {
+      if (user)
+
+      $("#map-container").append(`${modifyMarker(lat, lng)}`);
+
+      $mainMap.find("#submit-update").on("click", function (e) {
+        if ($mainMap.find("#update-marker-frm")[0].checkValidity()) {
+          e.preventDefault();
+          let data = $(this).closest("form").serialize();
+          data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
+          $("#save-point").remove();
+          updateMarker(data).then(() => {
+            createMarkers(mapId, mymap);
+          });
+        }
+        alert("Make sure to fill the fields with required");
+      });
+      $mainMap.find("#submit-delete").on("click", function (e) {
         e.preventDefault();
-        let data = $(this).closest('form').serialize();
-        data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
-        $("#save-point").remove();
-        updateMarker(data).then(() => {
-          createMarkers(mapId, mymap)
-        });
-      }
-      alert('Make sure to fill the fields with required data');
-    });
-    $mainMap.find("#submit-delete").on("click", function (e) {
-      if ($mainMap.find("#update-marker-frm")[0].checkValidity()) {
-        e.preventDefault();
-        let data = $(this).closest('form').serialize();
+        let data = $(this).closest("form").serialize();
         data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
         $("#save-point").remove();
         deleteMarker(data).then(() => {
           createMarkers(mapId, mymap);
         });
-      }
-      alert('Make sure to fill the fields with required data');
+      });
     });
   };
 
@@ -224,7 +224,6 @@ $(() => {
 
   window.modifyMarker = modifyMarker;
 
-
   const mapClickMarker = (id, map, event, mymap) => {
     // clear previous forms
     if ($("#save-point")) {
@@ -239,7 +238,7 @@ $(() => {
     const lat = event.latlng.lat;
     const lng = event.latlng.lng;
     // click event on mymap will create new marker to save/discard
-    $("#map-container").append(newMarkerForm(lat, lng, map));
+
     const myIcon = L.icon({
       iconUrl: `../images/maps-and-flags.png`,
       iconSize: [40, 40],
@@ -250,19 +249,22 @@ $(() => {
       .openPopup();
     // once the form element appened to the DOM, we can fill the info and send it back to server to udpate the db
 
-    $mainMap.on("submit", '#new-marker-frm', function (e) {
-      e.preventDefault();
-      let data = $(this).serialize();
-      data += `&map_id=${map.id}&latitude=${lat}&longitude=${lng}`;
-      console.log(data);
-      addMarker(data);
-      $("#save-point").remove();
-      createMarkers(map.id, mymap);
+    getMyDetails().then(function (user) {
+      if (user) {
+        $("#map-container").append(newMarkerForm(lat, lng, map));
+        $mainMap.on("submit", "#new-marker-frm", function (e) {
+          e.preventDefault();
+          let data = $(this).serialize();
+          data += `&map_id=${map.id}&latitude=${lat}&longitude=${lng}`;
+          addMarker(data);
+          $("#save-point").remove();
+          createMarkers(map.id, mymap);
+        });
+      }
     });
   };
 
   window.mapClickMarker = mapClickMarker;
-
 
   const newMarkerForm = (lat, lng, map) => {
     return $(`<div id = 'save-point'>
@@ -286,6 +288,4 @@ $(() => {
   };
 
   window.newMarkerForm = newMarkerForm;
-
 });
-
