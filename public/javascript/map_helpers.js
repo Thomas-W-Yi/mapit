@@ -134,8 +134,21 @@ $(() => {
     L.tileLayer(tileUrl, { attribution }).addTo(mymap);
     // add markers/points to map, and we get points data from our apiRoutes
     createMarkers(id, mymap);
+    $("#mymap").append(`<div id="addMapDiv">
+      <i id='addMap' class="fas fa-plus-circle"></i>
+      </div>`);
     mymap.on("click", function (event) {
       mapClickMarker(id, map, event, mymap);
+    });
+    $("#addMap").on("click", function (e) {
+      e.stopPropagation();
+
+      $("#map-container").append(`${addMapFrom()}`);
+      $("add-map-frm").on("submit", function (event) {
+        event.preventDefault();
+        let data = $(this).serialize();
+        console.log(data);
+      });
     });
   };
 
@@ -277,4 +290,18 @@ $(() => {
   };
 
   window.newMarkerForm = newMarkerForm;
+
+  const addMapFrom = () => {
+    return `<div id = 'addMapForm'>
+    <form id = 'add-map-frm'>
+    <div class="form-group">
+    <input name="name" type="text" class="form-control" id="InputText"  placeholder="Enter Map Name" required>
+    </div>
+    <div class="form-group">
+    <input name="address" type="text" class="form-control" id="InputDescription" placeholder="Enter The Address" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Create Map</button>
+    </form>
+    </div>`;
+  };
 });
