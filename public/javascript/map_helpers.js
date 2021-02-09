@@ -182,7 +182,8 @@ $(() => {
           let data = $(this).closest("form").serialize();
           data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
           $("#save-point").remove();
-          updateMarker(data).then(() => {
+          updateMarker(data)
+          .then(() => {
             createMarkers(mapId, mymap);
           });
         }
@@ -190,9 +191,8 @@ $(() => {
       $mainMap.find("#submit-delete").on("click", function (e) {
         e.preventDefault();
         $("#save-point").remove();
-        deleteMarker(`id=${id}`).then(() => {
-          createMarkers(mapId, mymap);
-        });
+        $.when(getMaps(`map_id=${mapId}`), deleteMarker(`id=${id}`))
+        .done((map) => createMap(map[0].maps[0]));
       });
     });
   };
