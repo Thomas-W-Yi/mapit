@@ -144,22 +144,24 @@ const updateMarker = function (options) {
     options.title,
     options.description || `Not provided`,
     options.img_url || `Not provided`,
-    options.marker_id
+    options.id
   ];
 
   const queryString = `
-  UPDATE markers
-  SET latitude = $1,
-  SET longitude = $2,
-  SET title = $3,
-  SET description = $4,
-  SET img_url = $5,
-  WHERE id = $6
-  RETURNING *;
+  UPDATE markers SET latitude = $1, longitude = $2, title = $3, description = $4, img_url = $5 WHERE id = $6 RETURNING *;
   `;
 
   return db.query(queryString, queryValues)
-    .then((res) => res.rows[0])
+    .then((res) => {
+      let output = {};
+      output.latitude = res.rows[0].latitude;
+      output.longitude = res.rows[0].longitude;
+      output.title = res.rows[0].title;
+      output.description = res.rows[0].description;
+      output.img_url = res.rows[0].img_url;
+      output.id = res.rows[0].id;
+      return output;
+    })
     .catch(() => null);
 }
 
@@ -257,11 +259,11 @@ const addUser = function (user) {
       const newUser = {};
       newUser.id = user.rows[0].id;
       newUser.name = user.rows[0].name;
-      newUser.email= user.rows[0].email;
+      newUser.email = user.rows[0].email;
       newUser.password = user.rows[0].password;
       console.log(newUser);
       return newUser;
-      })
+    })
     .catch(() => null);
 }
 exports.addUser = addUser;
