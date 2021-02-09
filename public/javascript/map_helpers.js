@@ -174,7 +174,7 @@ $(() => {
     getMyDetails().then(function (user) {
       if (user)
 
-      $("#map-container").append(`${modifyMarker(lat, lng)}`);
+        $("#map-container").append(`${modifyMarker(lat, lng)}`);
 
       $mainMap.find("#submit-update").on("click", function (e) {
         if ($mainMap.find("#update-marker-frm")[0].checkValidity()) {
@@ -186,7 +186,6 @@ $(() => {
             createMarkers(mapId, mymap);
           });
         }
-        alert("Make sure to fill the fields with required");
       });
       $mainMap.find("#submit-delete").on("click", function (e) {
         e.preventDefault();
@@ -206,8 +205,6 @@ $(() => {
     return `<div id = 'update-point'>
     <form id = 'update-marker-frm'>
   <div class="form-group">
-    <label>Latitude: ${lat}</label>
-    <label>Longitude: ${lng}</label>
     <input type="text" name = 'title' class="form-control" id="InputText" placeholder="Enter New Title" required>
   </div>
   <div class="form-group">
@@ -253,12 +250,12 @@ $(() => {
       if (user) {
         $("#map-container").append(newMarkerForm(lat, lng, map));
         $mainMap.on("submit", "#new-marker-frm", function (e) {
-          e.preventDefault();
-          let data = $(this).serialize();
-          data += `&map_id=${map.id}&latitude=${lat}&longitude=${lng}`;
-          addMarker(data);
-          $("#save-point").remove();
-          createMarkers(map.id, mymap);
+            e.preventDefault();
+            let data = $(this).serialize();
+            data += `&map_id=${map.id}&latitude=${lat}&longitude=${lng}`;
+            addMarker(data);
+            $("#save-point").remove();
+            createMarkers(map.id, mymap);
         });
       }
     });
@@ -267,24 +264,20 @@ $(() => {
   window.mapClickMarker = mapClickMarker;
 
   const newMarkerForm = (lat, lng, map) => {
-    return $(`<div id = 'save-point'>
+    return `<div id = 'save-point'>
     <form id = 'new-marker-frm'>
     <div class="form-group">
-    <label>Latitude: ${lat}</label>
-    <label>Longitude: ${lng}</label>
-    <label>map_id: ${map.id}</label>
-    <label>map_id: ${map.user_id}</label>
-    <input type="text" class="form-control" id="InputText" aria-describedby="emailHelp" placeholder="Enter Title">
+    <input type="text" class="form-control" id="InputText"  placeholder="Enter Title" required>
     </div>
     <div class="form-group">
-    <input type="text" class="form-control" id="InputDescription" placeholder="Description">
+    <input type="text" class="form-control" id="InputDescription" placeholder="Description" required>
     </div>
     <div class="form-group">
-    <input type="text" class="form-control" id="InputImgUrl" placeholder="Img Url">
+    <input type="" class="form-control" id="InputImgUrl" placeholder="Img Url" required>
     </div>
     <button type="submit" class="btn btn-primary">Save Point</button>
     </form>
-    </div>`);
+    </div>`;
   };
 
   window.newMarkerForm = newMarkerForm;
