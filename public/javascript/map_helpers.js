@@ -67,12 +67,17 @@ $(() => {
         // add individual markers to the map
         L.marker([latitude, longitude], { icon: myIcon })
           // click event on marker will trigger new form for update/delete for this marker
-          .on("click", clickPoint)
+
+
           .addTo(mymap)
           .bindPopup(`<p>${title}<br />${description}.</p>`)
           .openPopup();
+
       }
     });
+    $('.leaflet-marker-pane').on('click', '.leaflet-marker-icon', function(id, mymap, event){
+      console.log(id, mymap, event);
+    })
   };
 
   window.createMarkers = createMarkers;
@@ -151,13 +156,16 @@ $(() => {
   window.clickMap = clickMap;
 
   // callback function for point click event
-  const clickPoint = (event) => {
+  const clickPoint = (id, map, event, mymap) => {
     if ($("#save-point")) {
       $("#save-point").remove();
     }
     if ($("#update-point")) {
       $("#update-point").remove();
     }
+    $(".leaflet-marker-icon").remove();
+    $(".leaflet-popup").remove();
+    createMarkers(id, mymap);
     const { lat, lng } = event.latlng;
     // let icon = event.target.setIcon();
     let popup = event.target.getPopup();
@@ -165,16 +173,23 @@ $(() => {
     // popup.setContent("<p>new content</p>");
     // add new form so we can update or delete marker
     $("#map-container").append(`${modifyMarker(lat, lng)}`);
-
-    $("#update-marker-frm").on("submit", function (event) {
-      event.preventDefault();
-      const title = $(this).children("#InputText");
-      const description = $(this).children("#InputDescription");
-      const img_url = $(this).children("#InputImgUrl");
-      // data should have map_id, lat, long, user_id, title, img_url
-      // seriralze the data before sending out
-      data.serialize();
+    $mainMap.find("#submit-update").on("click", function (e) {
+      e.preventDefault();
+      console.log(e.target);
+      let data = $(this).serialize();
+      data += `map_id=${map.id}&latitude=${lat}&longitude=${lng}`;
+      console.log(data);
+      updateMarker(data);
+      $("#save-point").remove();
+      createMarkers(map.id, mymap);
     });
+     $mainMap.find("#submit-delete").on("click", function (e) {
+       e.preventDefault();
+       console.log(e.target);
+       deleteMarker(data);
+       $("#save-point").remove();
+       createMarkers(map.id, mymap);
+     });
   };
 
   window.clickPoint = clickPoint;
@@ -185,16 +200,16 @@ $(() => {
   <div class="form-group">
     <label>Latitude: ${lat}</label>
     <label>Longitude: ${lng}</label>
-    <input name ="title" type="text" class="form-control" id="InputText" placeholder="Enter New Title">
+    <input type="text" name = 'title' class="form-control" id="InputText" placeholder="Enter New Title">
   </div>
   <div class="form-group">
-    <input name ="description" type="text" class="form-control" id="InputDescription" placeholder="Enter New Description">
+    <input type="text" name='description' class="form-control" id="InputDescription" placeholder="Enter New Description">
   </div>
   <div class="form-group">
-    <input name="img_url" type="text" class="form-control" id="InputImgUrl" placeholder="Update img url">
+    <input type="text" name = 'img_url' class="form-control" id="InputImgUrl" placeholder="Update img url">
   </div>
-  <button type="submit" class="btn btn-primary">Update Point</button>
-  <button type="submit" class="btn btn-danger">Delete Point</button>
+  <button type="button" id="submit-update" class="btn btn-primary">Update Point</button>
+  <button type="button" id="submit-delete" class="btn btn-danger">Delete Point</button>
 </form>
     </div>`;
   };
