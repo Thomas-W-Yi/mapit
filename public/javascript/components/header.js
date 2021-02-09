@@ -60,41 +60,36 @@ $(() => {
 
   window.header.update = updateHeader;
 
-  getMyDetails()
-    .then(function (json) {
-      updateHeader(json.user);
-    });
+  getMyDetails().then(function (json) {
+    updateHeader(json.user);
+  });
 
-    $($pageHeader).click(function (evt) {
-      evt.preventDefault();
-      switch ($(evt.target).attr('id')) {
-        case ('login-btn'):
-          views_manager.show('logIn');
-          break;
-        case ('register-btn'):
-          views_manager.show('signUp');
-          break;
-        case ('logout-btn'):
-          logOut();
-          break;
-        case ('create-maps-li'):
-          views_manager.show('createMap');
-          break;
-        case ('favorites-li'):
-
-          break;
-        case ('contributions-li'):
-
-          break;
-        case ('maps-li'):
-
-          break;
-        case ('home-btn'):
-          views_manager.show('mainMap');
-          break;
-        default:
-          break;
-      }
-    });
+  $($pageHeader).click(function (evt) {
+    evt.preventDefault();
+    switch ($(evt.target).attr("id")) {
+      case "login-btn":
+        views_manager.show("logIn");
+        break;
+      case "register-btn":
+        views_manager.show("signUp");
+        break;
+      case "logout-btn":
+        logOut().then(() => header.update(null));
+        break;
+      case "create-maps-li":
+        views_manager.show("createMap");
+        break;
+      case "favorites-li":
+        break;
+      case "contributions-li":
+        break;
+      case "maps-li":
+        break;
+      case "home-btn":
+        views_manager.show("mainMap");
+        break;
+      default:
+        break;
+    }
+  });
 });
-
