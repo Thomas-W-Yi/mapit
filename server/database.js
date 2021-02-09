@@ -115,13 +115,12 @@ const deleteMarker = function (options) {
   if (!options.user_id) {
     throw new Error('User not logged in!');
   }
-
   const queryString = `
   DELETE FROM markers
   WHERE id = $1;
   `;
   const queryValues = [
-    options.marker_id
+    options.id
   ];
 
   return db.query(queryString, queryValues)
