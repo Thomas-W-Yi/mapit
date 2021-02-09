@@ -63,7 +63,7 @@ module.exports = function (router, database) {
   router.get("/me", (req, res) => {
     const userId = req.session.userId;
     if (!userId) {
-      res.send({message: "not logged in"});
+      res.send();
       return;
     }
 
