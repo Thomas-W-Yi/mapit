@@ -63,7 +63,6 @@ $(() => {
         const myIcon = L.icon({
           iconUrl: `${img_url}`,
           iconSize: [20, 40],
-          shadowSize: [0, 0],
         });
         // add individual markers to the map
         L.marker([latitude, longitude], { icon: myIcon })
@@ -176,21 +175,28 @@ $(() => {
     // add new form so we can update or delete marker
     $("#map-container").append(`${modifyMarker(lat, lng)}`);
     $mainMap.find("#submit-update").on("click", function (e) {
-      e.preventDefault();
-      let data = $(this).closest('form').serialize();
-      data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
-      $("#save-point").remove();
-      updateMarker(data).then(() => {
-        createMarkers(mapId, mymap)
-      });
+      if ($mainMap.find("#update-marker-frm")[0].checkValidity()) {
+        e.preventDefault();
+        let data = $(this).closest('form').serialize();
+        data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
+        $("#save-point").remove();
+        updateMarker(data).then(() => {
+          createMarkers(mapId, mymap)
+        });
+      }
+      alert('Make sure to fill the fields with required data');
     });
     $mainMap.find("#submit-delete").on("click", function (e) {
-      e.preventDefault();
-      let data = $(this).closest('form').serialize();
-      data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
-      deleteMarker(data);
-      $("#save-point").remove();
-      createMarkers(mapId, mymap);
+      if ($mainMap.find("#update-marker-frm")[0].checkValidity()) {
+        e.preventDefault();
+        let data = $(this).closest('form').serialize();
+        data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
+        $("#save-point").remove();
+        deleteMarker(data).then(() => {
+          createMarkers(mapId, mymap);
+        });
+      }
+      alert('Make sure to fill the fields with required data');
     });
   };
 
@@ -202,13 +208,13 @@ $(() => {
   <div class="form-group">
     <label>Latitude: ${lat}</label>
     <label>Longitude: ${lng}</label>
-    <input type="text" name = 'title' class="form-control" id="InputText" placeholder="Enter New Title">
+    <input type="text" name = 'title' class="form-control" id="InputText" placeholder="Enter New Title" required>
   </div>
   <div class="form-group">
-    <input type="text" name='description' class="form-control" id="InputDescription" placeholder="Enter New Description">
+    <input type="text" name='description' class="form-control" id="InputDescription" placeholder="Enter New Description" required>
   </div>
   <div class="form-group">
-    <input type="text" name = 'img_url' class="form-control" id="InputImgUrl" placeholder="Update img url">
+    <input type="url" name = 'img_url' class="form-control" id="InputImgUrl" placeholder="Update img url" required>
   </div>
   <button type="button" id="submit-update" class="btn btn-primary">Update Point</button>
   <button type="button" id="submit-delete" class="btn btn-danger">Delete Point</button>
@@ -234,17 +240,20 @@ $(() => {
     const lng = event.latlng.lng;
     // click event on mymap will create new marker to save/discard
     $("#map-container").append(newMarkerForm(lat, lng, map));
-    L.marker([lat, lng])
+    const myIcon = L.icon({
+      iconUrl: `../images/maps-and-flags.png`,
+      iconSize: [40, 40],
+    });
+    L.marker([lat, lng], { icon: myIcon })
       .addTo(mymap)
       .bindPopup(`map point lat: ${lat} and long: ${lng}`)
       .openPopup();
     // once the form element appened to the DOM, we can fill the info and send it back to server to udpate the db
-    console.log($mainMap.find("#save-point"));
+
     $mainMap.on("submit", '#new-marker-frm', function (e) {
       e.preventDefault();
-      console.log(e.target);
       let data = $(this).serialize();
-      data += `map_id=${map.id}&latitude=${lat}&longitude=${lng}`;
+      data += `&map_id=${map.id}&latitude=${lat}&longitude=${lng}`;
       console.log(data);
       addMarker(data);
       $("#save-point").remove();
