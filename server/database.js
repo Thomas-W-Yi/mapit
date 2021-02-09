@@ -254,7 +254,15 @@ const addUser = function (user) {
   RETURNING *;
   `;
   return db.query(queryString, queryValues)
-    .then((user) => user.rows[0])
+    .then((user) => {
+      const newUser = {};
+      newUser.id = user.rows[0].id;
+      newUser.name = user.rows[0].name;
+      newUser.email= user.rows[0].email;
+      newUser.password = user.rows[0].password;
+      console.log(newUser);
+      return newUser;
+      })
     .catch(() => null);
 }
 exports.addUser = addUser;
@@ -269,11 +277,9 @@ const userExists = function (email) {
   `;
   return db.query(queryString, queryValues)
     .then((obj) => {
-      return obj.rowCount === 0 ? "proceed" : new Error('user already exists');
+      return obj.rowCount === 0 ? true : false;
     })
     .catch(() => null);
 };
 
 exports.userExists = userExists;
-
-

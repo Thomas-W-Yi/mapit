@@ -6,7 +6,12 @@ module.exports = function (router, database) {
   router.post('/', (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, 12);
     database.userExists(req.body.email)
-    .then(() => database.addUser(req.body))
+    .then((boo) => {
+    if (!boo) {
+      res.send({error: "error"});
+      return;
+    }
+    database.addUser(req.body)
     .then((user) => {
       if (!user) {
         res.send({error: "error"});;
@@ -15,6 +20,7 @@ module.exports = function (router, database) {
       req.session.userId = user.id;
       res.send();
     })
+  })
     .catch(e => res.send(e));
   });
 
