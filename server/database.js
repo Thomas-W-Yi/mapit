@@ -142,8 +142,8 @@ const updateMarker = function (options) {
     options.latitude,
     options.longitude,
     options.title,
-    options.description || `Not provided`,
-    options.img_url || `Not provided`,
+    options.description,
+    options.img_url,
     options.id
   ];
 
