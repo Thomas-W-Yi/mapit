@@ -172,9 +172,7 @@ $(() => {
     const { lat, lng } = event.latlng;
 
     getMyDetails().then(function (user) {
-      if (user)
-
-        $("#map-container").append(`${modifyMarker(lat, lng)}`);
+      if (user) $("#map-container").append(`${modifyMarker(lat, lng)}`);
 
       $mainMap.find("#submit-update").on("click", function (e) {
         if ($mainMap.find("#update-marker-frm")[0].checkValidity()) {
@@ -182,17 +180,18 @@ $(() => {
           let data = $(this).closest("form").serialize();
           data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
           $("#save-point").remove();
-          updateMarker(data)
-          .then(() => {
-            createMarkers(mapId, mymap);
-          });
+          $.when(getMaps(`map_id=${mapId}`), updateMarker(data)).done((map) =>
+            createMap(map[0].maps[0])
+          );
         }
       });
       $mainMap.find("#submit-delete").on("click", function (e) {
         e.preventDefault();
         $("#save-point").remove();
-        $.when(getMaps(`map_id=${mapId}`), deleteMarker(`id=${id}`))
-        .done((map) => createMap(map[0].maps[0]));
+        $.when(
+          getMaps(`map_id=${mapId}`),
+          deleteMarker(`id=${id}`)
+        ).done((map) => createMap(map[0].maps[0]));
       });
     });
   };
@@ -248,12 +247,11 @@ $(() => {
       if (user) {
         $("#map-container").append(newMarkerForm(lat, lng, map));
         $mainMap.on("submit", "#new-marker-frm", function (e) {
-            e.preventDefault();
-            let data = $(this).serialize();
-            data += `&map_id=${map.id}&latitude=${lat}&longitude=${lng}`;
-            addMarker(data).then(() => createMap(map));
-            $("#save-point").remove();
-
+          e.preventDefault();
+          let data = $(this).serialize();
+          data += `&map_id=${map.id}&latitude=${lat}&longitude=${lng}`;
+          addMarker(data).then(() => createMap(map));
+          $("#save-point").remove();
         });
       }
     });
