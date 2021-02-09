@@ -83,9 +83,29 @@ $(() => {
     const { maps } = data;
     maps.map((obj) => {
       const map = obj;
-      $mainMap.find('#listUl').append(
-        `<li id='${map.id}' class='mapLi'>Map Id: ${map.id} - Map Name: ${map.name}</li>`
-      );
+
+      let mapListItem = `<li id="${map.id}" class="mapLi list-group-item-action list-group-item-`
+      switch (map.id % 5) {
+        case (0):
+          mapListItem += `success`;
+          break;
+        case (1):
+          mapListItem += `info`;
+          break;
+        case (2):
+          mapListItem += `dark`;
+          break;
+        case (3):
+          mapListItem += `danger`;
+          break;
+        case (4):
+          mapListItem += `warning`;
+          break;
+      }
+      mapListItem += `">Map Id: ${map.id} - Map Name: ${map.name}</li>`;
+
+
+      $mainMap.find('#listUl').append(mapListItem);
     });
     currentMapId
       ? $(`#${currentMapId}`).append('<i class="far fa-check-circle"></i>')
