@@ -254,9 +254,7 @@ const addUser = function (user) {
   RETURNING *;
   `;
   return db.query(queryString, queryValues)
-    .then((user) => {
-      return user.rows[0];
-    })
+    .then((user) => user.rows[0])
     .catch(() => null);
 }
 exports.addUser = addUser;
