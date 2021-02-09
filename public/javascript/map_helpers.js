@@ -226,7 +226,7 @@ $(() => {
       e.preventDefault();
       console.log(e.target);
       let data = $(this).serialize();
-      data += `map_id=${map.id}&latitude=${lat}&longitude=${lng}`;
+      data += `&map_id=${map.id}&latitude=${lat}&longitude=${lng}`;
       console.log(data);
       addMarker(data);
       $("#save-point").remove();
