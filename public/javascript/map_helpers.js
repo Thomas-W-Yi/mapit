@@ -70,7 +70,7 @@ $(() => {
           // click event on marker will trigger new form for update/delete for this marker
           .on("click", function (event) {
             return function () {
-              clickPoint(id, event, mymap);
+              clickPoint(id, mapId, event, mymap);
             }();
           })
           .addTo(mymap)
@@ -158,7 +158,7 @@ $(() => {
 
 
   // callback function for point click event
-  const clickPoint = (id, event, mymap) => {
+  const clickPoint = (id, mapId, event, mymap) => {
     if ($("#save-point")) {
       $("#save-point").remove();
     }
@@ -167,7 +167,7 @@ $(() => {
     }
     $(".leaflet-marker-icon").remove();
     $(".leaflet-popup").remove();
-    createMarkers(id, mymap);
+    createMarkers(mapId, mymap);
     const { lat, lng } = event.latlng;
     // let icon = event.target.setIcon();
     let popup = event.target.getPopup();
@@ -179,15 +179,18 @@ $(() => {
       e.preventDefault();
       let data = $(this).closest('form').serialize();
       data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
-      updateMarker(data);
       $("#save-point").remove();
-      createMarkers(id, mymap);
+      updateMarker(data).then(() => {
+        createMarkers(mapId, mymap)
+      });
     });
     $mainMap.find("#submit-delete").on("click", function (e) {
       e.preventDefault();
+      let data = $(this).closest('form').serialize();
+      data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
       deleteMarker(data);
       $("#save-point").remove();
-      createMarkers(id, mymap);
+      createMarkers(mapId, mymap);
     });
   };
 
