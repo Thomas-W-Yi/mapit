@@ -52,13 +52,14 @@ $(() => {
   window.createMapWithCoords = createMapWithCoords;
 
   // create makers on map
-  const createMarkers = (id, mymap) => {
-    getMarkersForMap(`map_id=${id}`).then((data) => {
+  const createMarkers = (mapId, mymap) => {
+    getMarkersForMap(`map_id=${mapId}`).then((data) => {
       const { markers } = data;
-      for (const id in markers) {
-        const { latitude, longitude, title, description, img_url } = markers[
-          id
+      for (const markerId in markers) {
+        const { id, latitude, longitude, title, description, img_url } = markers[
+          markerId
         ];
+
         const myIcon = L.icon({
           iconUrl: `${img_url}`,
           iconSize: [20, 40],
@@ -69,7 +70,7 @@ $(() => {
           // click event on marker will trigger new form for update/delete for this marker
           .on("click", function(event) {
             return function() {
-              clickPoint(id,event, mymap);
+              clickPoint(id, event, mymap);
             }();
           })
           .addTo(mymap)
@@ -176,17 +177,14 @@ $(() => {
         $("#map-container").append(`${modifyMarker(lat, lng)}`);
         $mainMap.find("#submit-update").on("click", function (e) {
           e.preventDefault();
-          console.log(e.target);
           let data = $(this).closest('form').serialize();
-          data += `&map_id=${id}&latitude=${lat}&longitude=${lng}`;
-          console.log(data);
+          data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
           updateMarker(data);
           $("#save-point").remove();
           createMarkers(id, mymap);
         });
          $mainMap.find("#submit-delete").on("click", function (e) {
            e.preventDefault();
-           console.log(e.target);
            deleteMarker(data);
            $("#save-point").remove();
            createMarkers(id, mymap);
