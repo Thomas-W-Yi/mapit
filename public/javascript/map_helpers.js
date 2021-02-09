@@ -23,31 +23,31 @@ $(() => {
       });
   };
 
-    window.createMapWithCoords = createMapWithCoords;
+  window.createMapWithCoords = createMapWithCoords;
 
   createMapWithCoords()
-  .then((res) => {
-    $mainMap.appendTo($main);
-    const { latitude, longitude } = res;
-    const mymap = L.map("mymap").setView([latitude, longitude], 10);
-    const attribution =
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-    const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-    L.tileLayer(tileUrl, { attribution }).addTo(mymap);
-    L.marker([latitude, longitude])
-      .addTo(mymap)
-      .bindPopup("This is our location.<br> Easily customizable.")
-      .openPopup();
-    mymap.on("click", function (event) {
-      const lat = event.latlng.lat;
-      const lng = event.latlng.lng;
-      L.marker([lat, lng])
+    .then((res) => {
+      $mainMap.appendTo($main);
+      const { latitude, longitude } = res;
+      const mymap = L.map("mymap").setView([latitude, longitude], 10);
+      const attribution =
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+      const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+      L.tileLayer(tileUrl, { attribution }).addTo(mymap);
+      L.marker([latitude, longitude])
         .addTo(mymap)
-        .bindPopup(`map point lat: ${lat} and lng: ${lng}`)
+        .bindPopup("This is our location.<br> Easily customizable.")
         .openPopup();
-    });
-  })
-  .catch();
+      mymap.on("click", function (event) {
+        const lat = event.latlng.lat;
+        const lng = event.latlng.lng;
+        L.marker([lat, lng])
+          .addTo(mymap)
+          .bindPopup(`map point lat: ${lat} and lng: ${lng}`)
+          .openPopup();
+      });
+    })
+    .catch();
 
   window.createMapWithCoords = createMapWithCoords;
 
@@ -68,8 +68,8 @@ $(() => {
         // add individual markers to the map
         L.marker([latitude, longitude], { icon: myIcon })
           // click event on marker will trigger new form for update/delete for this marker
-          .on("click", function(event) {
-            return function() {
+          .on("click", function (event) {
+            return function () {
               clickPoint(id, event, mymap);
             }();
           })
@@ -119,77 +119,77 @@ $(() => {
 
   window.getList = getList;
 
-    const createMap = (map) => {
-      $("#map-container").html("");
-      $("#map-container").html('<div id="mymap"></div>');
-      // get lat, lng, name, and id from map obj
-      const { latitude, longitude, name, id } = map;
-      // create mapObj
-      const mymap = L.map("mymap").setView([latitude, longitude], 10);
-      // fill the map with tiles, we use openstreetmap api
-      const attribution = `${name} is created by ${map.user_name}`;
-      const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-      L.tileLayer(tileUrl, { attribution }).addTo(mymap);
-      // add markers/points to map, and we get points data from our apiRoutes
+  const createMap = (map) => {
+    $("#map-container").html("");
+    $("#map-container").html('<div id="mymap"></div>');
+    // get lat, lng, name, and id from map obj
+    const { latitude, longitude, name, id } = map;
+    // create mapObj
+    const mymap = L.map("mymap").setView([latitude, longitude], 10);
+    // fill the map with tiles, we use openstreetmap api
+    const attribution = `${name} is created by ${map.user_name}`;
+    const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    L.tileLayer(tileUrl, { attribution }).addTo(mymap);
+    // add markers/points to map, and we get points data from our apiRoutes
+    createMarkers(id, mymap);
+    mymap.on("click", function (event) {
+      mapClickMarker(id, map, event, mymap);
+    });
+  };
+
+  window.createMap = createMap;
+
+  // callback function for map items click event, which will show the map item on our app, a check mark will show on the current map
+  const clickMap = (maps, mapId) => {
+    const id = mapId;
+    let map;
+    maps.map((obj) => {
+      if (obj.id == id) {
+        return (map = obj);
+      }
+    });
+    createMap(map);
+    $("#listUl").html("");
+    const data = { maps };
+    getList(data, id);
+  };
+
+  window.clickMap = clickMap;
+
+
+  // callback function for point click event
+  const clickPoint = (id, event, mymap) => {
+    if ($("#save-point")) {
+      $("#save-point").remove();
+    }
+    if ($("#update-point")) {
+      $("#update-point").remove();
+    }
+    $(".leaflet-marker-icon").remove();
+    $(".leaflet-popup").remove();
+    createMarkers(id, mymap);
+    const { lat, lng } = event.latlng;
+    // let icon = event.target.setIcon();
+    let popup = event.target.getPopup();
+    // update content on marker
+    // popup.setContent("<p>new content</p>");
+    // add new form so we can update or delete marker
+    $("#map-container").append(`${modifyMarker(lat, lng)}`);
+    $mainMap.find("#submit-update").on("click", function (e) {
+      e.preventDefault();
+      let data = $(this).closest('form').serialize();
+      data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
+      updateMarker(data);
+      $("#save-point").remove();
       createMarkers(id, mymap);
-      mymap.on("click", function (event) {
-        mapClickMarker(id, map, event, mymap);
-      });
-    };
-
-    window.createMap = createMap;
-
-    // callback function for map items click event, which will show the map item on our app, a check mark will show on the current map
-    const clickMap = (maps, mapId) => {
-      const id = mapId;
-      let map;
-      maps.map((obj) => {
-        if (obj.id == id) {
-          return (map = obj);
-        }
-      });
-      createMap(map);
-      $("#listUl").html("");
-      const data = { maps };
-      getList(data, id);
-    };
-
-    window.clickMap = clickMap;
-
-
-      // callback function for point click event
-      const clickPoint = (id, event, mymap) => {
-        if ($("#save-point")) {
-          $("#save-point").remove();
-        }
-        if ($("#update-point")) {
-          $("#update-point").remove();
-        }
-        $(".leaflet-marker-icon").remove();
-        $(".leaflet-popup").remove();
-        createMarkers(id, mymap);
-        const { lat, lng } = event.latlng;
-        // let icon = event.target.setIcon();
-        let popup = event.target.getPopup();
-        // update content on marker
-        // popup.setContent("<p>new content</p>");
-        // add new form so we can update or delete marker
-        $("#map-container").append(`${modifyMarker(lat, lng)}`);
-        $mainMap.find("#submit-update").on("click", function (e) {
-          e.preventDefault();
-          let data = $(this).closest('form').serialize();
-          data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
-          updateMarker(data);
-          $("#save-point").remove();
-          createMarkers(id, mymap);
-        });
-         $mainMap.find("#submit-delete").on("click", function (e) {
-           e.preventDefault();
-           deleteMarker(data);
-           $("#save-point").remove();
-           createMarkers(id, mymap);
-         });
-      };
+    });
+    $mainMap.find("#submit-delete").on("click", function (e) {
+      e.preventDefault();
+      deleteMarker(data);
+      $("#save-point").remove();
+      createMarkers(id, mymap);
+    });
+  };
 
   window.clickPoint = clickPoint;
 
@@ -237,7 +237,7 @@ $(() => {
       .openPopup();
     // once the form element appened to the DOM, we can fill the info and send it back to server to udpate the db
     console.log($mainMap.find("#save-point"));
-    $mainMap.on("submit",'#new-marker-frm', function (e) {
+    $mainMap.on("submit", '#new-marker-frm', function (e) {
       e.preventDefault();
       console.log(e.target);
       let data = $(this).serialize();
