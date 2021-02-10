@@ -86,7 +86,6 @@ $(() => {
       $("add-map-frm").on("submit", function (event) {
         event.preventDefault();
         let data = $(this).serialize();
-        console.log(data);
       });
     });
   };
@@ -110,14 +109,6 @@ $(() => {
 
   // callback function for point click event
   const clickPoint = (id, mapId, event, mymap) => {
-    if ($("#save-point")) {
-      $("#save-point").remove();
-    }
-    if ($("#update-point")) {
-      $("#update-point").remove();
-    }
-    $(".leaflet-marker-icon").remove();
-    $(".leaflet-popup").remove();
     createMarkers(mapId, mymap);
     const { lat, lng } = event.latlng;
 
@@ -169,16 +160,8 @@ $(() => {
   window.modifyMarker = modifyMarker;
 
   const mapClickMarker = (id, map, event, mymap) => {
+    $newMarkerForm.val("")
     // clear previous forms
-    if ($("#save-point")) {
-      $("#save-point").remove();
-    }
-    if ($("#update-point")) {
-      $("#update-point").remove();
-    }
-    $(".leaflet-marker-icon").remove();
-    $(".leaflet-popup").remove();
-    createMarkers(id, mymap);
     const lat = event.latlng.lat;
     const lng = event.latlng.lng;
     // click event on mymap will create new marker to save/discard
@@ -187,6 +170,10 @@ $(() => {
       iconUrl: `../images/maps-and-flags.png`,
       iconSize: [40, 40],
     });
+
+    if (theMarker != undefined) {
+      mymap.removeLayer(theMarker);
+    };
 
     theMarker = L.marker([lat, lng], { icon: myIcon })
       .addTo(mymap);
