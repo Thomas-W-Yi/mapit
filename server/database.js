@@ -10,7 +10,7 @@ const getMaps = function (options) {
   let queryString = `
   SELECT DISTINCT maps.*, users.name as user_name
   FROM maps
-  JOIN users on maps.user_id = users.id`;
+  JOIN users on maps.user_id = users.id `;
 
   if (options.map_id) {
     queryValue = [options.map_id]
