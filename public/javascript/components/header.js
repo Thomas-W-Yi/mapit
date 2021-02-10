@@ -91,6 +91,7 @@ $(() => {
         getMaps(`owner_id=${currentUser.id}`).then((maps) => mapLists.appendMaps(maps));
         break;
       case "home-btn":
+        getMaps().then((maps) => mapLists.appendMaps(maps));
         views_manager.show("mainMap");
         break;
       default:
