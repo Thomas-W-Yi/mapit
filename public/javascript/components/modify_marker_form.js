@@ -1,5 +1,5 @@
 $(() => {
-  const $modifyMarker =
+  const $modifyMarkerForm =
     $(`
     <form id = 'update-marker-frm'>
   <div class="form-group">
@@ -15,5 +15,5 @@ $(() => {
   <button type="button" id="submit-delete" class="btn btn-danger">Delete Point</button>
 </form>
 `);
-  window.$modifyMarker = $modifyMarker;
+  window.$modifyMarkerForm = $modifyMarkerForm;
 })
