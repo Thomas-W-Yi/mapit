@@ -148,7 +148,7 @@ $(() => {
 
   window.clickPoint = clickPoint;
 
-  const modifyMarker = (lat, lng) => {
+  const modifyMarker = () => {
     return `<div id = 'update-point'>
     <form id = 'update-marker-frm'>
   <div class="form-group">
@@ -194,38 +194,20 @@ $(() => {
 
     getMyDetails().then(function (user) {
       if (user) {
-        $("#map-container").append(newMarkerForm(lat, lng, map));
-        $mainMap.on("submit", "#new-marker-frm", function (e) {
+        views_manager.show('newMarkerForm');
+        $newMarkerForm.on("submit", function (e) {
           e.preventDefault();
           let data = $(this).serialize();
           data += `&map_id=${map.id}&latitude=${lat}&longitude=${lng}`;
           addMarker(data).then(() => createMap(map));
-          $("#save-point").remove();
+          views_manager.show('mapList');
+          $newMarkerForm.val("")
         });
       }
     });
   };
 
   window.mapClickMarker = mapClickMarker;
-
-  const newMarkerForm = (lat, lng, map) => {
-    return `<div id = 'save-point'>
-    <form id = 'new-marker-frm'>
-    <div class="form-group">
-    <input name="title" type="text" class="form-control" id="InputText"  placeholder="Enter Title" required>
-    </div>
-    <div class="form-group">
-    <input name="description" type="text" class="form-control" id="InputDescription" placeholder="Description" required>
-    </div>
-    <div class="form-group">
-    <input type="url" name="img_url" class="form-control" id="InputImgUrl" placeholder="Img Url" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Save Point</button>
-    </form>
-    </div>`;
-  };
-
-  window.newMarkerForm = newMarkerForm;
 
   const addMapFrom = () => {
     return `<div id = 'addMapForm'>
