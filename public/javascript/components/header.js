@@ -78,15 +78,17 @@ $(() => {
         views_manager.show("createMap");
         break;
       case "favorites-li":
-        getMaps(`favUser_id=${currentUser.id}`).then((maps) => getList(maps));
+        getMaps(`favUser_id=${currentUser.id}`).then((maps) => mapLists.appendMaps(maps))
+        ;
+        views_manager.show('mapList');
         break;
       case "contributions-li":
         getMaps(`contributor_id=${currentUser.id}`).then((maps) =>
-          getList(maps)
+        mapLists.appendMaps(maps)
         );
         break;
       case "maps-li":
-        getMaps(`owner_id=${currentUser.id}`).then((maps) => getList(maps));
+        getMaps(`owner_id=${currentUser.id}`).then((maps) => mapLists.appendMaps(maps));
         break;
       case "home-btn":
         views_manager.show("mainMap");
