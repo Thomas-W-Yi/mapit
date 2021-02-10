@@ -75,7 +75,7 @@ $(() => {
         logOut().then(() => header.update(null));
         break;
       case "create-maps-li":
-        views_manager.show("createMap");
+        views_manager.show("mapForm");
         break;
       case "favorites-li":
         getMaps(`favUser_id=${currentUser.id}`).then((maps) => mapLists.appendMaps(maps))
