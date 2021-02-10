@@ -260,7 +260,6 @@ const addUser = function (user) {
       newUser.name = user.rows[0].name;
       newUser.email = user.rows[0].email;
       newUser.password = user.rows[0].password;
-      console.log(newUser);
       return newUser;
     })
     .catch(() => null);
