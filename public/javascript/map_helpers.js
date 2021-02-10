@@ -1,7 +1,9 @@
 $(() => {
+
+  let theMarker = {};
   const $main = $("#main-content");
 
-  navigator.geolocation.getCurrentPosition(function({coords}) {
+  navigator.geolocation.getCurrentPosition(function ({ coords }) {
     $mainMap.appendTo($main);
     const { latitude, longitude } = coords;
     const mymap = L.map("mymap").setView([latitude, longitude], 10);
@@ -16,17 +18,17 @@ $(() => {
     mymap.on("click", function (event) {
       const lat = event.latlng.lat;
       const lng = event.latlng.lng;
-      L.marker([lat, lng])
-        .addTo(mymap)
-        .bindPopup(`map point lat: ${lat} and lng: ${lng}`)
-        .openPopup();
+      if (theMarker != undefined) {
+        mymap.removeLayer(theMarker);
+      };
+      theMarker = L.marker([lat, lng])
+        .addTo(mymap);
     });
   })
 
   // create makers on map
   const createMarkers = (mapId, mymap) => {
-    getMarkersForMap(`map_id=${mapId}`).then((data) => {
-      const { markers } = data;
+    getMarkersForMap(`map_id=${mapId}`).then(({ markers }) => {
       for (const markerId in markers) {
         const {
           id,
