@@ -15,4 +15,13 @@ $(() => {
   `);
 
   window.$newMarkerForm = $newMarkerForm;
+
+  $newMarkerForm.on("submit", function (e) {
+    e.preventDefault();
+    $newMarkerForm.val("")
+    let data = $(this).serialize();
+    data += `&map_id=${map.id}&latitude=${lat}&longitude=${lng}`;
+    addMarker(data).then(() => createMap(map));
+    views_manager.show('mapList');
+  });
 })
