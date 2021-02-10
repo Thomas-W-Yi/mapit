@@ -1,7 +1,7 @@
 $(() => {
   window.mapLists = {};
 
-  const $mapList = $(`<ul id="listUl" class="list-group"><ul>`);
+  const $mapList = $(` <ul id="listUl" style="list-group"></ul>`);
 
   window.$mapList = $mapList;
 
@@ -9,27 +9,34 @@ $(() => {
     $mapList.append(map);
   }
 
+
+
+
   /**
    * Get all MAPS (list). if we decide to add buttons onto the list options (stretch)
    * @param {{
    * isCreated = false,
    * isFavorites = false,
-   * isContributed = false
+   * isContributed = false,
+   * currentMapId = null
    * }} options An object containing conditional options.
    *
    */
 
-  function appendMaps(maps, options = false) {
-    for (const map in Object.values(maps)) {
+  function appendMaps({maps}, options = false) {
+    $mapList.children().remove();
+    for (const map of maps) {
       const mapListItem = mapList.createMapLi(map, options);
       appendMap(mapListItem);
     }
+    options.currentMapId
+    ? $(`#${options.currentMapId}`).append('<i class="far fa-check-circle"></i>')
+    : null;
   }
   window.mapLists.appendMaps = appendMaps;
 
 
-
-  $mainMap.find('#listUl').on("click", ".mapLi", function (event) {
+  $main.find('#listUl').on("click", ".mapLi", function (event) {
     const id = event.target.id;
     getMaps().then((data) => {
       const { maps } = data;
