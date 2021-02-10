@@ -94,18 +94,16 @@ $(() => {
   window.createMap = createMap;
 
   // callback function for map items click event, which will show the map item on our app, a check mark will show on the current map
-  const clickMap = (maps, mapId) => {
-    const id = mapId;
+  const clickMap = (maps, currentMapId) => {
+
     let map;
     maps.map((obj) => {
-      if (obj.id == id) {
+      if (obj.id == currentMapId) {
         return (map = obj);
       }
     });
     createMap(map);
-    $("#listUl").html("");
-    const data = { maps };
-    getList(data, id);
+    mapLists.appendMaps({maps}, {currentMapId});
   };
 
   window.clickMap = clickMap;
