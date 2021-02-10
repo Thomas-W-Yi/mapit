@@ -74,11 +74,8 @@ $(() => {
     L.tileLayer(tileUrl, { attribution }).addTo(mymap);
     // add markers/points to map, and we get points data from our apiRoutes
     createMarkers(id, mymap);
-    $("#mymap").append(`<div id="addMapDiv">
-      <i id='addMap' class="fas fa-plus-circle"></i>
-      </div>`);
     mymap.on("click", function (event) {
-      mapClickMarker(id, map, event, mymap);
+      mapClickMarker(id, event, mymap);
     });
     $("#addMap").on("click", function (e) {
       e.stopPropagation();
@@ -138,7 +135,7 @@ $(() => {
 
   window.clickPoint = clickPoint;
 
-  const mapClickMarker = (id, map, event, mymap) => {
+  const mapClickMarker = (id, event, mymap) => {
     // clear previous forms
     const lat = event.latlng.lat;
     const lng = event.latlng.lng;
@@ -155,23 +152,19 @@ $(() => {
 
     theMarker = L.marker([lat, lng], { icon: myIcon })
       .addTo(mymap);
-    // once the form element appened to the DOM, we can fill the info and send it back to server to udpate the db
 
-    getMyDetails().then(function (user) {
-      if (user) {
-        views_manager.show('newMarkerForm');
-        $newMarkerForm.on("submit", function (e) {
-          e.preventDefault();
-          $newMarkerForm.val("")
-          let data = $(this).serialize();
-          data += `&map_id=${map.id}&latitude=${lat}&longitude=${lng}`;
-          //^ this will have to be in the form I'm sure of it.
-          //Either we use input type=disabled or type=hidden
-          addMarker(data).then(() => createMap(map));
-          views_manager.show('mapList');
-        });
-      }
-    });
+    //checks if form already exists before making useless ajax get request
+    if(!jQuery.contains(document, $newMarkerForm[0])) {
+      getMyDetails()
+      .then((user) => {
+        if (user) {
+          views_manager.show('newMarkerForm');
+          $newMarkerForm.find('input').first().val(id);
+        }
+      });
+    }
+  $newMarkerForm.find('input').eq(1).val(lat);
+  $newMarkerForm.find('input').eq(2).val(lng)
   };
 
   window.mapClickMarker = mapClickMarker;
