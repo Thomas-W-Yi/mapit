@@ -2,6 +2,7 @@ $(() => {
 
   const $main = $('#main-content');
 
+  window.$main = $main;
   window.views_manager = {};
 
   window.views_manager.show = function (item) {
@@ -22,6 +23,7 @@ $(() => {
       case 'mainMap':
         //main map will have general list with the map
         $mainMap.appendTo($main);
+        $mapList.appendTo($main);
         break;
       case 'mapList':
         $mapList.appendTo($main);
