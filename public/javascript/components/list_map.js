@@ -4,7 +4,7 @@ $(() => {
   //second params for options (stretch if we decide that it a favorite or not)
   function createMapLi(
     map,
-    { isCreated = false, isFavorites = false, isContributed = false } = false
+    { isCreated = false, isFavorites = false, isContributed = false, isCurrent = false } = false
   ) {
 
     let mapListItem = `<li id="${map.id}" class="list-group-item-action list-group-item-`
