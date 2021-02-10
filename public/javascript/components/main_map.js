@@ -1,6 +1,6 @@
 $(() => {
   const $mainMap = $(`
-  
+
   <div id="map-container">
       <div id="mymap">
       </div>
@@ -9,7 +9,6 @@ $(() => {
       </div>
     </div>
     <div id="maplist">
-    <ul id="listUl" style="list-style-type: none"></ul>
   </div>
   `);
   window.$mainMap = $mainMap;
