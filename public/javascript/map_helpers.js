@@ -116,7 +116,7 @@ $(() => {
     getMyDetails().then(function (user) {
       if (user)
 
-      $modifyMarkerForm.on("submit", function (e) {
+      $modifyMarkerForm.on("click", "#submit-update", function (e) {
         if ($modifyMarkerForm[0].checkValidity()) {
           e.preventDefault();
           let data = $(this).closest("form").serialize();
