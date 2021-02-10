@@ -40,7 +40,7 @@ $(() => {
       clickMap(maps, event.target.id);
     });
   });
-  $mapList.on("click", ".far", function (event) {
+  $mapList.on("click", ".hollow-heart", function (event) {
     event.stopPropagation();
     const id = $(this).parent().attr("id");
     const data = `map_id=${id}`;

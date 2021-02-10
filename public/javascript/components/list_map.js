@@ -29,7 +29,7 @@ $(() => {
         mapListItem += `warning`;
         break;
     }
-    mapListItem += `">${map.name}<i class="far fa-heart"></i></li>`;
+    mapListItem += `">${map.name}<i class="far fa-heart hollow-heart"></i></li>`;
 
     return mapListItem;
   }
