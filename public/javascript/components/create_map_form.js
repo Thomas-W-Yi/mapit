@@ -11,8 +11,5 @@ $(() => {
     </form>
     </div>`);
 
-
   window.$mapForm = $mapForm;
 });
-
-

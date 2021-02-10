@@ -90,7 +90,7 @@ $(() => {
     $("#addMap").on("click", function (e) {
       e.stopPropagation();
 
-      $("#map-container").append(`${addMapFrom()}`);
+      $("#map-container").append($mapForm);
       $("add-map-frm").on("submit", function (event) {
         event.preventDefault();
         let data = $(this).serialize();
