@@ -1,6 +1,6 @@
 $(() => {
-  const $modifyMarker = (lat, lng) => {
-    return $(`<div id = 'update-point'>
+  const $modifyMarker =
+    $(`<div id = 'update-point'>
     <form id = 'update-marker-frm'>
   <div class="form-group">
     <input type="text" name = 'title' class="form-control" id="InputText" placeholder="Enter New Title" required>
@@ -15,7 +15,5 @@ $(() => {
   <button type="button" id="submit-delete" class="btn btn-danger">Delete Point</button>
 </form>
     </div>`);
-  };
-
   window.$modifyMarker = $modifyMarker;
 })

@@ -1,6 +1,5 @@
 $(() => {
-  const $newMarkerForm = (lat, lng, map) => {
-    return $(`<div id = 'save-point'>
+  const $newMarkerForm = $(`<div id = 'save-point'>
     <form id = 'new-marker-frm'>
     <div class="form-group">
     <input name="title" type="text" class="form-control" id="InputText"  placeholder="Enter Title" required>
@@ -14,7 +13,6 @@ $(() => {
     <button type="submit" class="btn btn-primary">Save Point</button>
     </form>
     </div>`);
-  };
 
   window.$newMarkerForm = $newMarkerForm;
 })
