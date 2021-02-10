@@ -11,7 +11,7 @@ $(() => {
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
     const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
     L.tileLayer(tileUrl, { attribution }).addTo(mymap);
-    L.marker([latitude, longitude])
+    theMarker = L.marker([latitude, longitude])
       .addTo(mymap)
       .bindPopup("This is our location.<br> Easily customizable.")
       .openPopup();
