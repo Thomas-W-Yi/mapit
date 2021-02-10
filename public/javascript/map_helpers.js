@@ -63,8 +63,7 @@ $(() => {
   // create list map list based on the map date from map api, if second argument provided, we will use this to label the current map item
   const getList = ({ maps }, currentMapId) => {
     $mainMap.find("#listUl").children().remove();
-    maps.map((obj) => {
-      const map = obj;
+    maps.map((map) => {
 
       let mapListItem = `<li id="${map.id}" class="mapLi list-group-item-action list-group-item-`;
       switch (map.id % 5) {
@@ -224,10 +223,9 @@ $(() => {
       iconUrl: `../images/maps-and-flags.png`,
       iconSize: [40, 40],
     });
-    L.marker([lat, lng], { icon: myIcon })
-      .addTo(mymap)
-      .bindPopup(`map point lat: ${lat} and long: ${lng}`)
-      .openPopup();
+
+    theMarker = L.marker([lat, lng], { icon: myIcon })
+      .addTo(mymap);
     // once the form element appened to the DOM, we can fill the info and send it back to server to udpate the db
 
     getMyDetails().then(function (user) {
