@@ -60,40 +60,6 @@ $(() => {
 
   window.createMarkers = createMarkers;
 
-  // create list map list based on the map date from map api, if second argument provided, we will use this to label the current map item
-  const getList = ({ maps }, currentMapId) => {
-    $mainMap.find("#listUl").children().remove();
-    maps.map((map) => {
-
-      let mapListItem = `<li id="${map.id}" class="mapLi list-group-item-action list-group-item-`;
-      switch (map.id % 5) {
-        case 0:
-          mapListItem += `success`;
-          break;
-        case 1:
-          mapListItem += `info`;
-          break;
-        case 2:
-          mapListItem += `dark`;
-          break;
-        case 3:
-          mapListItem += `danger`;
-          break;
-        case 4:
-          mapListItem += `warning`;
-          break;
-      }
-      mapListItem += `">Map Id: ${map.id} - Map Name: ${map.name}</li>`;
-
-      $mainMap.find("#listUl").append(mapListItem);
-    });
-    currentMapId
-      ? $(`#${currentMapId}`).append('<i class="far fa-check-circle"></i>')
-      : null;
-  };
-
-  window.getList = getList;
-
   const createMap = (map) => {
     $("#map-container").html("");
     $("#map-container").html('<div id="mymap"></div>');
