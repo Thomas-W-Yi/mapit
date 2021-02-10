@@ -7,17 +7,20 @@ const db = new Pool(dbParams);
 
 const getMaps = function (options) {
   let queryValue = [];
-  let queryString = `SELECT DISTINCT maps.* FROM maps `;
+  let queryString = `
+  SELECT DISTINCT maps.*, users.name as user_name
+  FROM maps
+  JOIN users on maps.user_id = users.id`;
 
   if (options.map_id) {
     queryValue = [options.map_id]
-    queryString += `WHERE id = $1`;
+    queryString += `WHERE maps.id = $1`;
   }
 
   if (options.owner_id) {
     queryValue = [options.owner_id]
     queryString += `
-    WHERE user_id = $1
+    WHERE maps.user_id = $1
     `;
   }
 
