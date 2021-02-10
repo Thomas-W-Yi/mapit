@@ -12,7 +12,7 @@ $(() => {
   window.$mainMap = $mainMap;
 
   $mainMap.on("click", "#addMapDiv", function (e) {
-    console.log("add map button clicked");
+    views_manager.show("mapForm");
   });
   // We can add the event listeners of the MAPS ONLY HERE!!! (Any list related functions should be with list file itself)
 });
