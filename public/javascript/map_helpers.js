@@ -160,7 +160,6 @@ $(() => {
   window.modifyMarker = modifyMarker;
 
   const mapClickMarker = (id, map, event, mymap) => {
-    $newMarkerForm.val("")
     // clear previous forms
     const lat = event.latlng.lat;
     const lng = event.latlng.lng;
@@ -184,11 +183,13 @@ $(() => {
         views_manager.show('newMarkerForm');
         $newMarkerForm.on("submit", function (e) {
           e.preventDefault();
+          $newMarkerForm.val("")
           let data = $(this).serialize();
           data += `&map_id=${map.id}&latitude=${lat}&longitude=${lng}`;
+          //^ this will have to be in the form I'm sure of it.
+          //Either we use input type=disabled or type=hidden
           addMarker(data).then(() => createMap(map));
           views_manager.show('mapList');
-          $newMarkerForm.val("")
         });
       }
     });
