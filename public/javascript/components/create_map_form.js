@@ -1,5 +1,5 @@
 $(() => {
-  const $addMapForm = $(`<div id = 'addMapForm'>
+  const $mapForm = $(`<div id = 'addMapForm'>
     <form id = 'add-map-frm'>
     <div class="form-group">
     <input name="name" type="text" class="form-control" id="InputText"  placeholder="Enter Map Name" required>
@@ -12,7 +12,7 @@ $(() => {
     </div>`);
 
 
-  window.$addMapForm = $addMapForm;
+  window.$mapForm = $mapForm;
 });
 
 
