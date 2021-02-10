@@ -36,7 +36,7 @@ $(() => {
   window.mapLists.appendMaps = appendMaps;
 
 
-  $main.find('#listUl').on("click", ".mapLi", function (event) {
+  $mapList.on("click", ".mapLi", function (event) {
     const id = event.target.id;
     getMaps().then((data) => {
       const { maps } = data;
