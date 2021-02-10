@@ -1,6 +1,5 @@
 $(() => {
-
-  const $main = $('#main-content');
+  const $main = $("#main-content");
 
   window.views_manager = {};
 
@@ -13,44 +12,44 @@ $(() => {
     $modifyMarkerForm.detach();
 
     switch (item) {
-      case 'logIn':
+      case "logIn":
         $mainMap.detach();
         $logInForm.appendTo($main);
         break;
-      case 'signUp':
+      case "signUp":
         $mainMap.detach();
         $signUpForm.appendTo($main);
         break;
-      case 'mainMap':
+      case "mainMap":
         //main map will have general list with the map
         $mainMap.appendTo($main);
         $mapList.appendTo($main);
         break;
-      case 'mapList':
+      case "mapList":
         $mapList.appendTo($main);
         break;
-      case 'createMap':
+      case "createMap":
         $mapForm.appendTo($main);
         break;
-      case 'newMarkerForm':
+      case "newMarkerForm":
         $newMarkerForm.appendTo($main);
         break;
-      case 'updateMarkerForm':
+      case "updateMarkerForm":
         $modifyMarkerForm.appendTo($main);
         break;
-      case 'mapForm':
+      case "mapForm":
         $mapForm.appendTo($main);
         break;
-      case 'error': {
+      case "error": {
         const $error = $(`<p>${arguments[1]}</p>`);
-        $error.appendTo('body');
+        $error.appendTo("body");
         $mainMap.detach();
         setTimeout(() => {
           $error.remove();
-          views_manager.show('mainMap');
+          views_manager.show("mainMap");
         }, 2000);
         break;
       }
     }
-  }
+  };
 });

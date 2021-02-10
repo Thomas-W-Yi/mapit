@@ -35,10 +35,20 @@ $(() => {
   window.mapLists.appendMaps = appendMaps;
 
   $mapList.on("click", ".mapLi", function (event) {
-    const id = event.target.id;
     getMaps().then((data) => {
       const { maps } = data;
-      clickMap(maps, id);
+      clickMap(maps, event.target.id);
+    });
+  });
+  $mapList.on("click", ".far", function (event) {
+    event.stopPropagation();
+    const id = $(this).parent().attr("id");
+    const data = `map_id=${id}`;
+    addFavorite(data).then((res) => {
+      $(this).html("");
+      $(this).html('<i class="fas fa-heart"></i>');
+
+      console.log($(this));
     });
   });
 });

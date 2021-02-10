@@ -89,12 +89,7 @@ $(() => {
     });
     $("#addMap").on("click", function (e) {
       e.stopPropagation();
-
-      views_manager.show('mapForm');
-      $("add-map-frm").on("submit", function (event) {
-        event.preventDefault();
-        let data = $(this).serialize();
-      });
+      views_manager.show("mapForm");
     });
   };
 
