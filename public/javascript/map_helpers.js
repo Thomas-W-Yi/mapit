@@ -47,6 +47,7 @@ $(() => {
         L.marker([latitude, longitude], { icon: myIcon })
           // click event on marker will trigger new form for update/delete for this marker
           .on("click", function (event) {
+            views_manager.show('updateMarkerForm');
             return (function () {
               clickPoint(id, mapId, event, mymap);
             })();
@@ -113,22 +114,20 @@ $(() => {
     const { lat, lng } = event.latlng;
 
     getMyDetails().then(function (user) {
-      if (user) $("#map-container").append(`${modifyMarker(lat, lng)}`);
+      if (user)
 
-      $mainMap.find("#submit-update").on("click", function (e) {
-        if ($mainMap.find("#update-marker-frm")[0].checkValidity()) {
+      $modifyMarkerForm.on("submit", function (e) {
+        if ($modifyMarkerForm[0].checkValidity()) {
           e.preventDefault();
           let data = $(this).closest("form").serialize();
           data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
-          $("#save-point").remove();
           $.when(getMaps(`map_id=${mapId}`), updateMarker(data)).done((map) =>
             createMap(map[0].maps[0])
           );
         }
       });
-      $mainMap.find("#submit-delete").on("click", function (e) {
+      $modifyMarkerForm.on("click", "#button-delete", function (e) {
         e.preventDefault();
-        $("#save-point").remove();
         $.when(
           getMaps(`map_id=${mapId}`),
           deleteMarker(`id=${id}`)
@@ -138,26 +137,6 @@ $(() => {
   };
 
   window.clickPoint = clickPoint;
-
-  const modifyMarker = () => {
-    return `<div id = 'update-point'>
-    <form id = 'update-marker-frm'>
-  <div class="form-group">
-    <input type="text" name = 'title' class="form-control" id="InputText" placeholder="Enter New Title" required>
-  </div>
-  <div class="form-group">
-    <input type="text" name='description' class="form-control" id="InputDescription" placeholder="Enter New Description" required>
-  </div>
-  <div class="form-group">
-    <input type="url" name = 'img_url' class="form-control" id="InputImgUrl" placeholder="Update img url" required>
-  </div>
-  <button type="button" id="submit-update" class="btn btn-primary">Update Point</button>
-  <button type="button" id="submit-delete" class="btn btn-danger">Delete Point</button>
-</form>
-    </div>`;
-  };
-
-  window.modifyMarker = modifyMarker;
 
   const mapClickMarker = (id, map, event, mymap) => {
     // clear previous forms
@@ -197,17 +176,4 @@ $(() => {
 
   window.mapClickMarker = mapClickMarker;
 
-  const addMapFrom = () => {
-    return `<div id = 'addMapForm'>
-    <form id = 'add-map-frm'>
-    <div class="form-group">
-    <input name="name" type="text" class="form-control" id="InputText"  placeholder="Enter Map Name" required>
-    </div>
-    <div class="form-group">
-    <input name="address" type="text" class="form-control" id="InputDescription" placeholder="Enter The Address" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Create Map</button>
-    </form>
-    </div>`;
-  };
 });
