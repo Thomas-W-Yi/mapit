@@ -60,9 +60,7 @@ $(() => {
 
   window.header.update = updateHeader;
 
-  getMyDetails().then(function (json) {
-    updateHeader(json.user);
-  });
+  getMyDetails().then((json) => updateHeader(json.user));
 
   $($pageHeader).click(function (evt) {
     evt.preventDefault();
@@ -83,7 +81,9 @@ $(() => {
         getMaps(`favUser_id=${currentUser.id}`).then((maps) => getList(maps));
         break;
       case "contributions-li":
-        getMaps(`contributor_id=${currentUser.id}`).then((maps) => getList(maps));
+        getMaps(`contributor_id=${currentUser.id}`).then((maps) =>
+          getList(maps)
+        );
         break;
       case "maps-li":
         getMaps(`owner_id=${currentUser.id}`).then((maps) => getList(maps));
