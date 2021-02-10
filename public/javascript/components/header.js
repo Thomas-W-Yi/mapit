@@ -83,8 +83,10 @@ $(() => {
         getMaps(`favUser_id=${currentUser.id}`).then((maps) => getList(maps));
         break;
       case "contributions-li":
+        getMaps(`contributor_id=${currentUser.id}`).then((maps) => getList(maps));
         break;
       case "maps-li":
+        getMaps(`owner_id=${currentUser.id}`).then((maps) => getList(maps));
         break;
       case "home-btn":
         views_manager.show("mainMap");
