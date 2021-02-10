@@ -10,7 +10,7 @@ $(() => {
     $mapList.detach();
     $mapForm.detach();
     $newMarkerForm.detach();
-    $modifyMarker.detach();
+    $modifyMarkerForm.detach();
 
     switch (item) {
       case 'logIn':
@@ -36,7 +36,7 @@ $(() => {
         $newMarkerForm.appendTo($main);
         break;
       case 'updateMarkerForm':
-        $modifyMarker.appendTo($main);
+        $modifyMarkerForm.appendTo($main);
         break;
       case 'mapForm':
         $mapForm.appendTo($main);
