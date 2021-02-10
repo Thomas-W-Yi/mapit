@@ -32,6 +32,9 @@ $(() => {
       case 'createMap':
         $mapForm.appendTo($main);
         break;
+      case 'newMarkerForm':
+        $newMarkerForm.appendTo($main);
+        break;
       case 'error': {
         const $error = $(`<p>${arguments[1]}</p>`);
         $error.appendTo('body');
