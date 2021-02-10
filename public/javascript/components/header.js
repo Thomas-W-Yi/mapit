@@ -80,6 +80,7 @@ $(() => {
         views_manager.show("createMap");
         break;
       case "favorites-li":
+        getMaps(`favUser_id=${currentUser.id}`).then((maps) => getList(maps));
         break;
       case "contributions-li":
         break;
