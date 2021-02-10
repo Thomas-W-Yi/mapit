@@ -1,5 +1,4 @@
 $(() => {
-
   let theMarker = {};
   const $main = $("#main-content");
 
@@ -20,11 +19,10 @@ $(() => {
       const lng = event.latlng.lng;
       if (theMarker != undefined) {
         mymap.removeLayer(theMarker);
-      };
-      theMarker = L.marker([lat, lng])
-        .addTo(mymap);
+      }
+      theMarker = L.marker([lat, lng]).addTo(mymap);
     });
-  })
+  });
 
   // create makers on map
   const createMarkers = (mapId, mymap) => {
@@ -47,10 +45,18 @@ $(() => {
         L.marker([latitude, longitude], { icon: myIcon })
           // click event on marker will trigger new form for update/delete for this marker
           .on("click", function (event) {
-            views_manager.show('updateMarkerForm');
-            return (function () {
-              clickPoint(id, mapId, event, mymap);
-            })();
+            const { lat, lng } = event.latlng;
+            if (!jQuery.contains(document, $modifyMarkerForm[0])) {
+              getMyDetails().then((user) => {
+                if (user) {
+                  views_manager.show("updateMarkerForm");
+                  $modifyMarkerForm.find("input").first().val(mapId);
+                }
+              });
+            }
+            $modifyMarkerForm.find("input").eq(1).val(lat);
+            $modifyMarkerForm.find("input").eq(2).val(lng);
+            $modifyMarkerForm.find("input").eq(3).val(id);
           })
           .addTo(mymap)
           .bindPopup(`<p>${title}<br />${description}.</p>`)
@@ -92,7 +98,6 @@ $(() => {
 
   // callback function for map items click event, which will show the map item on our app, a check mark will show on the current map
   const clickMap = (maps, currentMapId) => {
-
     let map;
     maps.map((obj) => {
       if (obj.id == currentMapId) {
@@ -100,40 +105,12 @@ $(() => {
       }
     });
     createMap(map);
-    mapLists.appendMaps({maps}, {currentMapId});
+    mapLists.appendMaps({ maps }, { currentMapId });
   };
 
   window.clickMap = clickMap;
 
   // callback function for point click event
-  const clickPoint = (id, mapId, event, mymap) => {
-    createMarkers(mapId, mymap);
-    const { lat, lng } = event.latlng;
-
-    getMyDetails().then(function (user) {
-      if (user)
-
-      $modifyMarkerForm.on("click", "#submit-update", function (e) {
-        if ($modifyMarkerForm[0].checkValidity()) {
-          e.preventDefault();
-          let data = $(this).closest("form").serialize();
-          data += `&id=${id}&latitude=${lat}&longitude=${lng}`;
-          $.when(getMaps(`map_id=${mapId}`), updateMarker(data)).done((map) =>
-            createMap(map[0].maps[0])
-          );
-        }
-      });
-      $modifyMarkerForm.on("click", "#button-delete", function (e) {
-        e.preventDefault();
-        $.when(
-          getMaps(`map_id=${mapId}`),
-          deleteMarker(`id=${id}`)
-        ).done((map) => createMap(map[0].maps[0]));
-      });
-    });
-  };
-
-  window.clickPoint = clickPoint;
 
   const mapClickMarker = (id, event, mymap) => {
     // clear previous forms
@@ -148,25 +125,22 @@ $(() => {
 
     if (theMarker != undefined) {
       mymap.removeLayer(theMarker);
-    };
+    }
 
-    theMarker = L.marker([lat, lng], { icon: myIcon })
-      .addTo(mymap);
+    theMarker = L.marker([lat, lng], { icon: myIcon }).addTo(mymap);
 
     //checks if form already exists before making useless ajax get request
-    if(!jQuery.contains(document, $newMarkerForm[0])) {
-      getMyDetails()
-      .then((user) => {
+    if (!jQuery.contains(document, $newMarkerForm[0])) {
+      getMyDetails().then((user) => {
         if (user) {
-          views_manager.show('newMarkerForm');
-          $newMarkerForm.find('input').first().val(id);
+          views_manager.show("newMarkerForm");
+          $newMarkerForm.find("input").first().val(id);
         }
       });
     }
-  $newMarkerForm.find('input').eq(1).val(lat);
-  $newMarkerForm.find('input').eq(2).val(lng)
+    $newMarkerForm.find("input").eq(1).val(lat);
+    $newMarkerForm.find("input").eq(2).val(lng);
   };
 
   window.mapClickMarker = mapClickMarker;
-
 });
