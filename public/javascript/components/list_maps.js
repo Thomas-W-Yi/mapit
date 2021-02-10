@@ -1,16 +1,13 @@
 $(() => {
   window.mapLists = {};
 
-  const $mapList = $(` <ul id="listUl" style="list-group"></ul>`);
+  const $mapList = $(` <ul id="listUl" style="list-style-type: none"></ul>`);
 
   window.$mapList = $mapList;
 
   function appendMap(map) {
     $mapList.append(map);
   }
-
-
-
 
   /**
    * Get all MAPS (list). if we decide to add buttons onto the list options (stretch)
@@ -23,18 +20,19 @@ $(() => {
    *
    */
 
-  function appendMaps({maps}, options = false) {
+  function appendMaps({ maps }, options = false) {
     $mapList.children().remove();
     for (const map of maps) {
       const mapListItem = mapList.createMapLi(map, options);
       appendMap(mapListItem);
     }
     options.currentMapId
-    ? $(`#${options.currentMapId}`).append('<i class="far fa-check-circle"></i>')
-    : null;
+      ? $(`#${options.currentMapId}`).append(
+          '<i class="far fa-check-circle"></i>'
+        )
+      : null;
   }
   window.mapLists.appendMaps = appendMaps;
-
 
   $mapList.on("click", ".mapLi", function (event) {
     const id = event.target.id;

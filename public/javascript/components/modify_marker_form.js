@@ -1,6 +1,5 @@
 $(() => {
-  const $modifyMarkerForm =
-    $(`
+  const $modifyMarkerForm = $(`
     <form id = 'update-marker-frm'>
     <input type="hidden" name="map_id" value="">
     <div class="form-group">
@@ -25,28 +24,26 @@ $(() => {
 `);
   window.$modifyMarkerForm = $modifyMarkerForm;
 
-
   $modifyMarkerForm.on("click", "#submit-update", function (e) {
     if ($modifyMarkerForm[0].checkValidity()) {
       e.preventDefault();
-      const mapId = $(this).closest('form').find('input').first().val();
-      const data = $(this).closest('form').serialize();
-      $.when(getMaps(`map_id=${mapId}`), updateMarker(data)).done((map) =>
-        createMap(map[0].maps[0])
-      );
+      const mapId = $(this).closest("form").find("input").first().val();
+      const data = $(this).closest("form").serialize();
+      $.when(getMaps(`map_id=${mapId}`), updateMarker(data)).done((map) => {
+        createMap(map[0].maps[0]), views_manager.show("mainMap");
+      });
     } else {
-      alert('make sure to enter all fields with correct inputs');
+      alert("make sure to enter all fields with correct inputs");
     }
   });
 
   $modifyMarkerForm.on("click", "#submit-delete", function (e) {
     e.preventDefault();
-    const mapId = $(this).closest('form').find('input').first().val();
-    const id = $(this).closest('form').find('input').eq(3).val();
-    $.when(
-      getMaps(`map_id=${mapId}`),
-      deleteMarker(`id=${id}`)
-    ).done((map) => createMap(map[0].maps[0]));
+    const mapId = $(this).closest("form").find("input").first().val();
+    const id = $(this).closest("form").find("input").eq(3).val();
+    $.when(getMaps(`map_id=${mapId}`), deleteMarker(`id=${id}`)).done((map) => {
+      createMap(map[0].maps[0]);
+      views_manager.show("mainMap");
+    });
   });
-
-})
+});
