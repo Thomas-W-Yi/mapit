@@ -2,7 +2,6 @@ $(() => {
 
   const $main = $('#main-content');
 
-  window.$main = $main;
   window.views_manager = {};
 
   window.views_manager.show = function (item) {
@@ -10,6 +9,8 @@ $(() => {
     $signUpForm.detach();
     $mapList.detach();
     $mapForm.detach();
+    $newMarkerForm.detach();
+    $modifyMarker.detach();
 
     switch (item) {
       case 'logIn':
