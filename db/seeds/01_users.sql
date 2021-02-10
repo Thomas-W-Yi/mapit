@@ -2,7 +2,7 @@ INSERT INTO users (name, email, password) VALUES ('Alice', 'alice@wonderland.com
 INSERT INTO users (name, email, password) VALUES ('Kira', 'kira@newdev.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
 INSERT INTO users (name, email, password) VALUES ('Debra', 'debra@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
 INSERT INTO users (name, email, password) VALUES ('Bruce', 'brucee@hotmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
-INSERT INTO users (name, email, password) VALUES ('Alice', 'alice@wonderland.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
+INSERT INTO users (name, email, password) VALUES ('Alice2', 'alice@wondersdfland.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
 INSERT INTO users (name, email, password) VALUES ('Kira', 'kira@newdev.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
 INSERT INTO users (name, email, password) VALUES ('Mohammed', 'mohammed@gmail.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
 INSERT INTO users (name, email, password) VALUES ('Oreo', 'example@example.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
