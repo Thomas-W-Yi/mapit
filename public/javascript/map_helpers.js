@@ -87,9 +87,8 @@ $(() => {
   window.createMarkers = createMarkers;
 
   // create list map list based on the map date from map api, if second argument provided, we will use this to label the current map item
-  const getList = (data, currentMapId) => {
+  const getList = ({ maps }, currentMapId) => {
     $mainMap.find("#listUl").children().remove();
-    const { maps } = data;
     maps.map((obj) => {
       const map = obj;
 
