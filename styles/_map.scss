@@ -1,20 +1,40 @@
-#map-container{
+#map-container {
   position: relative;
-top: 0;
-left: 0;
+  top: 0;
+  left: 0;
 }
- #mymap {
-   position: relative;
-top: 0;
-left: 0;
-   width: 400px;
-   height: 400px;
+#mymap {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 70vw;
+  height: 70vh;
+}
+#addMap {
+  position: absolute;
+  font-size: 40px;
+  top: 85%;
+  left: 5%;
+  z-index: 10000000000 !important;
+}
 
- }
- #addMap{
-   position: absolute;
-   font-size: 40px;
-   top: 85%;
-   left: 5%;
-   z-index: 10000000000 !important;
+@media only screen and (max-width: 420px) {
+  #mymap {
+    width: 100vw;
+    height: 50vh;
   }
+}
+
+@media only screen and (min-width: 421px) and (max-width: 767px) {
+  #mymap {
+    width: 70vw;
+    height: 70vh;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  #mymap {
+    width: 100vw;
+    height: 50vh;
+  }
+}
