@@ -3,7 +3,9 @@ $(() => {
 
   //second params for options (stretch if we decide that it a favorite or not)
   function createMapLi(map, isLoggedIn) {
-    let favResult = map.favorited ? "s" : "r";
+    let favResult = map.favorited ?
+    `<i class="fas fa-heart heart"></i>`:
+    `<i class="far fa-heart heart"></i>`;
     let mapListItem = `<li id="${map.id}" class="mapLi list-group-item-action list-group-item-`;
     switch (map.id % 5) {
       case 0:
@@ -22,7 +24,9 @@ $(() => {
         mapListItem += `warning`;
         break;
     }
-    mapListItem += `">${map.name}<i class="fa${favResult} fa-heart heart"></i></li>`;
+    mapListItem += `">${map.name}`;
+
+   mapListItem += isLoggedIn ? `${favResult}</li>` : `</li>`;
 
     return mapListItem;
   }

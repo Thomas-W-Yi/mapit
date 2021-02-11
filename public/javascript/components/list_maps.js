@@ -9,28 +9,20 @@ $(() => {
     $mapList.append(map);
   }
 
-  /**
-   * Get all MAPS (list). if we decide to add buttons onto the list options (stretch)
-   * @param {{
-   * isCreated = false,
-   * isFavorites = false,
-   * isContributed = false,
-   * currentMapId = null
-   * }} options An object containing conditional options.
-   *
-   */
-
   function appendMaps({ maps }, currentMapId = false) {
-    $mapList.children().remove();
-    for (const map of maps) {
-      const mapListItem = mapList.createMapLi(map);
-      appendMap(mapListItem);
-    }
-    currentMapId
-      ? $(`#${currentMapId}`).append(
-        '<i class="far fa-check-circle"></i>'
-      )
-      : null;
+    getMyDetails()
+      .then((json) => {
+        $mapList.children().remove();
+        for (const map of maps) {
+          const mapListItem = mapList.createMapLi(map, json.user);
+          appendMap(mapListItem);
+        }
+        currentMapId
+          ? $(`#${currentMapId}`).append(
+            '<i class="far fa-check-circle"></i>'
+          )
+          : null;
+      })
   }
   window.mapLists.appendMaps = appendMaps;
 
@@ -47,7 +39,7 @@ $(() => {
     const data = `map_id=${id}`;
     addFavorite(data)
       .then(getMyDetails)
-      .then(({user}) => getMaps(`${window.currentList}${user.id}`))
+      .then(({ user }) => getMaps(`${window.currentList}${user.id}`))
       .then((maps) => {
         appendMaps(maps);
         views_manager.show("mapList");
@@ -60,7 +52,7 @@ $(() => {
     const data = `map_id=${id}`;
     deleteFavorite(data)
       .then(getMyDetails)
-      .then(({user}) => getMaps(`${window.currentList}${user.id}`))
+      .then(({ user }) => getMaps(`${window.currentList}${user.id}`))
       .then((maps) => {
         appendMaps(maps);
         views_manager.show("mapList");
