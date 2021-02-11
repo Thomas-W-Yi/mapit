@@ -2,16 +2,23 @@
   display: flex;
   flex-direction: $direction;
   justify-content: center;
-
+  align-items: center;
 }
 
 
 #listUl{
   width: 100%;
-}
-li{
- display: flex;
- justify-content: space-between;
+  @include flexCenter(column);
+  margin: 0%;
+  padding-left: 0%;
+  li{
+    @include flexCenter(row);
+    justify-content: space-between;
+    height: 5vh;
+   &:hover {
+     transform: scale(1);
+   }
+  }
 }
 .fa-heart{
  order: 1;
