@@ -1,6 +1,6 @@
 $(() => {
   const $mapForm = $(`
-    <form id = 'add-map-frm'>
+    <form id='add-map-frm' class="marker-form">
     <div class="form-group">
     <input name="name" type="text" class="form-control" id="InputText"  placeholder="Enter Map Name" required>
     </div>
@@ -31,10 +31,5 @@ $(() => {
         views_manager.show("mapList");
       });
     });
-
-    // addMarker(data)
-    //   .then(() => getMaps(`map_id=${mapId}`))
-    //   .then(({ maps }) => createMap(maps[0]));
-    // views_manager.show("mapList");
   });
 });
