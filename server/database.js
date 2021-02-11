@@ -45,7 +45,7 @@ const getMaps = function (options) {
     `;
   }
 
-  queryString += `;`;
+  queryString += `ORDER BY maps.name;`;
 
   return db.query(queryString, queryValue)
     .then(res => {
