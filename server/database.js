@@ -46,7 +46,6 @@ const getMaps = function (options) {
   }
 
   queryString += `;`;
-  console.log(queryValue);
 
   return db.query(queryString, queryValue)
     .then(res => {
