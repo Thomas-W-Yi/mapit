@@ -27,6 +27,11 @@ $(() => {
     e.preventDefault();
     const mapId = $(this).find('input').first().val();
     const data = $(this).serialize();
+
+    $newMarkerForm.each(function() {
+      this.reset()
+    });
+
     addMarker(data)
     .then(() => getMaps(`map_id=${mapId}`))
     .then(({maps}) =>
