@@ -16,5 +16,6 @@
 @media only screen and (max-width: 1023px) {
   #new-marker-frm {
     @include flexCenter(column);
+    padding: 5px 100px;
   }
 }
