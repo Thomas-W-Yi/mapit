@@ -1,6 +1,6 @@
 $(() => {
   const $modifyMarkerForm = $(`
-    <form id = 'update-marker-frm'>
+    <form id='update-marker-frm' class="marker-form">
     <input type="hidden" name="map_id" value="">
     <div class="form-group">
     <input type="text" placeholder="Latitude" name = 'latitude' class="form-control" id="InputText" value="" readonly required>
@@ -18,7 +18,7 @@ $(() => {
     <div class="form-group">
     <input type="url" name="img_url" class="form-control" id="InputImgUrl" placeholder="Img Url" required>
     </div>
-  <button type="button" id="submit-update" class="btn btn-primary">Update Point</button>
+  <button type="button" id="submit-update" class="btn btn-outline-light">Update Point</button>
   <button type="button" id="submit-delete" class="btn btn-danger">Delete Point</button>
 </form>
 `);

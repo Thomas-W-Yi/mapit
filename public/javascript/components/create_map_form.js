@@ -13,7 +13,7 @@ $(() => {
     <div class="form-group">
     <input name="country" type="text" class="form-control" id="InputDescription" placeholder="Enter The country" required>
     </div>
-    <button type="submit" class="btn btn-primary">Create Map</button>
+    <button type="submit" class="btn btn-light">Create Map</button>
     </form>`);
 
   window.$mapForm = $mapForm;
