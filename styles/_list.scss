@@ -1,0 +1,18 @@
+@mixin flexCenter($direction) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+
+}
+
+
+#listUl{
+  width: 100%;
+}
+li{
+ display: flex;
+ justify-content: space-between;
+}
+.fa-heart{
+ order: 1;
+}

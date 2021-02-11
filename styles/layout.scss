@@ -1,5 +1,12 @@
 // See: https://sass-lang.com/
 
+@import "./variables";
+@import "./map";
+@import "./list";
+@import "./header";
+
+
+
 body {
   background-color: #EEE;
 
@@ -8,33 +15,5 @@ body {
   }
 }
 
-#map-container{
-  position: relative;
-top: 0;
-left: 0;
-}
- #mymap {
-   position: relative;
-top: 0;
-left: 0;
-   width: 400px;
-   height: 400px;
 
- }
- #listUl{
-   width: 100%;
- }
- #addMap{
-   position: absolute;
-   font-size: 40px;
-top: 85%;
-left: 5%;
-z-index: 10000000000 !important;
- }
- li{
-   display: flex;
-   justify-content: space-between;
- }
- .fa-heart{
-   order: 1;
- }
+
