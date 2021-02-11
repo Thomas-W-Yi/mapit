@@ -6,5 +6,9 @@ header {
   }
   .dropdown-menu {
     font-size: 150%;
+    ul {
+      position: relative;
+      z-index: 1200;
+    }
 }
 }
