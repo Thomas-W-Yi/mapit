@@ -35,7 +35,11 @@ $(() => {
           return;
         }
         header.update(json.user);
-        views_manager.show('mainMap');
+        })
+        .then(getMaps)
+        .then((maps) =>  {
+          mapLists.appendMaps(maps)
+          views_manager.show('mainMap');
       });
   });
 });

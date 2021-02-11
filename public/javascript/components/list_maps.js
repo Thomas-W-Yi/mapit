@@ -62,8 +62,6 @@ $(() => {
     deleteFavorite(data)
       .then(() =>getMaps(window.currentList))
       .then((maps) => {
-
-
         appendMaps(maps);
         views_manager.show("mapList");
       });
