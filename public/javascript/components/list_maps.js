@@ -41,26 +41,29 @@ $(() => {
     });
   });
   $mapList.on("click", ".far", function (event) {
-    console.log("hollow clicked");
+
     event.stopPropagation();
     const id = $(this).parent().attr("id");
     const data = `map_id=${id}`;
     addFavorite(data)
       .then(() => getMaps(window.currentList))
       .then((maps) => {
+
         appendMaps(maps);
         views_manager.show("mapList");
       });
   });
 
   $mapList.on("click", ".fas", function (event) {
-    console.log("solid clicked");
+
     event.stopPropagation();
     const id = $(this).parent().attr("id");
     const data = `map_id=${id}`;
     deleteFavorite(data)
-      .then(() => getMaps(window.currentList))
+      .then(() =>getMaps(window.currentList))
       .then((maps) => {
+
+
         appendMaps(maps);
         views_manager.show("mapList");
       });

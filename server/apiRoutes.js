@@ -88,7 +88,10 @@ module.exports = function (router, database) {
   router.delete('/favorites', (req, res) => {
     const userId = req.session.userId;
     database.deleteFavorite({...req.body, user_id: userId})
-      .then(() => res.status(200).send(1))
+      .then(() => {
+      console.log('check delete routes')
+      res.send()
+    })
       .catch((error) => {
         console.error(error);
         res.send(error);
