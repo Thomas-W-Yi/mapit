@@ -22,9 +22,6 @@ main {
   margin: 10em;
   @include bgImageLinear;
   border-radius: 2%;
-  p{
-    color: white;
-  }
 }
 
 .form-label-group {
