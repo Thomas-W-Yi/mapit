@@ -24,7 +24,6 @@ $(() => {
     let url = `https://nominatim.openstreetmap.org/search?q=${data[1].value},+${data[2].value}+${data[3].value}&&format=json&polygon=1&addressdetails=1`;
     axios.get(url).then((res) => {
       const send = `name=${data[0].value}&latitude=${res.data[0].lat}&longitude=${res.data[0].lon}`;
-      console.log(send);
       addMap(send).then((res) => {
         getMaps().then((maps) => {
           mapLists.appendMaps(maps);
