@@ -40,8 +40,8 @@ $(() => {
       clickMap(maps, event.target.id);
     });
   });
-  $mapList.on("click", ".far", function (event) {
 
+  $mapList.on("click", ".far", function (event) {
     event.stopPropagation();
     const id = $(this).parent().attr("id");
     const data = `map_id=${id}`;
@@ -55,7 +55,6 @@ $(() => {
   });
 
   $mapList.on("click", ".fas", function (event) {
-
     event.stopPropagation();
     const id = $(this).parent().attr("id");
     const data = `map_id=${id}`;
