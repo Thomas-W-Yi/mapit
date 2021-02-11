@@ -3,11 +3,8 @@ module.exports = function (router, database) {
   // Main GET maps route to get the maps----- either all maps or filtered through req.query
   router.get('/maps', (req, res) => {
     const userId = req.session.userId;
-    console.log(userId);
-    console.log({...req.query, user_id: userId});
     database.getMaps({...req.query, user_id: userId})
     .then(maps => {
-      console.log({maps})
       res.send({maps})
     })
     .catch((error) => {
