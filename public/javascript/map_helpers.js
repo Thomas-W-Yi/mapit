@@ -45,18 +45,19 @@ $(() => {
         L.marker([latitude, longitude], { icon: myIcon })
           // click event on marker will trigger new form for update/delete for this marker
           .on("click", function (event) {
+            const $modifyMarkerInput = $modifyMarkerForm.find("input");
             const { lat, lng } = event.latlng;
             if (!jQuery.contains(document, $modifyMarkerForm[0])) {
               getMyDetails().then((user) => {
                 if (user) {
                   views_manager.show("updateMarkerForm");
-                  $modifyMarkerForm.find("input").first().val(mapId);
+                  $modifyMarkerInput.first().val(mapId);
                 }
               });
             }
-            $modifyMarkerForm.find("input").eq(1).val(lat);
-            $modifyMarkerForm.find("input").eq(2).val(lng);
-            $modifyMarkerForm.find("input").eq(3).val(id);
+            $modifyMarkerInput.eq(1).val(lat);
+            $modifyMarkerInput.eq(2).val(lng);
+            $modifyMarkerInput.eq(3).val(id);
           })
           .addTo(mymap)
           .bindPopup(`<p>${title}<br />${description}.</p>`)
