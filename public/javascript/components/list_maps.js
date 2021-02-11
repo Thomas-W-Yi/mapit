@@ -28,8 +28,8 @@ $(() => {
     }
     options.currentMapId
       ? $(`#${options.currentMapId}`).append(
-          '<i class="far fa-check-circle"></i>'
-        )
+        '<i class="far fa-check-circle"></i>'
+      )
       : null;
   }
   window.mapLists.appendMaps = appendMaps;
@@ -46,9 +46,9 @@ $(() => {
     const id = $(this).parent().attr("id");
     const data = `map_id=${id}`;
     addFavorite(data)
-      .then(() => getMaps(window.currentList))
+      .then(getMyDetails)
+      .then(({user}) => getMaps(`${window.currentList}${user.id}`))
       .then((maps) => {
-
         appendMaps(maps);
         views_manager.show("mapList");
       });
@@ -59,7 +59,8 @@ $(() => {
     const id = $(this).parent().attr("id");
     const data = `map_id=${id}`;
     deleteFavorite(data)
-      .then(() =>getMaps(window.currentList))
+      .then(getMyDetails)
+      .then(({user}) => getMaps(`${window.currentList}${user.id}`))
       .then((maps) => {
         appendMaps(maps);
         views_manager.show("mapList");

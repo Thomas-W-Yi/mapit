@@ -82,19 +82,19 @@ $(() => {
       case "favorites-li":
         getMaps(`favUser_id=${currentUser.id}`).then((maps) => mapLists.appendMaps(maps))
         ;
-        window.currentList = `favUser_id=${currentUser.id}`;
+        window.currentList = `favUser_id=`;
         views_manager.show('mapList');
         break;
       case "contributions-li":
         getMaps(`contributor_id=${currentUser.id}`).then((maps) =>
         mapLists.appendMaps(maps)
         );
-        window.currentList = `contributor_id=${currentUser.id}`;
+        window.currentList = `contributor_id=`;
         views_manager.show('mapList');
         break;
       case "maps-li":
         getMaps(`owner_id=${currentUser.id}`).then((maps) => mapLists.appendMaps(maps));
-        window.currentList = `owner_id=${currentUser.id}`;
+        window.currentList = `owner_id=`;
         views_manager.show('mapList');
         break;
       case "home-btn":
