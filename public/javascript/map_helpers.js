@@ -127,18 +127,18 @@ $(() => {
     }
 
     theMarker = L.marker([lat, lng], { icon: myIcon }).addTo(mymap);
-
+    const $newMarkerInput = $newMarkerForm.find("input");
     //checks if form already exists before making useless ajax get request
     if (!jQuery.contains(document, $newMarkerForm[0])) {
       getMyDetails().then((user) => {
         if (user) {
           views_manager.show("newMarkerForm");
-          $newMarkerForm.find("input").first().val(id);
+          $newMarkerInput.first().val(id);
         }
       });
     }
-    $newMarkerForm.find("input").eq(1).val(lat);
-    $newMarkerForm.find("input").eq(2).val(lng);
+    $newMarkerInput.eq(1).val(lat);
+    $newMarkerInput.eq(2).val(lng);
   };
 
   window.mapClickMarker = mapClickMarker;
