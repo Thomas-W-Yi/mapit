@@ -14,11 +14,12 @@
   .list-group-item-action{
     @include flexCenter(row);
     padding: 0 5vh;
+    font-family: 'Courgette', ;
     justify-content: space-between;
     height: 5vh;
    &:hover {
      width: inherit;
-     height: 4em;
+     height: 7em;
    }
   }
 }
