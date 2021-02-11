@@ -11,6 +11,7 @@ $(() => {
       currentMapId = false,
     } = false
   ) {
+    let favResult = map.favorited ? 's' : 'r';
     let mapListItem = `<li id="${map.id}" class="mapLi list-group-item-action list-group-item-`;
     switch (map.id % 5) {
       case 0:
@@ -29,7 +30,7 @@ $(() => {
         mapListItem += `warning`;
         break;
     }
-    mapListItem += `">${map.name}<i class="far fa-heart hollow-heart"></i></li>`;
+    mapListItem += `">${map.name}<i class="fa${favResult} fa-heart heart"></i></li>`;
 
     return mapListItem;
   }

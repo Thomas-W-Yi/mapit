@@ -60,6 +60,8 @@ $(() => {
 
   window.header.update = updateHeader;
 
+  window.currentList = null;
+
   getMyDetails().then((json) => updateHeader(json.user));
 
   $($pageHeader).click(function (evt) {
@@ -80,18 +82,24 @@ $(() => {
       case "favorites-li":
         getMaps(`favUser_id=${currentUser.id}`).then((maps) => mapLists.appendMaps(maps))
         ;
+        window.currentList = `favUser_id=${currentUser.id}`;
         views_manager.show('mapList');
         break;
       case "contributions-li":
         getMaps(`contributor_id=${currentUser.id}`).then((maps) =>
         mapLists.appendMaps(maps)
         );
+        window.currentList = `contributor_id=${currentUser.id}`;
+        views_manager.show('mapList');
         break;
       case "maps-li":
         getMaps(`owner_id=${currentUser.id}`).then((maps) => mapLists.appendMaps(maps));
+        window.currentList = `owner_id=${currentUser.id}`;
+        views_manager.show('mapList');
         break;
       case "home-btn":
         getMaps().then((maps) => mapLists.appendMaps(maps));
+        window.currentList = null;
         views_manager.show("mainMap");
         break;
       default:

@@ -28,8 +28,8 @@ $(() => {
     }
     options.currentMapId
       ? $(`#${options.currentMapId}`).append(
-          '<i class="far fa-check-circle"></i>'
-        )
+        '<i class="far fa-check-circle"></i>'
+      )
       : null;
   }
   window.mapLists.appendMaps = appendMaps;
@@ -40,13 +40,13 @@ $(() => {
       clickMap(maps, event.target.id);
     });
   });
-  $mapList.on("click", ".hollow-heart", function (event) {
+  $mapList.on("click", ".heart", function (event) {
     event.stopPropagation();
     const id = $(this).parent().attr("id");
     const data = `map_id=${id}`;
-    addFavorite(data).then((res) => {
-      $(this).html("");
-      $(this).html('<i class="fas fa-heart"></i>');
+    addFavorite(data).then(() => getMaps(window.currentList)).then((maps) => {
+      appendMaps(maps);
+      views_manager.show('mapList');
     });
   });
 });
