@@ -27,8 +27,15 @@ $(() => {
   $modifyMarkerForm.on("click", "#submit-update", function (e) {
     if ($modifyMarkerForm[0].checkValidity()) {
       e.preventDefault();
-      const mapId = $(this).closest("form").find("input").first().val();
-      const data = $(this).closest("form").serialize();
+      const $formElement = $(this).closest("form");
+      const $formInputs = $formElement.find("input");
+      const mapId = $formInputs.first().val();
+      const data = $formElement.serialize();
+
+      $formElement.each(function() {
+        this.reset()
+      });
+
       $.when(getMaps(`map_id=${mapId}`), updateMarker(data)).done((map) => {
         createMap(map[0].maps[0]), views_manager.show("mainMap");
       });
