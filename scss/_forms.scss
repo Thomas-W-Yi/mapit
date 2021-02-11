@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: $direction;
   justify-content: center;
-  align-items: center;
+  align-content: flex-start;
 }
 
-#new-marker-frm {
+.marker-form {
     @include flexCenter(row);
     @include bgImageLinear;
     border-radius: 1%;
