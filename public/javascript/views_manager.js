@@ -28,9 +28,6 @@ $(() => {
       case "mapList":
         $mapList.appendTo($main);
         break;
-      // case "createMap":
-      //   $mapForm.appendTo($main);
-      //   break;
       case "newMarkerForm":
         $newMarkerForm.appendTo($main);
         break;
