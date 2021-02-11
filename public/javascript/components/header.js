@@ -74,31 +74,44 @@ $(() => {
         views_manager.show("signUp");
         break;
       case "logout-btn":
-        logOut().then(() => header.update(null));
+        logOut()
+        .then(() => header.update(null))
+        .then(getMaps)
+        .then((maps) => {
+          mapLists.appendMaps(maps);
+        });
+        views_manager.show("mapList");
         break;
       case "create-maps-li":
         views_manager.show("mapForm");
         break;
       case "favorites-li":
-        getMaps(`favUser_id=${currentUser.id}`).then((maps) => mapLists.appendMaps(maps))
-        ;
+        getMaps(`favUser_id=${currentUser.id}`)
+        .then((maps) =>
+          mapLists.appendMaps(maps)
+        );
         window.currentList = `favUser_id=`;
-        views_manager.show('mapList');
+        views_manager.show("mapList");
         break;
       case "contributions-li":
-        getMaps(`contributor_id=${currentUser.id}`).then((maps) =>
-        mapLists.appendMaps(maps)
+        getMaps(`contributor_id=${currentUser.id}`)
+        .then((maps) =>
+          mapLists.appendMaps(maps)
         );
         window.currentList = `contributor_id=`;
-        views_manager.show('mapList');
+        views_manager.show("mapList");
         break;
       case "maps-li":
-        getMaps(`owner_id=${currentUser.id}`).then((maps) => mapLists.appendMaps(maps));
+        getMaps(`owner_id=${currentUser.id}`)
+        .then((maps) =>
+          mapLists.appendMaps(maps)
+        );
         window.currentList = `owner_id=`;
-        views_manager.show('mapList');
+        views_manager.show("mapList");
         break;
       case "home-btn":
-        getMaps().then((maps) => mapLists.appendMaps(maps));
+        getMaps()
+        .then((maps) => mapLists.appendMaps(maps));
         window.currentList = null;
         views_manager.show("mainMap");
         break;
