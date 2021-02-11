@@ -47,8 +47,6 @@ $(() => {
     addFavorite(data).then((res) => {
       $(this).html("");
       $(this).html('<i class="fas fa-heart"></i>');
-
-      console.log($(this));
     });
   });
 });
