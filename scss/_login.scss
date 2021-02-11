@@ -20,7 +20,8 @@ main {
   max-width: 420px;
   padding: 30px;
   margin: 10em;
-  background-color: #f5f5f5;
+  background-image: linear-gradient($angle, $bgColor1, $bgColor2);
+  border-radius: 2%;
 }
 
 .form-label-group {
@@ -45,22 +46,6 @@ main {
   border: 1px solid transparent;
   border-radius: .25rem;
   transition: all .1s ease-in-out;
-}
-
-.form-label-group input::-webkit-input-placeholder {
-  color: transparent;
-}
-
-.form-label-group input:-ms-input-placeholder {
-  color: transparent;
-}
-
-.form-label-group input::-ms-input-placeholder {
-  color: transparent;
-}
-
-.form-label-group input::-moz-placeholder {
-  color: transparent;
 }
 
 .form-label-group input::placeholder {
