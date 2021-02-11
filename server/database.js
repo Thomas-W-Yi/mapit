@@ -6,44 +6,65 @@ const { Pool } = require('pg');
 const db = new Pool(dbParams);
 
 const getMaps = function (options) {
-  let queryValue = [];
+  let queryValue = [options.user_id];
   let queryString = `
-  SELECT DISTINCT maps.*, users.name as user_name
+  SELECT DISTINCT maps.*, users.name as user_name, CASE WHEN EXISTS (SELECT *
+  FROM favorites
+  WHERE maps.id = favorites.map_id
+  AND favorites.user_id = $1
+  ) THEN TRUE ELSE FALSE END
+  AS favorited
   FROM maps
   JOIN users on maps.user_id = users.id `;
 
   if (options.map_id) {
-    queryValue = [options.map_id]
-    queryString += `WHERE maps.id = $1`;
+    queryValue.push(options.map_id)
+    queryString += `WHERE maps.id = $2`;
   }
 
   if (options.owner_id) {
-    queryValue = [options.owner_id]
+    queryValue.push(options.owner_id)
     queryString += `
-    WHERE maps.user_id = $1
+    WHERE maps.user_id = $2
     `;
   }
 
   if (options.contributor_id) {
-    queryValue = [options.contributor_id]
+    queryValue.push(options.contributor_id)
     queryString += `
     JOIN markers ON maps.id = markers.map_id
-    WHERE markers.user_id = $1
+    WHERE markers.user_id = $2
     `;
   }
 
   if (options.favUser_id) {
-    queryValue = [options.favUser_id]
+    queryValue.push(options.favUser_id)
     queryString += `
     JOIN favorites ON maps.id = favorites.map_id
-    WHERE favorites.user_id = $1
+    WHERE favorites.user_id = $2
     `;
   }
 
   queryString += `;`;
+  console.log(queryValue);
 
   return db.query(queryString, queryValue)
-    .then(res => res.rows)
+    .then(res => {
+      let anonymousArray = res.rows;
+      let outputArray = [];
+      for (let single of anonymousArray) {
+      let singleObj = {};
+      singleObj.id = single.id;
+      singleObj.user_id = single.user_id;
+      singleObj.latitude = single.latitude;
+      singleObj.longitude = single.longitude;
+      singleObj.name = single.name;
+      singleObj.user_name = single.user_name;
+      singleObj.favorited = single.favorited;
+      outputArray.push(singleObj)
+      }
+    return outputArray;
+    })
     .catch(() => null);
 }
 
