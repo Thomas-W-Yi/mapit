@@ -1,14 +1,15 @@
 header {
-  font-family: 'Indie Flower', cursive;
+  font-family: "Indie Flower", cursive;
   font-size: 150%;
   button {
     font-size: inherit;
   }
+
   .dropdown-menu {
     font-size: 150%;
     ul {
       position: relative;
       z-index: 1200;
     }
-}
+  }
 }
