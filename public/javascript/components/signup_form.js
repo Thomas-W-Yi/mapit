@@ -3,7 +3,7 @@ $(() => {
   const $signUpForm = $(`
   <form class="form-signin">
     <div class="text-center mb-4">
-      <img class="mb-4" src="" alt="" width="72"
+      <img class="mb-4" src="APP-LOGO.png" alt="" width="72"
         height="72">
       <h1 class="h3 mb-3 font-weight-normal">Map It!</h1>
     </div>
