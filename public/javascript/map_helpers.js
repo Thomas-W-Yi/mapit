@@ -71,9 +71,6 @@ $(() => {
   const createMap = (map) => {
     $("#map-container").html("");
     $("#map-container").html(`<div id="mymap">
-      </div>
-      <div id="addMapDiv">
-      <i id='addMap' class="fas fa-plus-circle"></i>
       </div>`);
     // get lat, lng, name, and id from map obj
     const { latitude, longitude, name, id } = map;

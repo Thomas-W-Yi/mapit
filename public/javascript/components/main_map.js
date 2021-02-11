@@ -4,9 +4,6 @@ $(() => {
   <div id="map-container">
       <div id="mymap">
       </div>
-      <div id="addMapDiv">
-      <i id='addMap' class="fas fa-plus-circle"></i>
-      </div>
     </div>
   `);
   window.$mainMap = $mainMap;
