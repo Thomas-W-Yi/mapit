@@ -20,14 +20,14 @@ $(() => {
    *
    */
 
-  function appendMaps({ maps }, options = false) {
+  function appendMaps({ maps }, currentMapId = false) {
     $mapList.children().remove();
     for (const map of maps) {
-      const mapListItem = mapList.createMapLi(map, options);
+      const mapListItem = mapList.createMapLi(map);
       appendMap(mapListItem);
     }
-    options.currentMapId
-      ? $(`#${options.currentMapId}`).append(
+    currentMapId
+      ? $(`#${currentMapId}`).append(
         '<i class="far fa-check-circle"></i>'
       )
       : null;

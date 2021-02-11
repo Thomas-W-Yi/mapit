@@ -102,7 +102,7 @@ $(() => {
       }
     });
     createMap(map);
-    mapLists.appendMaps({ maps }, { currentMapId });
+    mapLists.appendMaps({ maps }, currentMapId);
   };
 
   window.clickMap = clickMap;

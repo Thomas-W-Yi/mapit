@@ -2,15 +2,7 @@ $(() => {
   window.mapList = {};
 
   //second params for options (stretch if we decide that it a favorite or not)
-  function createMapLi(
-    map,
-    {
-      isCreated = false,
-      isFavorites = false,
-      isContributed = false,
-      currentMapId = false,
-    } = false
-  ) {
+  function createMapLi(map, isLoggedIn) {
     let favResult = map.favorited ? "s" : "r";
     let mapListItem = `<li id="${map.id}" class="mapLi list-group-item-action list-group-item-`;
     switch (map.id % 5) {
