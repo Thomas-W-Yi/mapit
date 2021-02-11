@@ -1,6 +1,6 @@
 :root {
-  --input-padding-x: .75rem;
-  --input-padding-y: .75rem;
+  --input-padding-x: 0.75rem;
+  --input-padding-y: 0.75rem;
 }
 
 html,
@@ -20,8 +20,11 @@ main {
   max-width: 420px;
   padding: 30px;
   margin: 10em;
-  background-image: linear-gradient($angle, $bgColor1, $bgColor2);
+  @include bgImageLinear;
   border-radius: 2%;
+  p{
+    color: white;
+  }
 }
 
 .form-label-group {
@@ -44,8 +47,8 @@ main {
   line-height: 1.5;
   color: #495057;
   border: 1px solid transparent;
-  border-radius: .25rem;
-  transition: all .1s ease-in-out;
+  border-radius: 0.25rem;
+  transition: all 0.1s ease-in-out;
 }
 
 .form-label-group input::placeholder {

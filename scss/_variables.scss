@@ -1,3 +1,8 @@
 $bgColor1: #7776fe;
 $bgColor2: #b027ef;
 $angle: 10deg;
+
+@mixin bgImageLinear {
+  background-image: linear-gradient($angle, $bgColor1, $bgColor2);
+  color: white;
+}

@@ -7,7 +7,7 @@
 
 #new-marker-frm {
     @include flexCenter(row);
-    background-image: linear-gradient($angle, $bgColor1, $bgColor2);
+    @include bgImageLinear;
     border-radius: 1%;
     padding: 100px;
     margin: 1vh;
