@@ -5,13 +5,14 @@
   align-content: flex-start;
 }
 
-.marker-form {
-    @include flexCenter(column);
-    @include bgImageLinear;
-    border-radius: 1%;
-    padding: 100px;
-    margin: 1vh;
- }
+main .marker-form {
+  @include flexCenter(column);
+  @include bgImageLinear;
+  border-radius: 1%;
+  padding: 100px;
+  margin: 1vh;
+  align-items: stretch;
+}
 
 @media only screen and (max-width: 1023px) {
   #new-marker-frm {
