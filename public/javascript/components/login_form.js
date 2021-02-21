@@ -1,5 +1,4 @@
 $(() => {
-
   const $logInForm = $(`
   <form class="form-signin">
     <div class="text-center mb-4">
@@ -24,22 +23,22 @@ $(() => {
 
   window.$logInForm = $logInForm;
 
-  $logInForm.on('submit', function(event) {
+  $logInForm.on("submit", function (event) {
     event.preventDefault();
 
     const data = $(this).serialize();
     logIn(data)
-      .then(json => {
+      .then((json) => {
         if (!json.user) {
-          views_manager.show('error', 'Failed to login');
+          views_manager.show("error", "Failed to login");
           return;
         }
         header.update(json.user);
-        })
-        .then(getMaps)
-        .then((maps) =>  {
-          mapLists.appendMaps(maps)
-          views_manager.show('mainMap');
+      })
+      .then(getMaps)
+      .then((maps) => {
+        mapLists.appendMaps(maps);
+        views_manager.show("mainMap");
       });
   });
 });
