@@ -1,25 +1,16 @@
 # Map IT!
 
-## Final Product
+MapIt! is a full-stack single-page RESTful web application allowing users to share and create categorized maps. [Below are screenshots of the project](#final-product)
 
-!["screenshot of the main page"](https://github.com/thomaswyee/mapit/blob/master/public/images/Main.png)
-_screenshot of the main page_
-!["screenshot of the login page"](https://github.com/thomaswyee/mapit/blob/master/public/images/Login.png)
-_screenshot of the login page_
-!["screenshot of the register page"](https://github.com/thomaswyee/mapit/blob/master/public/images/SignUp.png)
-_screenshot of the register page_
-!["screenshot of the main page after sign in"](https://github.com/thomaswyee/mapit/blob/master/public/images/Main_Signed_In.png)
-_screenshot of the main page_
-!["screenshot of favourite page"](https://github.com/thomaswyee/mapit/blob/master/public/images/myFavs.png)
-_screenshot of favourite page_
-!["screenshot of contributed page"](https://github.com/thomaswyee/mapit/blob/master/public/images/contributed_maps.png)
-_screenshot of contributed page_
-!["screenshot of created page"](https://github.com/thomaswyee/mapit/blob/master/public/images/created_map_nav.png)
-_screenshot of created page_
-!["screenshot of the edit marker page"](https://github.com/thomaswyee/mapit/blob/master/public/images/update_marker_form.png)
-_screenshot of the edit marker page_
-!["screenshot of the mobile view"](https://github.com/thomaswyee/mapit/blob/master/public/images/mobile_view.png)
-_screenshot of the mobile view_
+The Stack used for this projects are:
+
+1. Node.js
+2. Express
+3. AJAX
+4. jQuery
+5. SCSS
+6. LeafletJS
+7. PostgreSQL
 
 ## Getting Started
 
@@ -56,3 +47,24 @@ _screenshot of the mobile view_
 - Node 10.x or above
 - NPM 5.x or above
 - PG 6.x
+
+## Final Product
+
+!["screenshot of the main page"](https://github.com/thomaswyee/mapit/blob/master/public/images/Main.png)
+_screenshot of the main page_
+!["screenshot of the login page"](https://github.com/thomaswyee/mapit/blob/master/public/images/Login.png)
+_screenshot of the login page_
+!["screenshot of the register page"](https://github.com/thomaswyee/mapit/blob/master/public/images/SignUp.png)
+_screenshot of the register page_
+!["screenshot of the main page after sign in"](https://github.com/thomaswyee/mapit/blob/master/public/images/Main_Signed_In.png)
+_screenshot of the main page_
+!["screenshot of favourite page"](https://github.com/thomaswyee/mapit/blob/master/public/images/myFavs.png)
+_screenshot of favourite page_
+!["screenshot of contributed page"](https://github.com/thomaswyee/mapit/blob/master/public/images/contributed_maps.png)
+_screenshot of contributed page_
+!["screenshot of created page"](https://github.com/thomaswyee/mapit/blob/master/public/images/created_map_nav.png)
+_screenshot of created page_
+!["screenshot of the edit marker page"](https://github.com/thomaswyee/mapit/blob/master/public/images/update_marker_form.png)
+_screenshot of the edit marker page_
+!["screenshot of the mobile view"](https://github.com/thomaswyee/mapit/blob/master/public/images/mobile_view.png)
+_screenshot of the mobile view_
