@@ -5,7 +5,7 @@ $(() => {
     <input name="name" type="text" class="form-control" id="InputText"  placeholder="Enter Map Name" required>
     </div>
     <div class="form-group">
-    <input name="street" type="text" class="form-control" id="InputDescription" placeholder="Enter the housenumber and street" required>
+    <input name="street" type="text" class="form-control" id="InputDescription" placeholder="Enter street Address" required>
     </div>
     <div class="form-group">
     <input name="city" type="text" class="form-control" id="InputDescription" placeholder="Enter The city" required>
