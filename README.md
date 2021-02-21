@@ -2,7 +2,7 @@
 
 ## Final Product
 
-!["screenshot of the main page"](https://github.com/thomaswyee/mapit/commit/0eee3109d3cd06ebd4bacdaac7c192d9deec3049)
+!["screenshot of the main page"](https://github.com/thomaswyee/mapit/blob/master/public/images/Main.png)
 _screenshot of the main page_
 !["screenshot of the login page"](https://github.com/thomaswyee/mapit/blob/master/public/images/Login.png)
 _screenshot of the login page_
