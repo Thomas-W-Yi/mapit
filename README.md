@@ -2,7 +2,7 @@
 
 MapIt! is a full-stack single-page RESTful web application allowing users to share and create categorized maps. [Below are screenshots of the project](#final-product)
 
-The Stack used for this projects are:
+The Stack used for this project:
 
 1. Node.js
 2. Express
