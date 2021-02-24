@@ -1,7 +1,7 @@
 //routes
-const apiRoutes = require("./apiRoutes");
-const userRoutes = require("./userRoutes");
-const db = require("./database");
+const apiRoutes = require("../server/apiRoutes");
+const userRoutes = require("../server/userRoutes");
+const db = require("../server/database");
 
 // Web server config
 const PORT = process.env.PORT || 8080;
