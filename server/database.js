@@ -1,8 +1,9 @@
 // load .env data into process.env
-require('dotenv').config();
+require("dotenv").config();
 
-const dbParams = require('../lib/db')
-const { Pool } = require('pg');
+const dbParams = require("../lib/db");
+const { Pool } = require("pg");
+console.log(dbParams);
 const db = new Pool(dbParams);
 
 const getMaps = function (options) {
@@ -18,19 +19,19 @@ const getMaps = function (options) {
   JOIN users on maps.user_id = users.id `;
 
   if (options.map_id) {
-    queryValue.push(options.map_id)
+    queryValue.push(options.map_id);
     queryString += `WHERE maps.id = $2`;
   }
 
   if (options.owner_id) {
-    queryValue.push(options.owner_id)
+    queryValue.push(options.owner_id);
     queryString += `
     WHERE maps.user_id = $2
     `;
   }
 
   if (options.contributor_id) {
-    queryValue.push(options.contributor_id)
+    queryValue.push(options.contributor_id);
     queryString += `
     JOIN markers ON maps.id = markers.map_id
     WHERE markers.user_id = $2
@@ -38,7 +39,7 @@ const getMaps = function (options) {
   }
 
   if (options.favUser_id) {
-    queryValue.push(options.favUser_id)
+    queryValue.push(options.favUser_id);
     queryString += `
     JOIN favorites ON maps.id = favorites.map_id
     WHERE favorites.user_id = $2
@@ -47,43 +48,43 @@ const getMaps = function (options) {
 
   queryString += `ORDER BY maps.name;`;
 
-  return db.query(queryString, queryValue)
-    .then(res => {
+  return db
+    .query(queryString, queryValue)
+    .then((res) => {
       let anonymousArray = res.rows;
       let outputArray = [];
       for (let single of anonymousArray) {
-      let singleObj = {};
-      singleObj.id = single.id;
-      singleObj.user_id = single.user_id;
-      singleObj.latitude = single.latitude;
-      singleObj.longitude = single.longitude;
-      singleObj.name = single.name;
-      singleObj.user_name = single.user_name;
-      singleObj.favorited = single.favorited;
-      outputArray.push(singleObj)
+        let singleObj = {};
+        singleObj.id = single.id;
+        singleObj.user_id = single.user_id;
+        singleObj.latitude = single.latitude;
+        singleObj.longitude = single.longitude;
+        singleObj.name = single.name;
+        singleObj.user_name = single.user_name;
+        singleObj.favorited = single.favorited;
+        outputArray.push(singleObj);
       }
-    return outputArray;
+      return outputArray;
     })
     .catch(() => null);
-}
+};
 
 exports.getMaps = getMaps;
-
 
 const getMarkersForMap = function ({ map_id }) {
   let queryValue = [map_id];
   let queryString = `SELECT * FROM markers WHERE map_id = $1;`;
-  return db.query(queryString, queryValue)
-    .then(res => res.rows)
+  return db
+    .query(queryString, queryValue)
+    .then((res) => res.rows)
     .catch(() => null);
-}
+};
 
 exports.getMarkersForMap = getMarkersForMap;
 
-
 const addMap = function (options) {
   if (!options.user_id) {
-    throw new Error('User not logged in!');
+    throw new Error("User not logged in!");
   }
 
   const queryString = `
@@ -99,16 +100,16 @@ const addMap = function (options) {
     options.name,
   ];
 
-  return db.query(queryString, queryValues)
+  return db
+    .query(queryString, queryValues)
     .then((res) => res.rows[0])
     .catch(() => null);
-}
+};
 exports.addMap = addMap;
 
 const addMarker = function (options) {
-
   if (!options.user_id) {
-    throw new Error('User not logged in!');
+    throw new Error("User not logged in!");
   }
 
   const queryString = `
@@ -124,40 +125,39 @@ const addMarker = function (options) {
     options.user_id,
     options.title,
     options.description || `Not provided`,
-    options.img_url || `Not provided`
+    options.img_url || `Not provided`,
   ];
 
-  return db.query(queryString, queryValues)
+  return db
+    .query(queryString, queryValues)
     .then((res) => res.rows[0])
     .catch(() => null);
-}
+};
 exports.addMarker = addMarker;
 
 const deleteMarker = function (options) {
-
   if (!options.user_id) {
-    throw new Error('User not logged in!');
+    throw new Error("User not logged in!");
   }
   const queryString = `
   DELETE FROM markers
   WHERE id = $1;
   `;
-  const queryValues = [
-    options.id
-  ];
+  const queryValues = [options.id];
 
-  return db.query(queryString, queryValues)
+  return db
+    .query(queryString, queryValues)
     .then(() => {
       return;
     })
     .catch(() => null);
-}
+};
 
 exports.deleteMarker = deleteMarker;
 
 const updateMarker = function (options) {
   if (!options.user_id) {
-    throw new Error('User not logged in!');
+    throw new Error("User not logged in!");
   }
 
   const queryValues = [
@@ -166,14 +166,15 @@ const updateMarker = function (options) {
     options.title,
     options.description,
     options.img_url,
-    options.id
+    options.id,
   ];
 
   const queryString = `
   UPDATE markers SET latitude = $1, longitude = $2, title = $3, description = $4, img_url = $5 WHERE id = $6 RETURNING *;
   `;
 
-  return db.query(queryString, queryValues)
+  return db
+    .query(queryString, queryValues)
     .then((res) => {
       let output = {};
       output.latitude = res.rows[0].latitude;
@@ -185,14 +186,13 @@ const updateMarker = function (options) {
       return output;
     })
     .catch(() => null);
-}
+};
 
 exports.updateMarker = updateMarker;
 
 const addFavorite = function (options) {
-
   if (!options.user_id) {
-    throw new Error('User not logged in!');
+    throw new Error("User not logged in!");
   }
 
   const queryString = `
@@ -201,21 +201,18 @@ const addFavorite = function (options) {
   RETURNING *;
   `;
 
-  const queryValues = [
-    options.user_id,
-    options.map_id
-  ];
+  const queryValues = [options.user_id, options.map_id];
 
-  return db.query(queryString, queryValues)
+  return db
+    .query(queryString, queryValues)
     .then((res) => res.rows[0])
     .catch(() => null);
-}
+};
 exports.addFavorite = addFavorite;
 
 const deleteFavorite = function (options) {
-
   if (!options.user_id) {
-    throw new Error('User not logged in!');
+    throw new Error("User not logged in!");
   }
 
   const queryString = `
@@ -224,17 +221,15 @@ const deleteFavorite = function (options) {
   AND map_id = $2;
   `;
 
-  const queryValues = [
-    options.user_id,
-    options.map_id
-  ];
+  const queryValues = [options.user_id, options.map_id];
 
-  return db.query(queryString, queryValues)
+  return db
+    .query(queryString, queryValues)
     .then(() => {
       return;
     })
     .catch(() => null);
-}
+};
 exports.deleteFavorite = deleteFavorite;
 
 //Helper function to return user object for a given id
@@ -245,11 +240,10 @@ const getUserWithId = function (id) {
   FROM users
   WHERE id = $1;
   `;
-  return db.query(queryString, queryValues)
-    .then((res) => {
-      return res.rows[0]
-    });
-}
+  return db.query(queryString, queryValues).then((res) => {
+    return res.rows[0];
+  });
+};
 exports.getUserWithId = getUserWithId;
 
 //Helper function for retrieving user with email
@@ -260,12 +254,13 @@ const getUserWithEmail = function (email) {
   FROM users
   WHERE email = $1;
   `;
-  return db.query(queryString, queryValues)
+  return db
+    .query(queryString, queryValues)
     .then((user) => {
       return user.rows[0];
     })
     .catch(() => null);
-}
+};
 exports.getUserWithEmail = getUserWithEmail;
 
 //Helper function for adding user to database
@@ -276,7 +271,8 @@ const addUser = function (user) {
   VALUES($1, $2, $3)
   RETURNING *;
   `;
-  return db.query(queryString, queryValues)
+  return db
+    .query(queryString, queryValues)
     .then((user) => {
       const newUser = {};
       newUser.id = user.rows[0].id;
@@ -286,7 +282,7 @@ const addUser = function (user) {
       return newUser;
     })
     .catch(() => null);
-}
+};
 exports.addUser = addUser;
 
 //Helper function for checking if user with an email exists during registration
@@ -297,7 +293,8 @@ const userExists = function (email) {
   FROM users
   WHERE email = $1;
   `;
-  return db.query(queryString, queryValues)
+  return db
+    .query(queryString, queryValues)
     .then((obj) => {
       return obj.rowCount === 0 ? true : false;
     })
