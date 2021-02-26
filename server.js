@@ -1,7 +1,7 @@
 //routes
-const apiRoutes = require("./apiRoutes");
-const userRoutes = require("./userRoutes");
-const db = require("./database");
+const apiRoutes = require("./server/apiRoutes");
+const userRoutes = require("./server/userRoutes");
+const db = require("./server/database");
 
 // Web server config
 const PORT = process.env.PORT || 8080;
@@ -43,7 +43,7 @@ app.use(
 const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 
-app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
